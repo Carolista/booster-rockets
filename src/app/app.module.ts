@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ScorecardComponent } from './scorecard/scorecard.component';
 import { FlashcardComponent } from './flashcard/flashcard.component';
 import { OptionsComponent } from './options/options.component';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { OptionsComponent } from './options/options.component';
     FooterComponent,
     ScorecardComponent,
     FlashcardComponent,
-    OptionsComponent
+    OptionsComponent,
+    StartComponent
   ],
   imports: [
     BrowserModule,
