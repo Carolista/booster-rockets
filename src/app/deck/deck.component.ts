@@ -27,7 +27,7 @@ export class DeckComponent implements OnInit {
   // create randomized list of questions based on user's criteria
   buildFlashcardSet() {
 
-    // use criteria from user to build flashcard set for this session
+    // build flashcard set for this session from question bank
     this.flashcards = [];
     // TODO: use criteria instead of adding all
     questionBank.forEach(obj => {
@@ -45,8 +45,6 @@ export class DeckComponent implements OnInit {
     this.currentCard = this.flashcards[this.currentIndex];
   }
 
-  
-  
   checkAnswer(answer: string) {
     this.answered = true;
     if (answer == this.currentCard.answer) {
@@ -59,8 +57,8 @@ export class DeckComponent implements OnInit {
   getNextCard() {
     this.currentCard.used = true;
     if (this.currentIndex == this.flashcards.length - 1) {
-      // TODO: need to ask if they want to start again and then reset from beginning
-      this.currentIndex = 0; // this works to return to beginning, but selections are retained
+      // TODO: need to ask if they want to start again and then maybe reshuffle?
+      this.currentIndex = 0; // this works to return to beginning and loop through in existing order
     } else {
       this.currentIndex++;
     }

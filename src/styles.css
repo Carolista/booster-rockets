@@ -45,6 +45,6 @@ html, body {
 }
 
 .right {
-    display: flex;
-    justify-content: right;
+    width: 100%;
+    text-align: right;
 }
