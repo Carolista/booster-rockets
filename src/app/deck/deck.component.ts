@@ -15,6 +15,7 @@ export class DeckComponent implements OnInit {
   flashcards: Flashcard[];
   currentCard: Flashcard;
   currentIndex: number = 0;
+  currentResponse: string;
   answered: boolean = false;
   correct: boolean = true;
 
@@ -59,7 +60,7 @@ export class DeckComponent implements OnInit {
     this.currentCard = this.flashcards[this.currentIndex];
   }
 
-  checkAnswer(answer: string) {
+  checkAnswer() {
     this.answered = true;
     let index = this.findQuestionByCardId(this.currentCard.id);
     if (index === -1) {
@@ -68,10 +69,12 @@ export class DeckComponent implements OnInit {
       index = this.questions.length - 1;
     }
     this.questions[index].presented++;
-    if (answer === this.currentCard.answer) {
+    if (this.currentResponse === this.currentCard.answer) {
+      console.log("Correct answer");
       this.questions[index].correct++;
       this.correct = true;
     } else {
+      console.log("Wrong answer");
       this.correct = false;
     }
     console.log(this.questions[index]);
@@ -89,8 +92,6 @@ export class DeckComponent implements OnInit {
 
     this.answered = false;
   }
-
-  // TODO: function to save/update question for user stats
 
   // TODO: send updates to back end with each answer in case user exits page/browser mid-session
 
