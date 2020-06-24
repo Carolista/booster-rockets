@@ -5,7 +5,7 @@ export class Flashcard {
     id: number;
     category: string;
     // TODO: add topic property here and in JSON file for each question
-    type: string;
+    type: string; // TODO: additional question types - short answer, fill-in-the-blank/dropdown, multiple response
     query: string; 
     choices: string[]; 
     answer: string; 
