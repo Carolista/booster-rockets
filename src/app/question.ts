@@ -6,6 +6,8 @@ export class Question {
     cardId: number; // match with question from question bank (JSON)
     presented: number; // how many times user has been asked this question
     correct: number; // how many times the user answered correctly
+    
+    archived: boolean; // if user chooses to prevent question from being included in future decks
 
     constructor(id: number, cardId: number, presented: number, correct: number) {
         this.id = id;
@@ -13,5 +15,5 @@ export class Question {
         this.presented = presented;
         this.correct = correct;
     }
-    
+
 }

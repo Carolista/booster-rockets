@@ -3,6 +3,7 @@ import questionBank from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
+import { Statistics } from '../statistics';
 
 @Component({
   selector: 'app-flashcard',
@@ -29,6 +30,9 @@ export class DeckComponent implements OnInit {
     new Question(145, 2, 4, 3),
     new Question(164, 5, 6, 5)
   ]
+
+  // temporarily hard-code Statistics object to test statistics calculations
+  statistics: Statistics = new Statistics();
 
   constructor() { 
   }
@@ -72,9 +76,15 @@ export class DeckComponent implements OnInit {
       index = this.questions.length - 1;
     }
     this.questions[index].presented++;
+    this.statistics.presented++;
     if (this.currentResponse === this.currentCard.answer) {
       console.log("Correct answer");
       this.questions[index].correct++;
+      this.statistics.correct++;
+      this.statistics.currentStreak++;
+      if (this.statistics.currentStreak > this.statistics.longestStreak) {
+        this.statistics.longestStreak = this.statistics.currentStreak;
+      }
       this.correct = true;
     } else {
       console.log("Wrong answer");
@@ -111,7 +121,6 @@ export class DeckComponent implements OnInit {
   }
 
   // TODO: send updates to back end with each answer in case user exits page/browser mid-session
-
 
   findQuestionByCardId(cardId: number): number {
     let question: Question;

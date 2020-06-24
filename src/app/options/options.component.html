@@ -1,29 +1,40 @@
-<p class="page-title">Choose Flashcards</p>
+<div class="options-block">
+    <p class="page-title">Choose Flashcards</p>
 
-<!-- TODO: add a 'select all' checkbox, maybe 'deselect all' too? -->
+    <!-- TODO: add a 'select all' checkbox, maybe 'deselect all' too? -->
 
-<div class="space-above">
-    <div class="checklist-header">Categories</div>
-    <div *ngFor="let category of categories; let c = index">
-        <label><input type="checkbox" #category> {{categories[c]}}</label>
+    <div class="space-above">
+        <div class="checklist-header">Categories</div>
+        <div *ngFor="let category of categories; let c = index" class="checklist-row">
+            <div class="checklist-checkbox-col">
+                <label><input type="checkbox" #category> {{categories[c]}}</label>
+            </div>
+            <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
+                {{cardsPerCategory[c]}} cards completed
+            </div>
+            <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
+                {{accuracyPerCategory[c]}}% accuracy
+            </div>
+        </div>
+        
     </div>
-    
-</div>
 
-<div class="space-above">
-    <div class="checklist-header">Question Types</div>
-    <div *ngFor="let type of types; let t = index">
-        <label><input type="checkbox" #type> {{types[t]}}</label>
+    <div class="space-above">
+        <div class="checklist-header">Question Types</div>
+        <div *ngFor="let type of types; let t = index">
+            <label><input type="checkbox" #type> {{types[t]}}</label>
+        </div>
     </div>
+
+    <!-- TODO: DO I ALSO WANT A TOPIC FILTER??? Maybe in a second column? -->
+    <!-- Strings, arrays, etc... this could get complicated and will need to
+        dynamically update depending on which categories are selected -->
+
+    <div class="space-above">
+        <button>Let's Go!</button> 
+    </div>
+
+    <!-- TODO: add ngModel when backend provides persistence -->
+    <!-- TODO: add click event to add or remove from list for saving with user -->
+
 </div>
-
-<!-- TODO: DO I ALSO WANT A TOPIC FILTER??? Maybe in a second column? -->
-<!-- Strings, arrays, etc... this could get complicated and will need to
-    dynamically update depending on which categories are selected -->
-
-<div class="space-above">
-    <button>Let's Go!</button> 
-</div>
-
-<!-- TODO: add ngModel when backend provides persistence -->
-<!-- TODO: add click event to add or remove from list for saving with user -->
