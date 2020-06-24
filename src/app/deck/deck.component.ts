@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import questionBank from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
+import { Filters } from '../filters';
 
 @Component({
   selector: 'app-flashcard',
@@ -16,6 +17,9 @@ export class DeckComponent implements OnInit {
   currentIndex: number = 0;
   answered: boolean = false;
   correct: boolean = true;
+
+  // temporarily hard-code Filters object to test function in buildFlashcardSet
+  filters: Filters = new Filters(null, ["JavaScript", "Angular", "Thymeleaf"], ["Multiple Choice","True/False"]);
 
   constructor() { 
   }
@@ -32,10 +36,13 @@ export class DeckComponent implements OnInit {
     // TODO: use criteria instead of adding all
     questionBank.forEach(obj => {
       let card = new Flashcard(obj.id, obj.category, obj.type, obj.query, obj.choices, obj.answer);
-      if (card.type != "True/False") {
-        this.shuffle(card.choices);
-      }
-      this.flashcards.push(card);
+      // add card to deck only if it fits user's criteria
+      if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
+        if (card.type != "True/False") {
+          this.shuffle(card.choices);
+        }
+        this.flashcards.push(card);
+      }      
     });
 
     // if sorting by category:
@@ -55,7 +62,6 @@ export class DeckComponent implements OnInit {
   }
 
   getNextCard() {
-    this.currentCard.used = true;
     if (this.currentIndex == this.flashcards.length - 1) {
       // TODO: need to ask if they want to start again and then maybe reshuffle?
       this.currentIndex = 0; // this works to return to beginning and loop through in existing order

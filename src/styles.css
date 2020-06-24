@@ -6,6 +6,17 @@ html, body {
     font-family: 'Nunito', sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+}
+
+/*
+IDEAS:
+    - instead of graphic cards in a pile on a white bkg... offer user optional
+        blurred background images with cards in foreground 
+        (beach, coffeeshop, library, mountains, garden, gaming den, etc)
+*/
+
 .header {
     display: flex;
     height: 10vh;
@@ -47,4 +58,22 @@ html, body {
 .right {
     width: 100%;
     text-align: right;
+}
+
+.space-above {
+    margin-top: 25px;
+}
+
+.page-title {
+    font-family: 'Days One', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.8em;
+    margin-bottom:0.5em;
+}
+
+.checklist-header {
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
 }
