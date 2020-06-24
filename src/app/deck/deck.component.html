@@ -2,7 +2,7 @@
     <h3>{{currentCard.category}}</h3>
     <p>{{currentCard.query}}</p>
     <div *ngFor="let choice of currentCard.choices; let c = index">
-        <input type="radio" #answer (change)="checkAnswer(answer)" [value]="currentCard.choices[c]" />{{currentCard.choices[c]}}
+        <input type="radio" #answer name="answer" (change)="checkAnswer(answer.value)" [value]="currentCard.choices[c]" />{{currentCard.choices[c]}}
     </div>
     <button *ngIf="answered && !correct" (click)="answered = false">Retry</button>
     <button *ngIf="answered" (click)="getNextCard()">Next</button> 
