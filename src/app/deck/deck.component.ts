@@ -35,7 +35,7 @@ export class DeckComponent implements OnInit {
     this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
     // TODO: look at satellite example for all vs. subset
     // reference helper randomize function
-    this.currentCard = questionBank[2];
+    this.currentCard = this.flashcards[2];
   }
 
   // TODO: function to save/update question for user stats
@@ -51,7 +51,7 @@ export class DeckComponent implements OnInit {
 
   getNextCard() {
     this.answered = false;
-    this.currentCard = questionBank[3]; // FIXME: need relative reference
+    this.currentCard = this.flashcards[3]; // FIXME: need relative reference
     // TODO: eventually use this to rotate graphics for changing flashcards
   }
 
