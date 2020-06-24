@@ -1,1 +1,17 @@
-<p>options works!</p>
+<h2>Choose Flashcards</h2>
+<div class="space-above">
+    <h3>Categories</h3>
+    <div *ngFor="let category of categories; let c = index">
+        <label><input type="checkbox" #category> {{categories[c]}}</label>
+    </div>
+    
+</div>
+<div class="space-above">
+    <h3>Question Types</h3>
+    <div *ngFor="let type of types; let t = index">
+        <label><input type="checkbox" #type > {{types[t]}}</label>
+    </div>
+</div>
+
+<!-- TODO: add ngModel when backend provides persistence -->
+<!-- TODO: add click event to add or remove from list for saving with user -->
