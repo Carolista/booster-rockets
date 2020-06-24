@@ -1,16 +1,28 @@
-<h2>Choose Flashcards</h2>
+<p class="page-title">Choose Flashcards</p>
+
+<!-- TODO: add a 'select all' checkbox, maybe 'deselect all' too? -->
+
 <div class="space-above">
-    <h3>Categories</h3>
+    <div class="checklist-header">Categories</div>
     <div *ngFor="let category of categories; let c = index">
         <label><input type="checkbox" #category> {{categories[c]}}</label>
     </div>
     
 </div>
+
 <div class="space-above">
-    <h3>Question Types</h3>
+    <div class="checklist-header">Question Types</div>
     <div *ngFor="let type of types; let t = index">
-        <label><input type="checkbox" #type > {{types[t]}}</label>
+        <label><input type="checkbox" #type> {{types[t]}}</label>
     </div>
+</div>
+
+<!-- TODO: DO I ALSO WANT A TOPIC FILTER??? Maybe in a second column? -->
+<!-- Strings, arrays, etc... this could get complicated and might need to
+    dynamically update depending on which categories are selected -->
+
+<div class="space-above">
+    <button>Let's Go!</button> 
 </div>
 
 <!-- TODO: add ngModel when backend provides persistence -->
