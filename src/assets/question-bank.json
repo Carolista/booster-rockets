@@ -1,0 +1,61 @@
+[
+    {
+        "id" : 1,
+        "category" : "Java",
+        "type" : "True/False",
+        "query" : "Java is considered a strictly-typed language.",
+        "choices" : [
+            "True",
+            "False"
+        ],
+        "answer" : "True"
+    },
+    {
+        "id" : 2,
+        "category" : "JavaScript",
+        "type" : "True/False",
+        "query" : "JavaScript is considered a strictly-typed language.",
+        "choices" : [
+            "True",
+            "False"
+        ],
+        "answer" : "False"
+    },
+    {
+        "id" : 3,
+        "category" : "Angular",
+        "type" : "Multiple Choice",
+        "query" : "What is the biggest difference between the first version of Angular and all others since?",
+        "choices" : [
+            "The first version of Angular was based on JavaScript instead of TypeScript.",
+            "The original Angular required programmers to hop on one foot while coding.",
+            "Even one compiling error in the original version would blow up your computer."
+        ],
+        "answer" : "The first version of Angular was based on JavaScript instead of TypeScript."
+    },
+    {
+        "id" : 4,
+        "category" : "Thymeleaf",
+        "type" : "Multiple Choice",
+        "query" : "What is the correct syntax for looping over a collection in a Thymeleaf template?",
+        "choices" : [
+            "th:for = 'thingy of thingies'",
+            "th:for = 'thingy : thingies'",
+            "th:each = 'thingy of thingies'",
+            "th:each = 'thingy : ${thingies}'"
+        ],
+        "answer" : "th:each = 'thingy : ${thingies}'"
+    },
+    {
+        "id" : 5,
+        "category" : "SQL",
+        "type" : "Multiple Choice",
+        "query" : "Which of the following is not a valid type of join in SQL?",
+        "choices" : [
+            "inner join",
+            "left outer join",
+            "right inner join"
+        ],
+        "answer" : "right inner join"
+    }       
+]

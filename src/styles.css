@@ -39,3 +39,7 @@ html, body {
     font-size: 5vh;
     font-family: 'Days One', sans-serif;
 }
+
+.card {
+    width: 60vw;
+}

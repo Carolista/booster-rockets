@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ScorecardComponent } from './scorecard/scorecard.component';
-import { FlashcardComponent } from './flashcard/flashcard.component';
+import { DeckComponent } from './deck/deck.component';
 import { OptionsComponent } from './options/options.component';
 import { StartComponent } from './start/start.component';
 
@@ -16,7 +16,7 @@ import { StartComponent } from './start/start.component';
     HeaderComponent,
     FooterComponent,
     ScorecardComponent,
-    FlashcardComponent,
+    DeckComponent,
     OptionsComponent,
     StartComponent
   ],
