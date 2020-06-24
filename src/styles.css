@@ -41,5 +41,10 @@ html, body {
 }
 
 .card {
-    width: 60vw;
+    width: 65vw;
+}
+
+.right {
+    display: flex;
+    justify-content: right;
 }

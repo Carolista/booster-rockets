@@ -13,6 +13,7 @@ export class DeckComponent implements OnInit {
 
   flashcards: Flashcard[];
   currentCard: Flashcard;
+  currentIndex: number = 0;
   answered: boolean = false;
   correct: boolean = true;
 
@@ -28,17 +29,23 @@ export class DeckComponent implements OnInit {
 
     // use criteria from user to build flashcard set for this session
     this.flashcards = [];
+    // TODO: use criteria instead of adding all
     questionBank.forEach(obj => {
       let card = new Flashcard(obj.id, obj.category, obj.type, obj.query, obj.choices, obj.answer);
+      if (card.type != "True/False") {
+        this.shuffle(card.choices);
+      }
       this.flashcards.push(card);
     });
-    this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
-    // TODO: look at satellite example for all vs. subset
-    // reference helper randomize function
-    this.currentCard = this.flashcards[2];
+
+    // if sorting by category:
+    // this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
+
+    this.shuffle(this.flashcards);
+    this.currentCard = this.flashcards[this.currentIndex];
   }
 
-  // TODO: function to save/update question for user stats
+  
   
   checkAnswer(answer: string) {
     this.answered = true;
@@ -50,9 +57,35 @@ export class DeckComponent implements OnInit {
   }
 
   getNextCard() {
-    this.answered = false;
-    this.currentCard = this.flashcards[3]; // FIXME: need relative reference
+    this.currentCard.used = true;
+    if (this.currentIndex == this.flashcards.length - 1) {
+      // TODO: need to ask if they want to start again and then reset from beginning
+      this.currentIndex = 0; // this works to return to beginning, but selections are retained
+    } else {
+      this.currentIndex++;
+    }
+    this.currentCard = this.flashcards[this.currentIndex];
     // TODO: eventually use this to rotate graphics for changing flashcards
+
+    this.answered = false;
+  }
+
+  // TODO: function to save/update question for user stats
+
+  shuffle(array: any[]): any[] {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) { 
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
   }
 
 }

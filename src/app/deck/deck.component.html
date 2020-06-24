@@ -4,6 +4,9 @@
     <div *ngFor="let choice of currentCard.choices; let c = index">
         <input type="radio" #answer name="answer" (change)="checkAnswer(answer.value)" [value]="currentCard.choices[c]" />{{currentCard.choices[c]}}
     </div>
-    <button *ngIf="answered && !correct" (click)="answered = false">Retry</button>
-    <button *ngIf="answered" (click)="getNextCard()">Next</button> 
+    <div class="right">
+        <button *ngIf="answered && !correct" (click)="answered = false">Retry</button>
+        <button *ngIf="answered && correct" (click)="getNextCard()">Next</button> 
+    </div>
+    
 </div>
