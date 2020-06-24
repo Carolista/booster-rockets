@@ -1,11 +1,9 @@
 export class Question {
 
+    // for session and historical stats on an unduplicated question
+
     id: number;
-    category: string; // specific language, framework, tool, etc.
-    type: string; // true/false, multiple choice, etc.
-    query: string; 
-    choices: string[]; // maybe a different data structure here
-    response: string; // maybe change type
+    cardId: number; // match with question from question bank (JSON)
     presented: number; // how many times user has been asked this question
     correct: number; // how many times the user answered correctly
 
