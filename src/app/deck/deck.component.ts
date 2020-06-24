@@ -12,8 +12,10 @@ import { Question } from '../question';
 export class DeckComponent implements OnInit {
 
   flashcards: Flashcard[];
-  currentCard: Flashcard; // ngModel
-  
+  currentCard: Flashcard;
+  answered: boolean = false;
+  correct: boolean = true;
+
   constructor() { 
   }
 
@@ -24,16 +26,27 @@ export class DeckComponent implements OnInit {
   // create randomized list of questions based on user's criteria
   buildFlashcardSet() {
 
-
     // use criteria from user to build flashcard set for this session
     this.flashcards = questionBank; // temporarily set to all for testing
     // TODO: look at satellite example for all vs. subset
     // reference helper randomize function
-    this.currentCard = questionBank[0];
+    this.currentCard = questionBank[2];
   }
 
-  // TODO: function to check user response against answer
   // TODO: function to save/update question for user stats
   
+  checkAnswer(answer: string) {
+    this.answered = true;
+    if (answer == this.currentCard.answer) {
+      this.correct = true;
+    } else {
+      this.correct = false;
+    }
+  }
+
+  getNextCard() {
+    this.answered = false;
+    this.currentCard = questionBank[3]; // FIXME: need relative reference
+  }
 
 }
