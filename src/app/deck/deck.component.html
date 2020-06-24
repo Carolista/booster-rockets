@@ -2,16 +2,43 @@
     <h3>{{currentCard.category}}</h3>
     <!-- TODO: add topic here as well -->
 
-    <p>{{currentCard.query}}</p>
-    <div *ngFor="let choice of currentCard.choices; let c = index">
-        <input type="radio" #response (change)="currentResponse = response.value" [value]="currentCard.choices[c]" [checked]="false" />{{currentCard.choices[c]}}
-    </div>
-    <div class="right">
-        <button *ngIf="!answered" (click)="checkAnswer()">Submit</button>
-        <button (click)="getNextCard()" [disabled]="!answered">Next</button> 
+    <!-- Displays when question is presented but only until user submits response -->
+    <div *ngIf="!answered">
+        <div *ngIf="currentQuestion.presented === 0">
+            <small class="stat-snippet-new">New question!</small>
+        </div>
+        <!-- <div *ngIf="currentQuestion.presented > 0 && currentQuestion.presented < 4">
+            <small class="stat-snippet">Keep it up!</small>
+        </div>
+        <div *ngIf="currentQuestion.presented > 3">
+            <small class="stat-snippet">Your success rate with this question is {{getSuccessRate()}}%.</small>
+        </div> -->
     </div>
 
+    <form>
+        <p class="query">{{currentCard.query}}</p>
+        <hr>
+        <div *ngFor="let choice of currentCard.choices; let c = index">
+            <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentCard.choices[c]" [checked]="false" />{{currentCard.choices[c]}}
+        </div>
+        <!-- TODO: figure out how the hell to indent label wrap on radio buttons UGH -->
+        <div class="right">
+            <button *ngIf="!answered" (click)="checkAnswer()">Submit</button>
+            <button (click)="getNextCard()" [disabled]="!answered">Next</button> 
+        </div>
+    </form>
 
-    <!-- TODO: consider adding stats if question has been asked before -->
+    
+
+    <!-- Displays only after user submits response -->
+    <div class="space-above" *ngIf="answered">
+        <div *ngIf="correct">
+            <p class="answer-correct">That's correct. Great job!</p>
+        </div>
+        <div *ngIf="!correct">
+            <p class="answer-incorrect">Uh oh! That's not quite right.</p>
+        </div>
+    </div>
+    
     
 </div>

@@ -77,3 +77,26 @@ IDEAS:
     font-size: 1.2em;
     margin-bottom: 0.5em;
 }
+
+.stat-snippet-new {
+    color: #5b8b0e;
+}
+
+.stat-snippet {
+    color: #888888;
+}
+
+.query {
+    font-weight: bold;
+}
+
+.answer-correct {
+    color: #5b8b0e;
+    font-weight: bold;
+}
+
+.answer-incorrect {
+    color: #aa1e0c;
+    font-weight: bold;
+}
+

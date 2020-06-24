@@ -14,6 +14,7 @@ export class DeckComponent implements OnInit {
 
   flashcards: Flashcard[];
   currentCard: Flashcard;
+  currentQuestion: Question;
   currentIndex: number = 0;
   currentResponse: string;
   answered: boolean = false;
@@ -46,18 +47,20 @@ export class DeckComponent implements OnInit {
       let card = new Flashcard(obj.id, obj.category, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
-        if (card.type == "Multiple Choice") { // TODO: add other types in future as needed
+        if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
           this.shuffle(card.choices);
         }
         this.flashcards.push(card);
       }      
     });
 
-    // if sorting by category:
+    // TODO: if user is given choice to sort by category:
     // this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
 
     this.shuffle(this.flashcards);
     this.currentCard = this.flashcards[this.currentIndex];
+    this.setCurrentQuestion();
+    console.log("Flashcard deck built.")
   }
 
   checkAnswer() {
@@ -80,6 +83,19 @@ export class DeckComponent implements OnInit {
     console.log(this.questions[index]);
   }
 
+  setCurrentQuestion() {
+    let index = this.findQuestionByCardId(this.currentCard.id);
+    if (index === -1) {
+      this.currentQuestion = new Question(null, this.currentCard.id, 0, 0); 
+    } else {
+      this.currentQuestion = this.questions[index];
+    }
+  }
+
+  getSuccessRate(): number {
+    return Math.round((this.currentQuestion.correct / this.currentQuestion.presented) * 100);
+  }
+
   getNextCard() {
     if (this.currentIndex === this.flashcards.length - 1) {
       // TODO: need to ask if they want to start again and then maybe reshuffle?
@@ -88,6 +104,7 @@ export class DeckComponent implements OnInit {
       this.currentIndex++;
     }
     this.currentCard = this.flashcards[this.currentIndex];
+    this.setCurrentQuestion();
     // TODO: eventually use this to rotate graphics for changing flashcards
 
     this.answered = false;
