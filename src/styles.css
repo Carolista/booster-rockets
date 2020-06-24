@@ -41,5 +41,10 @@ html, body {
 }
 
 .card {
-    width: 60vw;
+    width: 65vw;
+}
+
+.right {
+    width: 100%;
+    text-align: right;
 }

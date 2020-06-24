@@ -8,6 +8,7 @@ export class Flashcard {
     query: string; 
     choices: string[]; 
     answer: string; 
+    used: boolean = false; // just for modeling within session
 
     constructor(id: number, category: string, type: string, query: string, choices: string[], answer: string) {
         this.id = id;
