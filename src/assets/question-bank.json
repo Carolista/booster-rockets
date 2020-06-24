@@ -27,11 +27,11 @@
         "type" : "Multiple Choice",
         "query" : "What is the biggest difference between the first version of Angular and all others since?",
         "choices" : [
-            "The first version of Angular was based on JavaScript instead of TypeScript.",
+            "The first version of Angular was based in JavaScript instead of TypeScript.",
             "The original Angular required programmers to hop on one foot while coding.",
-            "Even one compiling error in the original version would blow up your computer."
+            "Even one compiling error in the original version would blow up your computer. And your house. Probably."
         ],
-        "answer" : "The first version of Angular was based on JavaScript instead of TypeScript."
+        "answer" : "The first version of Angular was based in JavaScript instead of TypeScript."
     },
     {
         "id" : 4,

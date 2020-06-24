@@ -3,6 +3,7 @@ import questionBank from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
+import { Statistics } from '../statistics';
 
 @Component({
   selector: 'app-flashcard',
@@ -14,12 +15,24 @@ export class DeckComponent implements OnInit {
 
   flashcards: Flashcard[];
   currentCard: Flashcard;
+  currentQuestion: Question;
   currentIndex: number = 0;
+  currentResponse: string;
   answered: boolean = false;
   correct: boolean = true;
 
   // temporarily hard-code Filters object to test function in buildFlashcardSet
-  filters: Filters = new Filters(null, ["JavaScript", "Angular", "Thymeleaf"], ["Multiple Choice","True/False"]);
+  filters: Filters = new Filters(null, ["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Multiple Choice","True/False"]);
+
+  // temporarily hard-code Question array to test statistics calculations
+  questions: Question[] = [
+    new Question(123, 1, 3, 2),
+    new Question(145, 2, 4, 3),
+    new Question(164, 5, 6, 5)
+  ]
+
+  // temporarily hard-code Statistics object to test statistics calculations
+  statistics: Statistics = new Statistics();
 
   constructor() { 
   }
@@ -38,55 +51,98 @@ export class DeckComponent implements OnInit {
       let card = new Flashcard(obj.id, obj.category, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
-        if (card.type != "True/False") {
+        if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
           this.shuffle(card.choices);
         }
         this.flashcards.push(card);
       }      
     });
 
-    // if sorting by category:
+    // TODO: if user is given choice to sort by category:
     // this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
 
     this.shuffle(this.flashcards);
     this.currentCard = this.flashcards[this.currentIndex];
+    this.setCurrentQuestion();
+    console.log("Flashcard deck built.")
   }
 
-  checkAnswer(answer: string) {
+  checkAnswer() {
     this.answered = true;
-    if (answer == this.currentCard.answer) {
+    let index = this.findQuestionByCardId(this.currentCard.id);
+    if (index === -1) {
+      let question = new Question(null, this.currentCard.id, 0, 0);
+      this.questions.push(question);
+      index = this.questions.length - 1;
+    }
+    this.questions[index].presented++;
+    this.statistics.presented++;
+    if (this.currentResponse === this.currentCard.answer) {
+      console.log("Correct answer");
+      this.questions[index].correct++;
+      this.statistics.correct++;
+      this.statistics.currentStreak++;
+      if (this.statistics.currentStreak > this.statistics.longestStreak) {
+        this.statistics.longestStreak = this.statistics.currentStreak;
+      }
       this.correct = true;
     } else {
+      console.log("Wrong answer");
       this.correct = false;
+    }
+    console.log(this.questions[index]);
+  }
+
+  setCurrentQuestion() {
+    let index = this.findQuestionByCardId(this.currentCard.id);
+    if (index === -1) {
+      this.currentQuestion = new Question(null, this.currentCard.id, 0, 0); 
+    } else {
+      this.currentQuestion = this.questions[index];
     }
   }
 
+  getSuccessRate(): number {
+    return Math.round((this.currentQuestion.correct / this.currentQuestion.presented) * 100);
+  }
+
   getNextCard() {
-    if (this.currentIndex == this.flashcards.length - 1) {
+    if (this.currentIndex === this.flashcards.length - 1) {
       // TODO: need to ask if they want to start again and then maybe reshuffle?
       this.currentIndex = 0; // this works to return to beginning and loop through in existing order
     } else {
       this.currentIndex++;
     }
     this.currentCard = this.flashcards[this.currentIndex];
+    this.setCurrentQuestion();
     // TODO: eventually use this to rotate graphics for changing flashcards
 
     this.answered = false;
   }
 
-  // TODO: function to save/update question for user stats
+  // TODO: send updates to back end with each answer in case user exits page/browser mid-session
+
+  findQuestionByCardId(cardId: number): number {
+    let question: Question;
+    for (let i = 0; i < this.questions.length; i++) {
+      question = this.questions[i];
+      if (question.cardId === cardId) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
   shuffle(array: any[]): any[] {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-  
+    let current = array.length, temporaryValue, randomIndex;
     // While there remain elements to shuffle...
-    while (0 !== currentIndex) { 
+    while (0 !== current) { 
       // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+      randomIndex = Math.floor(Math.random() * current);
+      current -= 1;
       // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
+      temporaryValue = array[current];
+      array[current] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
     return array;

@@ -4,6 +4,7 @@ html, body {
     padding: 0px;
     margin: 0px;
     font-family: 'Nunito', sans-serif;
+    font-weight: 200;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -55,6 +56,10 @@ IDEAS:
     width: 65vw;
 }
 
+.options-block {
+    width: 70vw;
+}
+
 .right {
     width: 100%;
     text-align: right;
@@ -72,8 +77,57 @@ IDEAS:
 }
 
 .checklist-header {
-    font-weight: bolder;
+    font-weight: 600;
     text-transform: uppercase;
     font-size: 1.2em;
     margin-bottom: 0.5em;
+}
+
+.category-topic {
+    font-size: 1.2em;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.stat-snippet-new {
+    color: #5b8b0e;
+}
+
+.stat-snippet {
+    color: #777777;
+}
+
+.query {
+    font-weight: 800;
+}
+
+.answer-correct {
+    color: #5b8b0e;
+    font-weight: 600;
+}
+
+.answer-incorrect {
+    color: #aa1e0c;
+    font-weight: 600;
+}
+
+.spacer-10 {
+    margin: 0px 10px;
+}
+
+.checklist-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.checklist-checkbox-col {
+    width: 40%;
+}
+
+.checklist-stats-col {
+    width: 30%;
+}
+
+.muted {
+    color: #BBBBBB;
 }
