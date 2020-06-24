@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as questionBank from '../../assets/question-bank.json';
+import questionBank from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 
@@ -27,7 +27,12 @@ export class DeckComponent implements OnInit {
   buildFlashcardSet() {
 
     // use criteria from user to build flashcard set for this session
-    this.flashcards = questionBank; // temporarily set to all for testing
+    this.flashcards = [];
+    questionBank.forEach(obj => {
+      let card = new Flashcard(obj.id, obj.category, obj.type, obj.query, obj.choices, obj.answer);
+      this.flashcards.push(card);
+    });
+    this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
     // TODO: look at satellite example for all vs. subset
     // reference helper randomize function
     this.currentCard = questionBank[2];
@@ -47,6 +52,7 @@ export class DeckComponent implements OnInit {
   getNextCard() {
     this.answered = false;
     this.currentCard = questionBank[3]; // FIXME: need relative reference
+    // TODO: eventually use this to rotate graphics for changing flashcards
   }
 
 }
