@@ -5,11 +5,11 @@ import { Question } from '../question';
 
 @Component({
   selector: 'app-flashcard',
-  templateUrl: './flashcard.component.html',
-  styleUrls: ['./flashcard.component.css']
+  templateUrl: './deck.component.html',
+  styleUrls: ['./deck.component.css']
 })
 
-export class FlashcardComponent implements OnInit {
+export class DeckComponent implements OnInit {
 
   flashcards: Flashcard[];
   currentCard: Flashcard; // ngModel

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StartComponent } from './start/start.component';
-import { Flashcard } from './flashcard';
+import { DeckComponent } from './deck/deck.component';
 
 const routes: Routes = [
   {path: 'start', component: StartComponent},
-  {path: 'flashcard', component: Flashcard},
+  {path: 'deck', component: DeckComponent},
   {path: '', redirectTo: 'start', pathMatch: 'full'},
   {path: '**', redirectTo: 'start', pathMatch: 'full'}
 ];
