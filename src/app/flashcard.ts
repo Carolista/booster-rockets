@@ -4,11 +4,11 @@ export class Flashcard {
 
     id: number;
     category: string;
+    // TODO: add topic property here and in JSON file for each question
     type: string;
     query: string; 
     choices: string[]; 
     answer: string; 
-    used: boolean = false; // just for modeling within session
 
     constructor(id: number, category: string, type: string, query: string, choices: string[], answer: string) {
         this.id = id;

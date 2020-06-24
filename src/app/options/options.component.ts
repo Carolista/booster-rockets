@@ -28,6 +28,7 @@ export class OptionsComponent implements OnInit {
       if (! this.types.includes(obj.type)) {
         this.types.push(obj.type);
       } 
+      // TODO: types (and topics) will need to be built dynamically depending on which categories are chosen
     });
     this.categories.sort((a, b) => (a > b) ? 1 : -1);
     console.log("Categories are: " + this.categories);
@@ -36,4 +37,7 @@ export class OptionsComponent implements OnInit {
     this.filters = new Filters(null, this.categories, this.types); // TODO: later this will come from user
     this.dataReady = true;
   }
+
+  // TODO: function to select or deselect all checkboxes
+
 }
