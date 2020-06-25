@@ -28,7 +28,9 @@ export class DeckComponent implements OnInit {
   questions: Question[] = [
     new Question(123, 1, 3, 2),
     new Question(145, 2, 4, 3),
-    new Question(164, 5, 6, 5)
+    new Question(164, 5, 6, 5),
+    new Question(198, 7, 4, 4),
+    new Question(210, 9, 2, 1)
   ]
 
   // temporarily hard-code Statistics object to test statistics calculations
