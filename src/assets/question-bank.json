@@ -2,6 +2,7 @@
     {
         "id" : 1,
         "category" : "Java",
+        "topic" : "General",
         "type" : "True/False",
         "query" : "Java is considered a strictly-typed language.",
         "choices" : [
@@ -13,6 +14,7 @@
     {
         "id" : 2,
         "category" : "JavaScript",
+        "topic" : "General",
         "type" : "True/False",
         "query" : "JavaScript is considered a strictly-typed language.",
         "choices" : [
@@ -24,6 +26,7 @@
     {
         "id" : 3,
         "category" : "Angular",
+        "topic" : "General",
         "type" : "Multiple Choice",
         "query" : "What is the biggest difference between the first version of Angular and all others since?",
         "choices" : [
@@ -36,6 +39,7 @@
     {
         "id" : 4,
         "category" : "Thymeleaf",
+        "topic" : "Templates",
         "type" : "Multiple Choice",
         "query" : "What is the correct syntax for looping over a collection in a Thymeleaf template?",
         "choices" : [
@@ -49,6 +53,7 @@
     {
         "id" : 5,
         "category" : "SQL",
+        "topoic" : "Queries",
         "type" : "Multiple Choice",
         "query" : "Which of the following is not a valid type of join in SQL?",
         "choices" : [

@@ -13,6 +13,7 @@ export class OptionsComponent implements OnInit {
 
   dataReady: boolean = false; // TODO: prevent page from being visible until this is true
   categories: string[] = [];
+  topics: string[] = [];
   types: string[] = [];
   cardsPerCategory: number[] = [];
   accuracyPerCategory: number[] = [];
@@ -40,6 +41,9 @@ export class OptionsComponent implements OnInit {
       if (! this.categories.includes(obj.category)) {
         this.categories.push(obj.category);
       } 
+      if (! this.topics.includes(obj.topic)) {
+        this.topics.push(obj.topic);
+      } 
       if (! this.types.includes(obj.type)) {
         this.types.push(obj.type);
       } 
@@ -49,7 +53,7 @@ export class OptionsComponent implements OnInit {
     console.log("Categories are: " + this.categories);
     this.types.sort((a, b) => (a > b) ? 1 : -1);
     console.log("Types are: " + this.types);
-    this.filters = new Filters(null, this.categories, this.types); // TODO: later this will come from user
+    this.filters = new Filters(null, this.categories, this.topics, this.types); // TODO: later this will come from user
     this.buildStatsArrays();
     this.dataReady = true; // TODO: implement or delete this
   }
