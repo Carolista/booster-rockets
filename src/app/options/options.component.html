@@ -4,19 +4,53 @@
     <!-- TODO: add a 'select all' checkbox, maybe 'deselect all' too? -->
 
     <div class="space-above">
-        <div class="checklist-header">Categories</div>
+        <div class="checklist-row"> 
+            <div class="checklist-header checklist-checkbox-col">
+                Categories
+            </div>
+            <div class="checklist-stats-col">
+                Cards Completed
+            </div>
+            <div class="checklist-stats-col">
+                Accuracy
+            </div>
+        </div>
         <div *ngFor="let category of categories; let c = index" class="checklist-row">
             <div class="checklist-checkbox-col">
                 <label><input type="checkbox" #category> {{categories[c]}}</label>
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
-                {{cardsPerCategory[c]}} cards completed
+                {{cardsPerCategory[c]}}
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
-                {{accuracyPerCategory[c]}}% accuracy
+                {{accuracyPerCategory[c]}}%
             </div>
         </div>
-        
+    </div>
+
+    <div class="space-above">
+        <div class="checklist-row"> 
+            <div class="checklist-header checklist-checkbox-col">
+                Topics
+            </div>
+            <div class="checklist-stats-col">
+                Cards Completed
+            </div>
+            <div class="checklist-stats-col">
+                Accuracy
+            </div>
+        </div>
+        <div *ngFor="let topic of topics; let p = index" class="checklist-row">
+            <div class="checklist-checkbox-col">
+                <label><input type="checkbox" #topic> {{topics[p]}}</label>
+            </div>
+            <div class="checklist-stats-col" [class.muted]="cardsPerTopic[p] === 0">
+                {{cardsPerTopic[p]}}
+            </div>
+            <div class="checklist-stats-col" [class.muted]="cardsPerTopic[p] === 0">
+                {{accuracyPerTopic[p]}}%
+            </div>
+        </div>
     </div>
 
     <div class="space-above">

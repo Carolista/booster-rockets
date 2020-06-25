@@ -2,6 +2,7 @@
     {
         "id" : 1,
         "category" : "Java",
+        "topic" : "General",
         "type" : "True/False",
         "query" : "Java is considered a strictly-typed language.",
         "choices" : [
@@ -13,6 +14,7 @@
     {
         "id" : 2,
         "category" : "JavaScript",
+        "topic" : "General",
         "type" : "True/False",
         "query" : "JavaScript is considered a strictly-typed language.",
         "choices" : [
@@ -24,6 +26,7 @@
     {
         "id" : 3,
         "category" : "Angular",
+        "topic" : "General",
         "type" : "Multiple Choice",
         "query" : "What is the biggest difference between the first version of Angular and all others since?",
         "choices" : [
@@ -36,19 +39,21 @@
     {
         "id" : 4,
         "category" : "Thymeleaf",
+        "topic" : "Templates",
         "type" : "Multiple Choice",
         "query" : "What is the correct syntax for looping over a collection in a Thymeleaf template?",
         "choices" : [
-            "th:for = 'thingy of thingies'",
-            "th:for = 'thingy : thingies'",
-            "th:each = 'thingy of thingies'",
-            "th:each = 'thingy : ${thingies}'"
+            "th:for = 'satellite of satellites'",
+            "th:for = 'satellite : satellites'",
+            "th:each = 'satellite of satellites'",
+            "th:each = 'satellite : ${satellites}'"
         ],
-        "answer" : "th:each = 'thingy : ${thingies}'"
+        "answer" : "th:each = 'satellite : ${satellites}'"
     },
     {
         "id" : 5,
         "category" : "SQL",
+        "topic" : "Queries",
         "type" : "Multiple Choice",
         "query" : "Which of the following is not a valid type of join in SQL?",
         "choices" : [
@@ -57,5 +62,58 @@
             "right inner join"
         ],
         "answer" : "right inner join"
-    }       
+    },
+    {
+        "id" : 6,
+        "category" : "SQL",
+        "topic" : "Queries",
+        "type" : "True/False",
+        "query" : "A column that relates one table to another is called a foreign key.",
+        "choices" : [
+            "True",
+            "False"
+        ],
+        "answer" : "True"
+    },
+    {
+        "id" : 7,
+        "category" : "Thymeleaf",
+        "topic" : "Data Binding",
+        "type" : "Multiple Choice",
+        "query" : "Which of these demonstrates the correct way to bind data to a property with Thymeleaf?",
+        "choices" : [
+            "${user.name}",
+            "{{user.name}}",
+            "{user.name}",
+            "${{user.name}}"
+        ],
+        "answer" : "${user.name}"
+    },
+    {
+        "id" : 8,
+        "category" : "Angular",
+        "topic" : "Data Binding",
+        "type" : "Multiple Choice",
+        "query" : "Which of the following is not an example of data binding with Angular?",
+        "choices" : [
+            "${project.name}",
+            "{{project.name}}",
+            "[value]='project.name'",
+            "(click)='saveProject()'"
+        ],
+        "answer" : "${project.name}"
+    },
+    {
+        "id" : 9,
+        "category" : "JavaScript",
+        "topic" : "Arrays",
+        "type" : "Multiple Choice",
+        "query" : "Which of the following is the correct method for adding an item on the end of an array in JavaScript?",
+        "choices" : [
+            "array.push()",
+            "array.append()",
+            "array.add()"
+        ],
+        "answer" : "array.push()"
+    }             
 ]
