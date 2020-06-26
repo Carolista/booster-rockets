@@ -1,5 +1,7 @@
 package com.kaleidoscope314.boosterrockets.models;
 
+import javax.persistence.Entity;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity

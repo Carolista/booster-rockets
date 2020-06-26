@@ -1,5 +1,7 @@
 package com.kaleidoscope314.boosterrockets.models;
 
+import javax.persistence.Entity;
+
 @Entity
 public class Statistics extends AbstractEntity {
 
