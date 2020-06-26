@@ -76,6 +76,12 @@ IDEAS:
     margin-bottom:0.5em;
 }
 
+.checklist-row {
+    display: flex;
+    flex-direction: row;
+    
+}
+
 .checklist-header {
     font-weight: 600;
     text-transform: uppercase;
@@ -83,10 +89,11 @@ IDEAS:
     margin-bottom: 0.5em;
 }
 
-.category-topic {
+.stats-headers {
+    font-weight: 600;
+    /* text-transform: uppercase; */
     font-size: 1.2em;
-    font-weight: 400;
-    text-transform: uppercase;
+    margin-bottom: 0.5em;
 }
 
 .stat-snippet-new {
@@ -115,10 +122,6 @@ IDEAS:
     margin: 0px 10px;
 }
 
-.checklist-row {
-    display: flex;
-    flex-direction: row;
-}
 
 .checklist-checkbox-col {
     width: 40%;
@@ -131,4 +134,9 @@ IDEAS:
 
 .muted {
     color: #BBBBBB;
+}
+
+.deck-count {
+    font-weight: 400;
+    color: #0970a0;
 }

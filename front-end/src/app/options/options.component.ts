@@ -3,6 +3,7 @@ import questionBank from '../../assets/question-bank.json';
 import { Filters } from '../filters';
 import { Question } from '../question';
 import { Statistics } from '../statistics';
+import { Flashcard } from '../flashcard';
 
 @Component({
   selector: 'app-options',
@@ -20,6 +21,8 @@ export class OptionsComponent implements OnInit {
   cardsPerTopic: number[] = [];
   accuracyPerTopic: number[] = [];
   filters: Filters;
+
+  // TODO: need way to store selections and carry through to deck component
 
   // temporarily hard-code question objects in lieu of user array
   questions: Question[] = [
@@ -129,6 +132,16 @@ export class OptionsComponent implements OnInit {
 
   // TODO: function to select or deselect all checkboxes
 
+  // TODO: function to collect categories
+  // TODO: function to collect topics
+  // TODO: function to collect question types
 
+  countSelections(): number {
+    let count: number = 0;
+    questionBank.forEach(obj => {
+      // TODO: count number of cards matching current criteria
+    });
+    return count;
+  }
 
 }
