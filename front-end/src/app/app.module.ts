@@ -9,6 +9,8 @@ import { ScorecardComponent } from './scorecard/scorecard.component';
 import { DeckComponent } from './deck/deck.component';
 import { OptionsComponent } from './options/options.component';
 import { StartComponent } from './start/start.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { StartComponent } from './start/start.component';
     ScorecardComponent,
     DeckComponent,
     OptionsComponent,
-    StartComponent
+    StartComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
