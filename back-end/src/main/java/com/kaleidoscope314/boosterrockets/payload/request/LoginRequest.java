@@ -1,13 +1,13 @@
 package com.kaleidoscope314.boosterrockets.payload.request;
 
-import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
 
-    @NotBlank
+//    @NotBlank
     private String email;
 
-    @NotBlank
+//    @NotBlank
     private String password;
 
     public String getEmail() {

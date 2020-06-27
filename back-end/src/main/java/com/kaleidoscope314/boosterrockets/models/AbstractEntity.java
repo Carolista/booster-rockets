@@ -1,6 +1,9 @@
 package com.kaleidoscope314.boosterrockets.models;
 
 import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class AbstractEntity {

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class UserDetailsServiceImpl {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;

@@ -18,7 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+//import javax.validation.Valid;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,7 +47,8 @@ public class AuthController {
     UserAuthService userAuthService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest signupRequest) {
+    // FIXME: temporarily removed @Valid from registerUser() due to javax.validation not importing
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signupRequest) {
 
         // check and see if user exists
         if (userRepository.findByName(signupRequest.getEmail()).isPresent()) {
@@ -87,7 +89,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
+    // FIXME: temporarily removed @Valid from loginUser() due to javax.validation not importing
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
 
         // generate an Authentication object to create token.
         Authentication authentication = authenticationManager.authenticate(

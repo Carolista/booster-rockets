@@ -4,23 +4,23 @@ import java.util.Set;
 
 public class RegisterRequest {
 
-    @NotBlank
-    @Size(min = 2, max = 40)
+//    @NotBlank
+//    @Size(min = 2, max = 40)
     private String firstName;
 
-    @NotBlank
-    @Size(min = 2, max = 40)
+//    @NotBlank
+//    @Size(min = 2, max = 40)
     private String lastName;
 
-    @NotBlank
-    @Email
-    @Size(max = 50)
+//    @NotBlank
+//    @Email
+//    @Size(max = 50)
     private String email;
 
     private Set<String> role;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
+//    @NotBlank
+//    @Size(min = 6, max = 40)
     private String password;
 
     public String getFirstName() {

@@ -1,5 +1,6 @@
 package com.kaleidoscope314.boosterrockets.security.services;
 
+import com.kaleidoscope314.boosterrockets.models.User;
 import com.kaleidoscope314.boosterrockets.models.data.UserRepository;
 import com.kaleidoscope314.boosterrockets.payload.response.JwtResponse;
 import com.kaleidoscope314.boosterrockets.security.jwt.JwtUtils;
