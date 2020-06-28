@@ -15,9 +15,9 @@
                 Accuracy
             </div>
         </div>
-        <div *ngFor="let category of categories; let c = index" class="checklist-row">
+        <div *ngFor="let category of allCategories; let c = index" class="checklist-row">
             <div class="checklist-checkbox-col">
-                <label><input #cat name="cat" type="checkbox" #category> {{categories[c]}}</label>
+                <label><input type="checkbox"> {{allCategories[c]}}</label>
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
                 {{cardsPerCategory[c]}}
@@ -40,9 +40,9 @@
                 Accuracy
             </div>
         </div>
-        <div *ngFor="let topic of topics; let p = index" class="checklist-row">
+        <div *ngFor="let topic of allTopics; let p = index" class="checklist-row">
             <div class="checklist-checkbox-col">
-                <label><input type="checkbox" #topic> {{topics[p]}}</label>
+                <label><input type="checkbox"> {{allTopics[p]}}</label>
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerTopic[p] === 0">
                 {{cardsPerTopic[p]}}
@@ -55,8 +55,8 @@
 
     <div class="space-above">
         <div class="checklist-header">Question Types</div>
-        <div *ngFor="let type of types; let t = index">
-            <label><input type="checkbox" #type> {{types[t]}}</label>
+        <div *ngFor="let type of allTypes; let t = index">
+            <label><input type="checkbox"> {{allTypes[t]}}</label>
         </div>
     </div>
 
