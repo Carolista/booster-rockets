@@ -60,6 +60,14 @@ IDEAS:
     width: 70vw;
 }
 
+.login-register {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    align-items: center;
+    text-align: center;
+}
+
 .right {
     width: 100%;
     text-align: right;
@@ -131,4 +139,27 @@ IDEAS:
 
 .muted {
     color: #BBBBBB;
+}
+
+.form-fields {
+    width: 50vw;
+    height: 4vw;
+    margin-bottom: 1vw;
+    padding: 5px;
+}
+
+.error-msg {
+    color: #aa1e0c;
+    font-size: .9em;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.secondary-text {
+    color: #777777;
+    font-size: .9em;
+}
+
+.subtle-link {
+    color: #555555;
 }

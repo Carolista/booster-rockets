@@ -1,40 +1,44 @@
-<div>
+<div class="login-register">
     <p class="page-title">Sign Up </p>
 
     <form #f="ngForm" name="form" (ngSubmit)="f.form.valid && saveUser()" validate>
 
         <div>
-            <input #firstName="ngModel" name="firstName" [(ngModel)]="user.firstName" required minlength="2" type='text' placeholder="First Name" />
-            <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid" class="alert alert-danger w-100">
+            <input #firstName="ngModel" name="firstName" [(ngModel)]="user.firstName" required minlength="2" type='text' placeholder="First Name" class="form-fields" />
+            <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid" class="error-msg">
                 First name must be at least 2 characters.
             </div>
         </div>
-        <div class="form-group">
-            <input #lastName="ngModel" name="lastName" [(ngModel)]="user.lastName" required minlength="2" type='text' placeholder="Last Name" />
-            <div *ngIf="lastName.dirty && lastName.touched && lastName.invalid" class="alert alert-danger w-100">
+        <div>
+            <input #lastName="ngModel" name="lastName" [(ngModel)]="user.lastName" required minlength="2" type='text' placeholder="Last Name" class="form-fields" />
+            <div *ngIf="lastName.dirty && lastName.touched && lastName.invalid" class="error-msg">
                 Last name must be at least 2 characters.
             </div>
         </div>
-        <div class = "form-group">
-            <input #email="ngModel" name="email" [(ngModel)]="user.email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$" type='email' placeholder="E-mail Address" />
-            <div *ngIf="email.dirty && email.touched && email.invalid" class="alert alert-danger w-100">
+        <div>
+            <input #email="ngModel" name="email" [(ngModel)]="user.email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$" type='email' placeholder="E-mail Address" class="form-fields" />
+            <div *ngIf="email.dirty && email.touched && email.invalid" class="error-msg">
                 Must be a valid e-mail format. <i>Example: name@domain.com</i>
             </div>
         </div>
-        <div class = "form-group">
-            <input #password="ngModel" name="password" [(ngModel)]="user.password" type='password' required minlength="8" placeholder="Update Password" [class.is-invalid]="(password.touched && password.invalid) || passwordMismatch"/>
-            <div *ngIf="password.touched && password.invalid" class="alert alert-danger w-100">
+        <div>
+            <input #password="ngModel" name="password" [(ngModel)]="user.password" type='password' required minlength="8" placeholder="Update Password" [class.is-invalid]="(password.touched && password.invalid) || passwordMismatch" class="form-fields" />
+            <div *ngIf="password.touched && password.invalid" class="error-msg">
                 Password must be at least 8 characters.
             </div>
         </div>
-        <div class = "form-group">
-            <input #verifyPassword="ngModel" name="verifyPassword" [(ngModel)]="verify" (change)="checkVerify()" type='password' required placeholder="Verify Updated Password" [class.is-invalid]="passwordMismatch" />
-            <div *ngIf="password.dirty && verifyPassword.dirty && passwordMismatch" >
+        <div>
+            <input #verifyPassword="ngModel" name="verifyPassword" [(ngModel)]="verify" (change)="checkVerify()" type='password' required placeholder="Verify Updated Password" [class.is-invalid]="passwordMismatch" class="form-fields" />
+            <div *ngIf="password.dirty && verifyPassword.dirty && passwordMismatch" class="error-msg">
                 Passwords do not match.
             </div>
         </div>
 
-        <div>
+        <div class="secondary-text">
+            <p>Already registered? <a [routerLink]="'/login'" class="subtle-link">Log in here.</a></p>
+        </div>
+
+        <div class="space-above">
             <button type="submit" [disabled]="!f.form.valid || passwordMismatch">Get Started</button>
         </div>
     </form>
