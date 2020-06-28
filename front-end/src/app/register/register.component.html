@@ -1,7 +1,7 @@
 <div>
     <p class="page-title">Sign Up </p>
 
-    <form name="form" (ngSubmit)="f.form.valid && saveUser()" #f="ngForm" validate>
+    <form #f="ngForm" name="form" (ngSubmit)="f.form.valid && saveUser()" validate>
 
         <div>
             <input #firstName="ngModel" name="firstName" [(ngModel)]="user.firstName" required minlength="2" type='text' placeholder="First Name" />

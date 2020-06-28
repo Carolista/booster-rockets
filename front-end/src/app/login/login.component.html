@@ -1,18 +1,18 @@
-<div class="options-block">
-    <p class="page-title">Choose Flashcards</p>
-        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" validate>
+<div>
+    <p class="page-title">Log In</p>
+    <form #f="ngForm" name="form" (ngSubmit)="f.form.valid && onSubmit()" validate>
 
         <div>            
             <input #email="ngModel" name="email" placeholder="E-mail Address" type="email" 
-                [(ngModel)]="form.email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$" />
+                [(ngModel)]="user.email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$" />
             <div *ngIf="email.invalid && email.touched">
                 Please enter a valid e-mail address.
             </div>
         </div>
 
-        <div class="form-group">
+        <div>
             <input #password="ngModel" name="password" placeholder="Password" type="password"
-                [(ngModel)]="form.password" required minlength="8" />
+                [(ngModel)]="user.password" required minlength="8" />
             <div *ngIf="f.invalid && password.touched">
                 <div *ngIf="password.errors.required">
                     Password is required.
@@ -27,7 +27,7 @@
             <p>Don't have an account yet? <a [routerLink]="'/register'">Register here.</a></p>
         </div>
 
-        <div class="form-group text-right">
+        <div>
             <button type="submit" [disabled]="!f.form.valid">Log in</button>
         </div>
         
@@ -36,3 +36,4 @@
         </div>
         
     </form>
+</div>  

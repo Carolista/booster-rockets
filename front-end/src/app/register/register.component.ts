@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/user'
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { User } from 'src/app/user'
 
 @Component({
   selector: 'app-register',
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
-      this.router.navigate(['/user/profile']);
+      this.router.navigate(['/start']); // TODO: keep or change
     } 
 
   }
@@ -69,8 +69,7 @@ export class RegisterComponent implements OnInit {
         this.isLoggedIn = true;
 
         this.tokenStorage.saveUser(data);
-        window.location.reload();
-        this.router.navigate(['/user/profile/']);
+        this.reloadPage();
         
       },
       err => {
@@ -79,6 +78,10 @@ export class RegisterComponent implements OnInit {
       }
     );
 
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
 }

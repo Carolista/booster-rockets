@@ -2,7 +2,6 @@ import { Filters } from './filters';
 import { Question } from './question';
 import { Settings } from './settings';
 import { Statistics } from './statistics';
-import { stat } from 'fs';
 
 export class User {
 

@@ -16,11 +16,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  // FIXME: credentials needs a type
-  login(credentials): Observable<any> {
+  login(e: string, p: string): Observable<any> {
     return this.http.post(AUTH_API + 'login', {
-      email: credentials.email,
-      password: credentials.password
+      email: e,
+      password: p
     }, httpOptions);
   }
 
@@ -31,9 +30,11 @@ export class AuthService {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
-      userDetails: null,
-      projects: null
+      filters: null,
+      questions: [],
+      settings: null,
+      statistics: null
     }, httpOptions);
   }
-  
+
 }
