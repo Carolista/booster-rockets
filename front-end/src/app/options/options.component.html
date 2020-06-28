@@ -17,7 +17,7 @@
         </div>
         <div *ngFor="let category of categories; let c = index" class="checklist-row">
             <div class="checklist-checkbox-col">
-                <label><input type="checkbox" #category> {{categories[c]}}</label>
+                <label><input #cat name="cat" type="checkbox" #category> {{categories[c]}}</label>
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
                 {{cardsPerCategory[c]}}

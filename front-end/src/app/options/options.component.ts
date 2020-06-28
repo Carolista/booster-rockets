@@ -3,7 +3,7 @@ import questionBank from '../../assets/question-bank.json';
 import { Filters } from '../filters';
 import { Question } from '../question';
 import { Statistics } from '../statistics';
-import { Flashcard } from '../flashcard';
+import { Settings } from '../settings';
 
 @Component({
   selector: 'app-options',
@@ -13,29 +13,30 @@ import { Flashcard } from '../flashcard';
 export class OptionsComponent implements OnInit {
 
   dataReady: boolean = false; // TODO: prevent page from being visible until this is true
-  categories: string[] = [];
-  topics: string[] = [];
-  types: string[] = [];
+  allCategories: string[] = [];
+  allTopics: string[] = [];
+  allTypes: string[] = [];
   cardsPerCategory: number[] = [];
   accuracyPerCategory: number[] = [];
   cardsPerTopic: number[] = [];
   accuracyPerTopic: number[] = [];
-  filters: Filters;
 
-  // TODO: need way to store selections and carry through to deck component
+  // temporarily hard-coded
+  filters: Filters = new Filters([],[],[]); // FIXME: pull from user
 
   // temporarily hard-code question objects in lieu of user array
-  questions: Question[] = [
-    new Question(123, 1, 3, 2),
-    new Question(145, 2, 4, 3),
-    new Question(164, 5, 6, 5),
-    new Question(198, 7, 4, 4),
-    new Question(210, 9, 2, 1)
+  questions: Question[] = [ // FIXME: pull from user
+    new Question(1, 3, 2),
+    new Question(2, 4, 3),
+    new Question(5, 6, 5),
+    new Question(7, 4, 4),
+    new Question(9, 2, 1)
   ]
 
-  // temporarily hard-code stats into new object
-  statistics: Statistics = new Statistics; // FIXME: pull from user once persistence is in place
+  settings: Settings = new Settings(true); // FIXME: pull from user
 
+  // temporarily hard-code stats into new object
+  statistics: Statistics = new Statistics; // FIXME: pull from user
 
   constructor() { }
 
@@ -45,22 +46,21 @@ export class OptionsComponent implements OnInit {
 
   getFilterOptions() {
     questionBank.forEach(obj => {
-      if (! this.categories.includes(obj.category)) {
-        this.categories.push(obj.category);
+      if (! this.allCategories.includes(obj.category)) {
+        this.allCategories.push(obj.category);
       } 
-      if (! this.topics.includes(obj.topic)) {
-        this.topics.push(obj.topic);
+      if (! this.allTopics.includes(obj.topic)) {
+        this.allTopics.push(obj.topic);
       } 
-      if (! this.types.includes(obj.type)) {
-        this.types.push(obj.type);
+      if (! this.allTypes.includes(obj.type)) {
+        this.allTypes.push(obj.type);
       } 
-      // TODO: types (and topics) will need to be built dynamically depending on which categories are chosen
     });
-    this.categories.sort((a, b) => (a > b) ? 1 : -1);
-    console.log("Categories are: " + this.categories);
-    this.types.sort((a, b) => (a > b) ? 1 : -1);
-    console.log("Types are: " + this.types);
-    this.filters = new Filters(null, this.categories, this.topics, this.types); // TODO: later this will come from user
+    this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
+    console.log("Categories are: " + this.allCategories);
+    this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
+    console.log("Types are: " + this.allTypes);
+    this.filters = new Filters(this.allCategories, this.allTopics, this.allTypes); // TODO: later this will come from user
     this.buildStatsArrays();
     this.dataReady = true; // TODO: implement or delete this
   }
@@ -118,23 +118,56 @@ export class OptionsComponent implements OnInit {
   }
 
   buildStatsArrays() {
-    this.categories.forEach(category => {
+    this.allCategories.forEach(category => {
       let statsPerCategory: number[] = this.getStatsPerCategory(category);
       this.cardsPerCategory.push(statsPerCategory[0]);
       this.accuracyPerCategory.push(statsPerCategory[1]);
     })
-    this.topics.forEach(topic => {
+    this.allTopics.forEach(topic => {
       let statsPerTopic: number[] = this.getStatsPerTopic(topic);
       this.cardsPerTopic.push(statsPerTopic[0]);
       this.accuracyPerTopic.push(statsPerTopic[1]);
     })
   }
 
-  // TODO: function to select or deselect all checkboxes
+  updateCategories(category: string, checked: boolean) {
+    let index: number = this.filters.categories.indexOf(category);
+    if (!checked && index >= 0) {
+      this.filters.categories.splice(index,1);
+    } else if (checked && index === -1) {
+      this.filters.categories.push(category);
+    }
+  }
 
-  // TODO: function to collect categories
-  // TODO: function to collect topics
-  // TODO: function to collect question types
+  updateTopics(topic: string, checked: boolean) {
+    let index: number = this.filters.topics.indexOf(topic);
+    if (!checked && index >= 0) {
+      this.filters.topics.splice(index,1);
+    } else if (checked && index === -1) {
+      this.filters.topics.push(topic);
+    }
+  }
+
+  updateTypes(type: string, checked: boolean) {
+    let index: number = this.filters.types.indexOf(type);
+    if (!checked && index >= 0) {
+      this.filters.types.splice(index,1);
+    } else if (checked && index === -1) {
+      this.filters.types.push(type);
+    }
+  }
+
+  selectAll(checked: boolean) {
+    for (let i=0; i < this.allCategories.length; i++) {
+      this.updateCategories(this.allCategories[i],checked);
+    }
+    for (let j=0; j < this.allTopics.length; j++) {
+      this.updateTopics(this.allTopics[j], checked);
+    }
+    for (let k=0; k < this.allTypes.length; k++) {
+      this.updateTypes(this.allTypes[k], checked);
+    }
+  }
 
   countSelections(): number {
     let count: number = 0;

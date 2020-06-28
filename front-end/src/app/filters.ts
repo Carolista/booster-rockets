@@ -5,8 +5,7 @@ export class Filters {
     topics: string[];
     types: string[];
 
-    constructor(id: number, categories: string[], topics: string[], types: string[]) {
-        this.id = id;
+    constructor(categories: string[], topics: string[], types: string[]) {
         this.categories = categories;
         this.topics = topics;
         this.types = types;
