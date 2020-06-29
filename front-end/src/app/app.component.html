@@ -1,9 +1,13 @@
-<div class="header">
-  <app-header></app-header>
+
+<div id="viewport">
+  <div id="header">
+    <app-header></app-header>
+  </div>
+  <div id="main">
+    <router-outlet></router-outlet>
+  </div>
+  <div id="footer">
+    <app-footer></app-footer>
+  </div>
 </div>
-<div class="main">
-  <router-outlet></router-outlet>
-</div>
-<div class="footer">
-  <app-footer></app-footer>
-</div>
+

@@ -1,4 +1,5 @@
 html, body {
+    position: relative;
     height: 100vh;
     width: 100vw;
     padding: 0px;
@@ -18,24 +19,45 @@ IDEAS:
         (beach, coffeeshop, library, mountains, garden, gaming den, etc)
 */
 
-.header {
+/* TODO: move styles that are not used globally to lower css files */
+
+#viewport {
     display: flex;
-    height: 10vh;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    padding-bottom: -6vh;
+}
+#header {
+    display: flex;
+    height: 12vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    background-color: #222222;
+    color: white;
+}
+
+#main {
+    display: flex;
+    flex: 1 0 auto;
+    width: 100vw;
+    justify-content: center;
+    background-color: white;
+    padding-bottom: 60px;
+}
+
+#footer {
+    display: flex;
+    flex-shrink: 0;
+    height: 6vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
     background-color: #222222;
     color: white;
-}
-
-/* TODO: give header and footer min and max heights */
-
-.main {
-    display: flex;
-    height: 83vh;
-    width: 100vw;
-    justify-content: center;
-    background-color: white;
+    padding: 5px;
 }
 
 .top-align {
@@ -49,19 +71,15 @@ IDEAS:
     align-items: center;
 }
 
-.footer {
-    display: flex;
-    height: 7vh;
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-    background-color: #222222;
-    color: white;
+.title {
+    font-size: 7vw;
+    font-family: 'Days One', 'Prompt', sans-serif;
 }
 
-.title {
-    font-size: 5vh;
-    font-family: 'Days One', 'Prompt', sans-serif;
+@media screen and (min-width: 800px) {
+    .title {
+       font-size: 56px;
+    }
 }
 
 .card {
@@ -70,6 +88,7 @@ IDEAS:
 
 .options-block {
     width: 75vw;
+    max-width: 560px;
 }
 
 .login-register {
@@ -169,13 +188,13 @@ IDEAS:
 }
 
 .big-number {
-    font-size: 4.2em;
+    font-size: 5em;
     padding-right: 10px;
-    margin-top: -12px;
+    margin-top: -18px;
 }
 
 .big-text {
-    font-size: 1.5em;
+    font-size: 1.7em;
     margin-left: 5px;
 }
 
@@ -197,6 +216,10 @@ button {
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
+}
+
+button:disabled {
+    background-color: #ccc;
 }
 
 .error-msg {
