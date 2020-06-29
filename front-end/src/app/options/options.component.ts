@@ -1,68 +1,104 @@
 import { Component, OnInit } from '@angular/core';
-import questionBank from '../../assets/question-bank.json';
+import allFlashcards from '../../assets/question-bank.json';
 import { Filters } from '../filters';
 import { Question } from '../question';
 import { Statistics } from '../statistics';
 import { Settings } from '../settings';
+import { Selection } from '../selection';
+import { Flashcard } from '../flashcard';
 
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
+
+/*
+Flashcards come in by way of allFlashcards
+Selections are built by looking at all possible categories, topics, and types of flashcards
+Selections are placed in three arrays to track checked/unchecked with ngModel
+As selections are made, data from flashcards is checked to update counts on page
+Filters object saves to user
+*/
+
 export class OptionsComponent implements OnInit {
 
-  dataReady: boolean = false; // TODO: prevent page from being visible until this is true
-  allCategories: string[] = [];
-  allTopics: string[] = [];
-  allTypes: string[] = [];
+  // ngModels
+  selectAllBoxes: Selection = new Selection("Select all categories, topics, and types", false);
+  allCategories: Selection[] = [];
+  allTopics: Selection[] = [];
+  allTypes: Selection[] = [];
+
   cardsPerCategory: number[] = [];
   accuracyPerCategory: number[] = [];
   cardsPerTopic: number[] = [];
   accuracyPerTopic: number[] = [];
-
-  // temporarily hard-coded
-  filters: Filters = new Filters([],[],[]); // FIXME: pull from user
-
-  // temporarily hard-code question objects in lieu of user array
-  questions: Question[] = [ // FIXME: pull from user
+ 
+  // TEMPORARY PROPERTIES OF USER UNTIL BACK END IS CONNECTED FIXME: pull from user
+  filters: Filters = new Filters([],[],[]); 
+  questions: Question[] = [ 
     new Question(1, 3, 2),
     new Question(2, 4, 3),
     new Question(5, 6, 5),
     new Question(7, 4, 4),
     new Question(9, 2, 1)
   ]
-
-  settings: Settings = new Settings(true); // FIXME: pull from user
-
-  // temporarily hard-code stats into new object
-  statistics: Statistics = new Statistics; // FIXME: pull from user
+  settings: Settings = new Settings(true);
+  statistics: Statistics = new Statistics;
 
   constructor() { }
 
   ngOnInit() {
-    this.getFilterOptions();
+    this.buildSelectionArrays();
   }
 
-  getFilterOptions() {
-    questionBank.forEach(obj => {
-      if (! this.allCategories.includes(obj.category)) {
-        this.allCategories.push(obj.category);
+  buildSelectionArrays() {
+    let index: number;
+    allFlashcards.forEach(obj => {
+      index = this.findCategory(obj.category);
+      if (index === -1) {
+        this.allCategories.push(new Selection(obj.category, false));
+      }
+      index = this.findTopic(obj.topic);
+      if (index === -1) {
+        this.allTopics.push(new Selection(obj.topic, false));
       } 
-      if (! this.allTopics.includes(obj.topic)) {
-        this.allTopics.push(obj.topic);
-      } 
-      if (! this.allTypes.includes(obj.type)) {
-        this.allTypes.push(obj.type);
+      index = this.findType(obj.type);
+      if (index === -1) {
+        this.allTypes.push(new Selection(obj.type, false));
       } 
     });
     this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
-    console.log("Categories are: " + this.allCategories);
+    this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
-    console.log("Types are: " + this.allTypes);
-    this.filters = new Filters(this.allCategories, this.allTopics, this.allTypes); // TODO: later this will come from user
     this.buildStatsArrays();
-    this.dataReady = true; // TODO: implement or delete this
+  }
+
+  findCategory(category: string): number {
+    for (let i=0; i < this.allCategories.length; i++) {
+      if (this.allCategories[i].item === category) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  findTopic(topic: string): number {
+    for (let i=0; i < this.allTopics.length; i++) {
+      if (this.allTopics[i].item === topic) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  findType(type: string): number {
+    for (let i=0; i < this.allTypes.length; i++) {
+      if (this.allTypes[i].item === type) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   getStatsPerCategory(category: string): number[] {
@@ -99,7 +135,7 @@ export class OptionsComponent implements OnInit {
 
   getCategoryByCardId(cardId: number): string {
     let category: string;
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       if (obj.id === cardId) {
         category = obj.category;
       } 
@@ -109,7 +145,7 @@ export class OptionsComponent implements OnInit {
 
   getTopicByCardId(cardId: number): string {
     let topic: string;
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       if (obj.id === cardId) {
         topic = obj.topic;
       } 
@@ -118,60 +154,73 @@ export class OptionsComponent implements OnInit {
   }
 
   buildStatsArrays() {
-    this.allCategories.forEach(category => {
-      let statsPerCategory: number[] = this.getStatsPerCategory(category);
+    this.allCategories.forEach(obj => {
+      let statsPerCategory: number[] = this.getStatsPerCategory(obj.item);
       this.cardsPerCategory.push(statsPerCategory[0]);
       this.accuracyPerCategory.push(statsPerCategory[1]);
     })
-    this.allTopics.forEach(topic => {
-      let statsPerTopic: number[] = this.getStatsPerTopic(topic);
+    this.allTopics.forEach(obj => {
+      let statsPerTopic: number[] = this.getStatsPerTopic(obj.item);
       this.cardsPerTopic.push(statsPerTopic[0]);
       this.accuracyPerTopic.push(statsPerTopic[1]);
     })
   }
 
-  updateCategories(category: string, checked: boolean) {
+  updateCategories(c: number) {
+    let category = this.allCategories[c].item;
+    let checked = this.allCategories[c].checked;
     let index: number = this.filters.categories.indexOf(category);
     if (!checked && index >= 0) {
       this.filters.categories.splice(index,1);
     } else if (checked && index === -1) {
       this.filters.categories.push(category);
     }
+    console.log(category + " is now " + (checked ? "checked" : "unchecked"));
   }
 
-  updateTopics(topic: string, checked: boolean) {
+  updateTopics(p: number) {
+    let topic = this.allTopics[p].item;
+    let checked = this.allTopics[p].checked;
     let index: number = this.filters.topics.indexOf(topic);
     if (!checked && index >= 0) {
       this.filters.topics.splice(index,1);
     } else if (checked && index === -1) {
       this.filters.topics.push(topic);
     }
+    console.log(topic + " is now " + (checked ? "checked" : "unchecked"));
   }
 
-  updateTypes(type: string, checked: boolean) {
+  updateTypes(t: number) {
+    let type = this.allTypes[t].item;
+    let checked = this.allTypes[t].checked;
     let index: number = this.filters.types.indexOf(type);
     if (!checked && index >= 0) {
       this.filters.types.splice(index,1);
     } else if (checked && index === -1) {
       this.filters.types.push(type);
     }
+    console.log(type + " is now " + (checked ? "checked" : "unchecked"));
   }
 
-  selectAll(checked: boolean) {
+  // select or deselect all categories, topics, and types on page
+  selectAllOptions(isChecked: boolean) {
     for (let i=0; i < this.allCategories.length; i++) {
-      this.updateCategories(this.allCategories[i],checked);
+      this.allCategories[i].checked = isChecked;
+      this.updateCategories(i);
     }
     for (let j=0; j < this.allTopics.length; j++) {
-      this.updateTopics(this.allTopics[j], checked);
+      this.allTopics[j].checked = isChecked;
+      this.updateTopics(j);
     }
     for (let k=0; k < this.allTypes.length; k++) {
-      this.updateTypes(this.allTypes[k], checked);
+      this.allTypes[k].checked = isChecked;
+      this.updateTypes(k);
     }
   }
 
   countSelections(): number {
     let count: number = 0;
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       // TODO: count number of cards matching current criteria
     });
     return count;

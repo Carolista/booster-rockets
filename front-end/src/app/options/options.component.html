@@ -1,7 +1,9 @@
 <div class="options-block">
     <p class="page-title">Choose Flashcards</p>
 
-    <!-- TODO: add a 'select all' checkbox, maybe 'deselect all' too? -->
+    <div class="space-above">
+        <label><input #selectAll name="selectAll" type="checkbox" [(ngModel)]="selectAllBoxes.checked" (change)="selectAllOptions(selectAll.checked)" /> {{selectAllBoxes.item}}</label>
+    </div>
 
     <div class="space-above">
         <div class="checklist-row"> 
@@ -17,7 +19,7 @@
         </div>
         <div *ngFor="let category of allCategories; let c = index" class="checklist-row">
             <div class="checklist-checkbox-col">
-                <label><input type="checkbox"> {{allCategories[c]}}</label>
+                <label><input #categories name="categories" [(ngModel)]="allCategories[c].checked" (change)="updateCategories(c)" type="checkbox"> {{allCategories[c].item}}</label>
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
                 {{cardsPerCategory[c]}}
@@ -42,7 +44,7 @@
         </div>
         <div *ngFor="let topic of allTopics; let p = index" class="checklist-row">
             <div class="checklist-checkbox-col">
-                <label><input type="checkbox"> {{allTopics[p]}}</label>
+                <label><input #topics name="topics" [(ngModel)]="allTopics[p].checked" (change)="updateTopics(p)" type="checkbox"> {{allTopics[p].item}}</label>
             </div>
             <div class="checklist-stats-col" [class.muted]="cardsPerTopic[p] === 0">
                 {{cardsPerTopic[p]}}
@@ -56,7 +58,7 @@
     <div class="space-above">
         <div class="checklist-header">Question Types</div>
         <div *ngFor="let type of allTypes; let t = index">
-            <label><input type="checkbox"> {{allTypes[t]}}</label>
+            <label><input #types name="type" [(ngModel)]="allTypes[t].checked" (change)="updateTypes(t)" type="checkbox"> {{allTypes[t].item}}</label>
         </div>
     </div>
 
