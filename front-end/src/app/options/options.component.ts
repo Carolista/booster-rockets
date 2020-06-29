@@ -5,7 +5,6 @@ import { Question } from '../question';
 import { Statistics } from '../statistics';
 import { Settings } from '../settings';
 import { Selection } from '../selection';
-import { Flashcard } from '../flashcard';
 
 @Component({
   selector: 'app-options',
@@ -13,27 +12,21 @@ import { Flashcard } from '../flashcard';
   styleUrls: ['./options.component.css']
 })
 
-/*
-Flashcards come in by way of allFlashcards
-Selections are built by looking at all possible categories, topics, and types of flashcards
-Selections are placed in three arrays to track checked/unchecked with ngModel
-As selections are made, data from flashcards is checked to update counts on page
-Filters object saves to user
-*/
-
 export class OptionsComponent implements OnInit {
 
   // ngModels
   allCategories: Selection[] = [];
   allTopics: Selection[] = [];
   allTypes: Selection[] = [];
-  selectAllCategoryBoxes: Selection = new Selection("Select all categories", false);
-  selectAllTopicBoxes: Selection = new Selection("Select all topics", false);
-  selectAllTypeBoxes: Selection = new Selection("Select all types", false);
+  selectAllCategoryBoxes: Selection = new Selection("Select all categories", true);
+  selectAllTopicBoxes: Selection = new Selection("Select all topics", true);
+  selectAllTypeBoxes: Selection = new Selection("Select all types", true);
 
   cardsPerCategory: number[] = [];
+  viewsPerCategory: number[] = [];
   accuracyPerCategory: number[] = [];
   cardsPerTopic: number[] = [];
+  viewsPerTopic: number[] = [];
   accuracyPerTopic: number[] = [];
 
   cardsInDeck: number = 0;
@@ -107,11 +100,13 @@ export class OptionsComponent implements OnInit {
   }
 
   getStatsPerCategory(category: string): number[] {
+    let count = 0;
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
     for(let i=0; i < this.questions.length; i++) {
       if (this.getCategoryByCardId(this.questions[i].cardId) === category) {
+        count += 1;
         presented += this.questions[i].presented;
         correct += this.questions[i].correct;
       }
@@ -119,15 +114,17 @@ export class OptionsComponent implements OnInit {
     if (presented > 0) {
       accuracy = Math.round(correct/presented * 100);
     }
-    return [presented, accuracy];
+    return [count, presented, accuracy];
   }
 
   getStatsPerTopic(topic: string): number[] {
+    let count = 0;
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
     for(let i=0; i < this.questions.length; i++) {
       if (this.getTopicByCardId(this.questions[i].cardId) === topic) {
+        count += 1;
         presented += this.questions[i].presented;
         correct += this.questions[i].correct;
       }
@@ -135,7 +132,7 @@ export class OptionsComponent implements OnInit {
     if (presented > 0) {
       accuracy = Math.round(correct/presented * 100);
     }
-    return [presented, accuracy];
+    return [count, presented, accuracy];
   }
 
   getCategoryByCardId(cardId: number): string {
@@ -162,29 +159,32 @@ export class OptionsComponent implements OnInit {
     this.allCategories.forEach(obj => {
       let statsPerCategory: number[] = this.getStatsPerCategory(obj.item);
       this.cardsPerCategory.push(statsPerCategory[0]);
-      this.accuracyPerCategory.push(statsPerCategory[1]);
+      this.viewsPerCategory.push(statsPerCategory[1]);
+      this.accuracyPerCategory.push(statsPerCategory[2]);
     })
     this.allTopics.forEach(obj => {
       let statsPerTopic: number[] = this.getStatsPerTopic(obj.item);
       this.cardsPerTopic.push(statsPerTopic[0]);
-      this.accuracyPerTopic.push(statsPerTopic[1]);
+      this.viewsPerTopic.push(statsPerTopic[1]);
+      this.accuracyPerTopic.push(statsPerTopic[2]);
     })
   }
 
   updateCategories(c: number) {
     let category = this.allCategories[c].item;
     let checked = this.allCategories[c].checked;
-    // console.log(category + " is now " + (checked ? "checked" : "unchecked"));
     let index: number = this.filters.categories.indexOf(category);
     if (!checked && index >= 0) {
       this.filters.categories.splice(index,1);
-      // console.log(category + " removed from allCategories array");
     } else if (checked && index === -1) {
       this.filters.categories.push(category);
-      // console.log(category + " added to allCategories array");
+    }
+    if (this.filters.categories.length === this.allCategories.length) {
+      this.selectAllCategoryBoxes.checked = true;
+    } else {
+      this.selectAllCategoryBoxes.checked = false;
     }
     this.countSelections();
-    // console.log("Categories in Filters object are now: " + this.filters.categories);
   }
 
   updateTopics(p: number) {
@@ -196,9 +196,12 @@ export class OptionsComponent implements OnInit {
     } else if (checked && index === -1) {
       this.filters.topics.push(topic);
     }
+    if (this.filters.topics.length === this.allTopics.length) {
+      this.selectAllTopicBoxes.checked = true;
+    } else {
+      this.selectAllTopicBoxes.checked = false;
+    }
     this.countSelections();
-    // console.log(topic + " is now " + (checked ? "checked" : "unchecked"));
-    // console.log("Topics in Filters object are now: " + this.filters.topics);
   }
 
   updateTypes(t: number) {
@@ -210,8 +213,12 @@ export class OptionsComponent implements OnInit {
     } else if (checked && index === -1) {
       this.filters.types.push(type);
     }
+    if (this.filters.types.length === this.allTypes.length) {
+      this.selectAllTypeBoxes.checked = true;
+    } else {
+      this.selectAllTypeBoxes.checked = false;
+    }
     this.countSelections();
-    // console.log(type + " is now " + (checked ? "checked" : "unchecked"));
   }
 
   // select or deselect all categories and topics on page
@@ -229,7 +236,7 @@ export class OptionsComponent implements OnInit {
     }
   }
 
-  selectAllOptions(isChecked: boolean) {
+  selectAllTypes(isChecked: boolean) {
     for (let k=0; k < this.allTypes.length; k++) {
       this.allTypes[k].checked = isChecked;
       this.updateTypes(k);

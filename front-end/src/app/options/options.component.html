@@ -3,24 +3,36 @@
 
     <div class="space-above">
         <div class="checklist-row"> 
-            <div class="checklist-header checklist-checkbox-col">
-                Categories
-            </div>
-            <div class="stats-headers checklist-stats-col">
-                Cards
-            </div>
-            <div class="stats-headers checklist-stats-col">
-                Accuracy
+            <div>
+                <span class="checklist-header">Categories</span>
+                <label class="slightly-smaller spacer-10"><input #selectAllCat name="selectAllCat" type="checkbox" [(ngModel)]="selectAllCategoryBoxes.checked" (change)="selectAllCategories(selectAllCat.checked)" /> {{selectAllCategoryBoxes.item}}</label>
             </div>
         </div>
+        <div class="checklist-row slightly-smaller"> 
+            <div class="checkbox-column">
+                <!-- spacer -->
+            </div>
+            <div class="stats-column stats-headers">
+                Unique Cards
+            </div>
+            <div class="stats-column stats-headers">
+                Views
+            </div>
+            <div class="stats-column stats-headers">
+                Accuracy
+            </div>
+        </div>        
         <div *ngFor="let category of allCategories; let c = index" class="checklist-row">
-            <div class="checklist-checkbox-col">
+            <div class="checkbox-column">
                 <label><input #categories name="categories" [(ngModel)]="allCategories[c].checked" (change)="updateCategories(c)" type="checkbox"> {{allCategories[c].item}}</label>
             </div>
-            <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
+            <div class="stats-column" [class.muted]="viewsPerCategory[c] === 0">
                 {{cardsPerCategory[c]}}
             </div>
-            <div class="checklist-stats-col" [class.muted]="cardsPerCategory[c] === 0">
+            <div class="stats-column" [class.muted]="viewsPerCategory[c] === 0">
+                {{viewsPerCategory[c]}}
+            </div>
+            <div class="stats-column" [class.muted]="viewsPerCategory[c] === 0">
                 {{accuracyPerCategory[c]}}%
             </div>
         </div>
@@ -28,52 +40,58 @@
 
     <div class="space-above">
         <div class="checklist-row"> 
-            <div class="checklist-header checklist-checkbox-col">
-                Topics
-            </div>
-            <div class="stats-headers checklist-stats-col">
-                Cards
-            </div>
-            <div class="stats-headers checklist-stats-col">
-                Accuracy
+            <div>
+                <span class="checklist-header">Topics</span>
+                <label class="slightly-smaller spacer-10"><input #selectAllTop name="selectAllTop" type="checkbox" [(ngModel)]="selectAllTopicBoxes.checked" (change)="selectAllTopics(selectAllTop.checked)" /> {{selectAllTopicBoxes.item}}</label>
             </div>
         </div>
+        <div class="checklist-row slightly-smaller"> 
+            <div class="checkbox-column">
+                <!-- spacer -->
+            </div>
+            <div class="stats-column stats-headers">
+                Unique Cards
+            </div>
+            <div class="stats-column stats-headers">
+                Views
+            </div>
+            <div class="stats-column stats-headers">
+                Accuracy
+            </div>
+        </div> 
         <div *ngFor="let topic of allTopics; let p = index" class="checklist-row">
-            <div class="checklist-checkbox-col">
+            <div class="checkbox-column">
                 <label><input #topics name="topics" [(ngModel)]="allTopics[p].checked" (change)="updateTopics(p)" type="checkbox"> {{allTopics[p].item}}</label>
             </div>
-            <div class="checklist-stats-col" [class.muted]="cardsPerTopic[p] === 0">
+            <div class="stats-column" [class.muted]="viewsPerTopic[p] === 0">
                 {{cardsPerTopic[p]}}
             </div>
-            <div class="checklist-stats-col" [class.muted]="cardsPerTopic[p] === 0">
+            <div class="stats-column" [class.muted]="viewsPerTopic[p] === 0">
+                {{viewsPerTopic[p]}}
+            </div>
+            <div class="stats-column" [class.muted]="viewsPerTopic[p] === 0">
                 {{accuracyPerTopic[p]}}%
             </div>
         </div>
     </div>
 
     <div class="space-above">
-        <div class="checklist-header">Question Types</div>
+        <div class="space-below">
+            <span class="checklist-header">Types</span>
+            <label class="slightly-smaller spacer-10"><input #selectAllTyp name="selectAllTyp" type="checkbox" [(ngModel)]="selectAllTypeBoxes.checked" (change)="selectAllTypes(selectAllTyp.checked)" /> {{selectAllTypeBoxes.item}}</label>
+        </div>
         <div *ngFor="let type of allTypes; let t = index">
             <label><input #types name="type" [(ngModel)]="allTypes[t].checked" (change)="updateTypes(t)" type="checkbox"> {{allTypes[t].item}}</label>
         </div>
     </div>
 
-    <div class="space-above slightly-smaller">
-        <label class="inline-space"><input #selectAllCat name="selectAllCat" type="checkbox" [(ngModel)]="selectAllCategoryBoxes.checked" (change)="selectAllCategories(selectAllCat.checked)" /> {{selectAllCategoryBoxes.item}}</label>
-        <label class="inline-space"><input #selectAllTop name="selectAllTop" type="checkbox" [(ngModel)]="selectAllTopicBoxes.checked" (change)="selectAllTopics(selectAllTop.checked)" /> {{selectAllTopicBoxes.item}}</label>
-        <label class="inline-space"><input #selectAllTyp name="selectAllTyp" type="checkbox" [(ngModel)]="selectAllTypeBoxes.checked" (change)="selectAllTypes(selectAllTyp.checked)" /> {{selectAllTypeBoxes.item}}</label>
+    <div class="space-above">
+        <div class="deck-count">{{cardsInDeck}} flashcards in your deck</div>
+        <div *ngIf="cardsInDeck === 0" class="instruction">Make selections above to add some cards.</div>
     </div>
 
     <div class="space-above">
-        <span class="deck-count">Your deck will have {{cardsInDeck}} flashcards.</span><br />
-        <span *ngIf="cardsInDeck === 0" class="error-msg">Make selections above to add cards to the deck.</span>
+        <button disabled="cardsInDeck === 0">Let's Go!</button> 
     </div>
-
-    <div class="space-above">
-        <button>Let's Go!</button> 
-    </div>
-
-    <!-- TODO: add ngModel when backend provides persistence -->
-    <!-- TODO: add click event to add or remove from list for saving with user -->
 
 </div>
