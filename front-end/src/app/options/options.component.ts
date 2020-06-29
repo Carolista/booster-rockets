@@ -48,7 +48,6 @@ export class OptionsComponent implements OnInit {
   ngOnInit() {
     this.buildSelectionArrays();
     this.buildStatsArrays();
-    this.countSelections();
   }
 
   buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
@@ -56,11 +55,13 @@ export class OptionsComponent implements OnInit {
     allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
-        this.allCategories.push(new Selection(obj.category, false));
+        this.allCategories.push(new Selection(obj.category, true));
+        this.filters.categories.push(obj.category); // FIXME: temporary backfill
       }
       index = this.findTopic(obj.topic);
       if (index === -1) {
-        this.allTopics.push(new Selection(obj.topic, false));
+        this.allTopics.push(new Selection(obj.topic, true));
+        this.filters.topics.push(obj.topic); // FIXME: temporary backfill
       } 
       index = this.findType(obj.type);
       if (index === -1) {
@@ -70,6 +71,11 @@ export class OptionsComponent implements OnInit {
     this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
     this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
+
+    this.updateCategories;
+    this.updateTopics;
+    this.updateTypes;
+    this.countSelections();
   }
 
   findCategory(category: string): number {
@@ -104,9 +110,15 @@ export class OptionsComponent implements OnInit {
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
+    // from full deck of available cards
+    allFlashcards.forEach(obj => {
+      if (obj.category === category) {
+        count++
+      }
+    });
+    // from user's history
     for(let i=0; i < this.questions.length; i++) {
       if (this.getCategoryByCardId(this.questions[i].cardId) === category) {
-        count += 1;
         presented += this.questions[i].presented;
         correct += this.questions[i].correct;
       }
@@ -122,9 +134,15 @@ export class OptionsComponent implements OnInit {
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
+      // from full deck of available cards
+      allFlashcards.forEach(obj => {
+        if (obj.topic === topic) {
+          count++
+        }
+      });
+      // from user's history
     for(let i=0; i < this.questions.length; i++) {
       if (this.getTopicByCardId(this.questions[i].cardId) === topic) {
-        count += 1;
         presented += this.questions[i].presented;
         correct += this.questions[i].correct;
       }
@@ -250,7 +268,6 @@ export class OptionsComponent implements OnInit {
           && this.filters.topics.includes(obj.topic) 
           && this.filters.types.includes(obj.type)) {
         count++
-        // console.log("Count is now " + count);
       }
     });
     this.cardsInDeck = count;

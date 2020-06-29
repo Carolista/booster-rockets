@@ -26,7 +26,7 @@
             <div class="checkbox-column">
                 <label><input #categories name="categories" [(ngModel)]="allCategories[c].checked" (change)="updateCategories(c)" type="checkbox"> {{allCategories[c].item}}</label>
             </div>
-            <div class="stats-column" [class.muted]="viewsPerCategory[c] === 0">
+            <div class="stats-column">
                 {{cardsPerCategory[c]}}
             </div>
             <div class="stats-column" [class.muted]="viewsPerCategory[c] === 0">
@@ -63,7 +63,7 @@
             <div class="checkbox-column">
                 <label><input #topics name="topics" [(ngModel)]="allTopics[p].checked" (change)="updateTopics(p)" type="checkbox"> {{allTopics[p].item}}</label>
             </div>
-            <div class="stats-column" [class.muted]="viewsPerTopic[p] === 0">
+            <div class="stats-column">
                 {{cardsPerTopic[p]}}
             </div>
             <div class="stats-column" [class.muted]="viewsPerTopic[p] === 0">
