@@ -25,15 +25,17 @@ IDEAS:
     justify-content: center;
     align-items: center;
     background-color: #222222;
-    color: ghostwhite;
+    color: white;
 }
+
+/* TODO: give header and footer min and max heights */
 
 .main {
     display: flex;
     height: 83vh;
     width: 100vw;
     justify-content: center;
-    background-color: ghostwhite;
+    background-color: white;
 }
 
 .top-align {
@@ -42,6 +44,8 @@ IDEAS:
 }
 
 .center-align {
+    display: flex;
+    height: 100%;
     align-items: center;
 }
 
@@ -52,7 +56,7 @@ IDEAS:
     justify-content: center;
     align-items: center;
     background-color: #222222;
-    color: ghostwhite;
+    color: white;
 }
 
 .title {
@@ -61,7 +65,7 @@ IDEAS:
 }
 
 .card {
-    width: 65vw;
+    width: 55vw;
 }
 
 .options-block {
@@ -177,9 +181,12 @@ IDEAS:
 
 .form-fields {
     width: 50vw;
-    height: 20px;
+    height: 25px;
     margin-bottom: 8px;
-    padding: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #eeeeee;
 }
 
 button {

@@ -1,36 +1,37 @@
-<div class="card">
-    <span class="category-topic">{{currentCard.category}}</span> 
-        <small *ngIf="!answered && currentQuestion.presented === 0" class="stat-snippet-new spacer-10">New question!</small>
-    <hr>
-    <!-- TODO: add topic here as well -->
+<div class="center-align">
+    <div class="card">
+        <span class="category-topic">{{currentCard.category}}</span> 
+            <small *ngIf="!answered && currentQuestion.presented === 0" class="stat-snippet-new spacer-10">New question!</small>
+        <hr>
+        <!-- TODO: add topic here as well -->
 
-    <p class="query">{{currentCard.query}}</p>
-    <div *ngFor="let choice of currentCard.choices; let c = index">
-        <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentCard.choices[c]" [checked]="false" />{{currentCard.choices[c]}}
-    </div>
-    <!-- TODO: figure out how the hell to indent label wrap on radio buttons... UGH -->
-
-    <!-- Displays only after user submits response -->
-    <div class="space-above" *ngIf="answered">
-        <div *ngIf="correct">
-            <p class="answer-correct">That's correct. Great job!</p>
-            <small *ngIf="currentQuestion.presented > 5 && getSuccessRate() > 85" class="stat-snippet">
-                <b>Hey!</b> You've answered this question {{currentQuestion.presented}} times before, and your success rate is {{getSuccessRate()}}%. Great work!
-                Click here if you would like to archive this flashcard.
-                <!-- TODO: add popup box and link to confirm and handle archiving -->
-            </small>  
+        <p class="query">{{currentCard.query}}</p>
+        <div *ngFor="let choice of currentCard.choices; let c = index">
+            <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentCard.choices[c]" [checked]="false" />{{currentCard.choices[c]}}
         </div>
-        <div *ngIf="!correct">
-            <p class="answer-incorrect">Uh oh! That's not quite right.</p>
-            <p><b>The correct answer is:</b><br /> 
-                {{currentCard.answer}}</p>
-        </div>
-    </div>
+        <!-- TODO: figure out how the hell to indent label wrap on radio buttons... UGH -->
 
-    <div class="right space-above">
-        <button *ngIf="!answered" (click)="checkAnswer()">Submit</button>
-        <button *ngIf="answered" (click)="getNextCard()">Next</button> 
+        <!-- Displays only after user submits response -->
+        <div class="space-above" *ngIf="answered">
+            <div *ngIf="correct">
+                <p class="answer-correct">That's correct. Great job!</p>
+                <small *ngIf="currentQuestion.presented > 5 && getSuccessRate() > 85" class="stat-snippet">
+                    <b>Hey!</b> You've answered this question {{currentQuestion.presented}} times before, and your success rate is {{getSuccessRate()}}%. Great work!
+                    Click here if you would like to archive this flashcard.
+                    <!-- TODO: add popup box and link to confirm and handle archiving -->
+                </small>  
+            </div>
+            <div *ngIf="!correct">
+                <p class="answer-incorrect">Uh oh! That's not quite right.</p>
+                <p><b>The correct answer is:</b><br /> 
+                    {{currentCard.answer}}</p>
+            </div>
+        </div>
+
+        <div class="right space-above">
+            <button *ngIf="!answered" (click)="checkAnswer()">Submit</button>
+            <button *ngIf="answered" (click)="getNextCard()">Next</button> 
+        </div>
+        
     </div>
-      
-    
 </div>
