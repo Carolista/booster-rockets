@@ -22,15 +22,15 @@ export class DeckComponent implements OnInit {
   correct: boolean = true;
 
   // temporarily hard-code Filters object to test function in buildFlashcardSet
-  filters: Filters = new Filters(null, ["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Strings", "Arrays"], ["Multiple Choice","True/False"]);
+  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Strings", "Arrays"], ["Multiple Choice","True/False"]);
 
   // temporarily hard-code Question array to test statistics calculations
   questions: Question[] = [
-    new Question(123, 1, 3, 2),
-    new Question(145, 2, 4, 3),
-    new Question(164, 5, 6, 5),
-    new Question(198, 7, 4, 4),
-    new Question(210, 9, 2, 1)
+    new Question(1, 3, 2),
+    new Question(2, 4, 3),
+    new Question(5, 6, 5),
+    new Question(7, 4, 4),
+    new Question(9, 2, 1)
   ]
 
   // temporarily hard-code Statistics object to test statistics calculations
@@ -50,7 +50,7 @@ export class DeckComponent implements OnInit {
     this.flashcards = [];
     // TODO: use criteria instead of adding all
     questionBank.forEach(obj => {
-      let card = new Flashcard(obj.id, obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
+      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
         if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
@@ -73,7 +73,7 @@ export class DeckComponent implements OnInit {
     this.answered = true;
     let index = this.findQuestionByCardId(this.currentCard.id);
     if (index === -1) {
-      let question = new Question(null, this.currentCard.id, 0, 0);
+      let question = new Question(this.currentCard.id, 0, 0);
       this.questions.push(question);
       index = this.questions.length - 1;
     }
@@ -98,7 +98,7 @@ export class DeckComponent implements OnInit {
   setCurrentQuestion() {
     let index = this.findQuestionByCardId(this.currentCard.id);
     if (index === -1) {
-      this.currentQuestion = new Question(null, this.currentCard.id, 0, 0); 
+      this.currentQuestion = new Question(this.currentCard.id, 0, 0); 
     } else {
       this.currentQuestion = this.questions[index];
     }

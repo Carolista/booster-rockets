@@ -41,20 +41,22 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
 
-    this.authService.login(this.user.email, this.user.password).subscribe(
-      data => {
-        this.tokenStorage.saveToken(data.token);
-        this.tokenStorage.saveUser(data);
-        console.log(data.token);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.reloadPage(); // upon ngInit, will reroute user
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    );
+    this.router.navigate(['/start']); // TODO: remove when backend is connected
+
+    // this.authService.login(this.user.email, this.user.password).subscribe(
+    //   data => {
+    //     this.tokenStorage.saveToken(data.token);
+    //     this.tokenStorage.saveUser(data);
+    //     console.log(data.token);
+    //     this.isLoginFailed = false;
+    //     this.isLoggedIn = true;
+    //     this.reloadPage(); // upon ngInit, will reroute user
+    //   },
+    //   err => {
+    //     this.errorMessage = err.error.message;
+    //     this.isLoginFailed = true;
+    //   }
+    // );
 
   }
 

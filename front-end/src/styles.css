@@ -3,7 +3,7 @@ html, body {
     width: 100vw;
     padding: 0px;
     margin: 0px;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-weight: 200;
 }
 
@@ -49,7 +49,7 @@ IDEAS:
 
 .title {
     font-size: 5vh;
-    font-family: 'Days One', sans-serif;
+    font-family: 'Days One', 'Prompt', sans-serif;
 }
 
 .card {
@@ -57,7 +57,7 @@ IDEAS:
 }
 
 .options-block {
-    width: 70vw;
+    width: 75vw;
 }
 
 .login-register {
@@ -74,14 +74,24 @@ IDEAS:
 }
 
 .space-above {
-    margin-top: 25px;
+    margin-top: 30px;
+}
+
+.space-below {
+    margin-bottom: 5px;
 }
 
 .page-title {
-    font-family: 'Days One', sans-serif;
+    font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
     font-size: 1.8em;
     margin-bottom:0.5em;
+}
+
+.checklist-row {
+    display: flex;
+    flex-direction: row;
+    
 }
 
 .checklist-header {
@@ -91,10 +101,9 @@ IDEAS:
     margin-bottom: 0.5em;
 }
 
-.category-topic {
-    font-size: 1.2em;
-    font-weight: 400;
-    text-transform: uppercase;
+.stats-headers {
+    font-weight: 600;
+    margin: 5px 0px 3px 0px;
 }
 
 .stat-snippet-new {
@@ -123,28 +132,37 @@ IDEAS:
     margin: 0px 10px;
 }
 
-.checklist-row {
-    display: flex;
-    flex-direction: row;
-}
-
-.checklist-checkbox-col {
-    width: 40%;
-}
-
-.checklist-stats-col {
-    width: 30%;
+.stats-column {
+    width: 20%;
     text-align: center;
+}
+
+.checkbox-column {
+    width: 40%;
 }
 
 .muted {
     color: #BBBBBB;
 }
 
+.deck-count {
+    font-family: 'Days One', 'Prompt', sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: #0970a0;
+    margin-bottom: 5px;
+}
+
 .form-fields {
     width: 50vw;
     height: 4vw;
     margin-bottom: 1vw;
+    padding: 5px;
+}
+
+button {
+    height: 4vw;
     padding: 5px;
 }
 
@@ -162,4 +180,12 @@ IDEAS:
 
 .subtle-link {
     color: #555555;
+}
+
+.slightly-smaller {
+    font-size: .9em;
+}
+
+.instruction {
+    font-style: italic;
 }
