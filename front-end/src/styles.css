@@ -6,6 +6,9 @@ html, body {
     margin: 0px;
     font-family: 'Prompt', sans-serif;
     font-weight: 200;
+    background-color: #222222; /* prevents white peeking through when hitting scrolling limits */
+    z-index: 1;
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,15 +31,18 @@ IDEAS:
     width: 100vw;
     padding-bottom: -6vh;
 }
+
 #header {
     display: flex;
     height: 12vh;
+    min-height: 60px;
     width: 100vw;
     justify-content: center;
     align-items: center;
     bottom: 0;
-    background-color: #222222;
+    /* background-color: #222222; */
     color: white;
+    padding: 5px;
 }
 
 #main {
@@ -55,7 +61,7 @@ IDEAS:
     width: 100vw;
     justify-content: center;
     align-items: center;
-    background-color: #222222;
+    /* background-color: #222222; */
     color: white;
     padding: 5px;
 }
@@ -78,7 +84,7 @@ IDEAS:
 
 @media screen and (min-width: 800px) {
     .title {
-       font-size: 56px;
+       font-size: 50px;
     }
 }
 
@@ -87,7 +93,7 @@ IDEAS:
 }
 
 .options-block {
-    width: 75vw;
+    width: 70vw;
     max-width: 560px;
 }
 
@@ -119,7 +125,7 @@ IDEAS:
     margin-bottom:0.5em;
 }
 
-.checklist-row {
+.flexbox-row {
     display: flex;
     flex-direction: row;
     margin-bottom: 2px;
@@ -176,26 +182,47 @@ IDEAS:
     color: #BBBBBB;
 }
 
-.count-block {
-    width: 60%;
+.count-block-z {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    min-height: 60px;
+    top: 90px;
+    right: 20px;
+    padding: 5px 20px 20px;
+    background-color: #bd430b;
+    border-radius: 0px 30px;
+    justify-content: center;
+    align-items: center;
 }
-.deck-count {
+
+.alert-z {
+    background-color: #a73500;
+}
+
+.deck-count-z {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
-    font-weight: 600;
-    color: #df7716;
-    margin-bottom: 5px;
+    color: white;
 }
 
 .big-number {
-    font-size: 5em;
-    padding-right: 10px;
-    margin-top: -18px;
+    font-weight: 400;
+    font-size: 3.6em;
 }
 
 .big-text {
-    font-size: 1.7em;
-    margin-left: 5px;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.instruction {
+    font-family: "Prompt", sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    text-transform: none;
+    margin-top: 10px;
+    color: white;
 }
 
 .form-fields {
@@ -215,7 +242,7 @@ button {
     background-color: #5b8b0e;
     text-transform: uppercase;
     border: none;
-    border-radius: 5px;
+    border-radius: 0px 15px;
 }
 
 button:disabled {
@@ -242,10 +269,6 @@ button:disabled {
     font-size: .9em;
 }
 
-.instruction {
-    font-family: "Days One", sans-serif;
-    margin-top: -15px;
-}
 
 
 /* EXPERIMENTAL CUSTOM CHECKBOX */
@@ -266,7 +289,7 @@ button:disabled {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border-radius: 5px;
+    border-radius: 0px 5px;
     background: #ccc;
     position: absolute;
     left: 0;
@@ -276,7 +299,7 @@ button:disabled {
 .custom-checkbox-small .checkmark {
     width: 16px;
     height: 16px;
-    border-radius: 4px;
+    border-radius: 0px 4px;
     top: 8%;
 }
   

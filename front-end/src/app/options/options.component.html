@@ -1,16 +1,28 @@
+<div class="count-block-z" [class.alert-z]="cardsInDeck === 0">
+    <div class="deck-count-z">
+        <div class="big-number">
+            {{cardsInDeck}}
+        </div>
+        <div>
+            <div class="big-text">cards in<br /> your deck</div>
+        </div>
+        <div *ngIf="cardsInDeck === 0" class="instruction">Check some boxes!</div>
+    </div>
+</div>
+
 <div class="top-align">
 
     <div class="options-block">
         <p class="page-title">Choose Flashcards</p>
 
         <div class="space-above">
-            <div class="checklist-row"> 
+            <div class="flexbox-row"> 
                 <div>
                     <span class="checklist-header">Categories</span>
                     <label class="slightly-smaller spacer-10 custom-checkbox custom-checkbox-small"><input #selectAllCat name="selectAllCat" type="checkbox" [(ngModel)]="selectAllCategoryBoxes.checked" (change)="selectAllCategories(selectAllCat.checked)" /><span class="checkmark"></span> {{selectAllCategoryBoxes.item}}</label>
                 </div>
             </div>
-            <div class="checklist-row slightly-smaller"> 
+            <div class="flexbox-row slightly-smaller"> 
                 <div class="checkbox-column">
                     <!-- spacer -->
                 </div>
@@ -24,7 +36,7 @@
                     Accuracy
                 </div>
             </div>        
-            <div *ngFor="let category of allCategories; let c = index" class="checklist-row">
+            <div *ngFor="let category of allCategories; let c = index" class="flexbox-row">
                 <div class="checkbox-column">
                     <label class="custom-checkbox"><input #categories name="categories" [(ngModel)]="allCategories[c].checked" (change)="updateCategories(c)" type="checkbox"><span class="checkmark"></span> {{allCategories[c].item}}</label>
                 </div>
@@ -41,13 +53,13 @@
         </div>
 
         <div class="space-above">
-            <div class="checklist-row"> 
+            <div class="flexbox-row"> 
                 <div>
                     <span class="checklist-header">Topics</span>
                     <label class="slightly-smaller spacer-10 custom-checkbox custom-checkbox-small"><input #selectAllTop name="selectAllTop" type="checkbox" [(ngModel)]="selectAllTopicBoxes.checked" (change)="selectAllTopics(selectAllTop.checked)" /><span class="checkmark"></span> {{selectAllTopicBoxes.item}}</label>
                 </div>
             </div>
-            <div class="checklist-row slightly-smaller"> 
+            <div class="flexbox-row slightly-smaller"> 
                 <div class="checkbox-column">
                     <!-- spacer -->
                 </div>
@@ -61,7 +73,7 @@
                     Accuracy
                 </div>
             </div> 
-            <div *ngFor="let topic of allTopics; let p = index" class="checklist-row">
+            <div *ngFor="let topic of allTopics; let p = index" class="flexbox-row">
                 <div class="checkbox-column">
                     <label class="custom-checkbox"><input #topics name="topics" [(ngModel)]="allTopics[p].checked" (change)="updateTopics(p)" type="checkbox"><span class="checkmark"></span> {{allTopics[p].item}}</label>
                 </div>
@@ -77,7 +89,7 @@
             </div>
         </div>
 
-        <div class="checklist-row space-above">
+        <div class="flexbox-row space-above">
             <div class="checkbox-column">
                 <div class="space-below">
                     <span class="checklist-header">Types</span>
@@ -86,19 +98,7 @@
                 <div *ngFor="let type of allTypes; let t = index">
                     <label class="custom-checkbox"><input #types name="type" [(ngModel)]="allTypes[t].checked" (change)="updateTypes(t)" type="checkbox"><span class="checkmark"></span> {{allTypes[t].item}}</label>
                 </div>
-            </div>
-            <div class="count-block">
-                <div class="checklist-row deck-count">
-                    <div class="big-number">
-                        {{cardsInDeck}}
-                    </div>
-                    <div>
-                        <div class="big-text">flashcards<br /> in your deck</div>
-                    </div>
-                </div>
-                <div *ngIf="cardsInDeck === 0" class="instruction">Uh oh! Better check some boxes!</div>
-            </div>
-            
+            </div>            
         </div>
     </div>
     

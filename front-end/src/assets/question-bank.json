@@ -115,5 +115,46 @@
             "array.add()"
         ],
         "answer" : "array.push()"
-    }             
+    },
+    {
+        "id" : 10,
+        "category" : "Thymeleaf",
+        "topic" : "Data Binding",
+        "type" : "Multiple Choice",
+        "query" : "Which of these demonstrates the correct way to bind data to a property with Thymeleaf?",
+        "choices" : [
+            "${user.name}",
+            "{{user.name}}",
+            "{user.name}",
+            "${{user.name}}"
+        ],
+        "answer" : "${user.name}"
+    },
+    {
+        "id" : 11,
+        "category" : "Angular",
+        "topic" : "Data Binding",
+        "type" : "Multiple Choice",
+        "query" : "Which of the following is not an example of data binding with Angular?",
+        "choices" : [
+            "${project.name}",
+            "{{project.name}}",
+            "[value]='project.name'",
+            "(click)='saveProject()'"
+        ],
+        "answer" : "${project.name}"
+    },
+    {
+        "id" : 12,
+        "category" : "JavaScript",
+        "topic" : "Arrays",
+        "type" : "Multiple Choice",
+        "query" : "Which of the following is the correct method for adding an item on the end of an array in JavaScript?",
+        "choices" : [
+            "array.push()",
+            "array.append()",
+            "array.add()"
+        ],
+        "answer" : "array.push()"
+    }               
 ]
