@@ -78,7 +78,7 @@
         </div>
 
         <div class="checklist-row space-above">
-            <div class="types-column">
+            <div class="checkbox-column">
                 <div class="space-below">
                     <span class="checklist-header">Types</span>
                     <label class="slightly-smaller spacer-10 custom-checkbox custom-checkbox-small"><input #selectAllTyp name="selectAllTyp" type="checkbox" [(ngModel)]="selectAllTypeBoxes.checked" (change)="selectAllTypes(selectAllTyp.checked)" /><span class="checkmark"></span> {{selectAllTypeBoxes.item}}</label>
@@ -102,8 +102,8 @@
         </div>
     </div>
     
-    <div class="space-above">
-        <button disabled="cardsInDeck === 0">Let's Go!</button> 
+    <div class="space-above right">
+        <button type="submit" [disabled]="cardsInDeck === 0">Let's Go!</button> 
     </div>
 
 </div>

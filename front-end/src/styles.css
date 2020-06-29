@@ -38,6 +38,7 @@ IDEAS:
 
 .top-align {
     align-items: top;
+    margin-top: 50px;
 }
 
 .center-align {
@@ -148,22 +149,18 @@ IDEAS:
     width: 40%;
 }
 
-.types-column {
-    width: 45%
-}
-
 .muted {
     color: #BBBBBB;
 }
 
 .count-block {
-    width: 55%;
+    width: 60%;
 }
 .deck-count {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
     font-weight: 600;
-    color: #0ba5c0;
+    color: #df7716;
     margin-bottom: 5px;
 }
 
@@ -175,18 +172,24 @@ IDEAS:
 
 .big-text {
     font-size: 1.5em;
+    margin-left: 5px;
 }
 
 .form-fields {
     width: 50vw;
-    height: 4vw;
-    margin-bottom: 1vw;
+    height: 20px;
+    margin-bottom: 8px;
     padding: 5px;
 }
 
 button {
-    height: 4vw;
-    padding: 5px;
+    height: 40px;
+    padding: 10px;
+    color: white;
+    background-color: #5b8b0e;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
 }
 
 .error-msg {

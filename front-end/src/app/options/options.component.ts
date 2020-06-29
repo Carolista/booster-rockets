@@ -18,9 +18,9 @@ export class OptionsComponent implements OnInit {
   allCategories: Selection[] = [];
   allTopics: Selection[] = [];
   allTypes: Selection[] = [];
-  selectAllCategoryBoxes: Selection = new Selection("Select all categories", true);
-  selectAllTopicBoxes: Selection = new Selection("Select all topics", true);
-  selectAllTypeBoxes: Selection = new Selection("Select all types", true);
+  selectAllCategoryBoxes: Selection = new Selection("Select All", true);
+  selectAllTopicBoxes: Selection = new Selection("Select All", true);
+  selectAllTypeBoxes: Selection = new Selection("Select All", true);
 
   cardsPerCategory: number[] = [];
   viewsPerCategory: number[] = [];
