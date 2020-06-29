@@ -145,7 +145,8 @@ IDEAS:
 }
 
 .deck-count {
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 1.2em;
     color: #0970a0;
 }
 
@@ -170,4 +171,12 @@ IDEAS:
 
 .subtle-link {
     color: #555555;
+}
+
+.inline-space {
+    margin-right: 15px;
+}
+
+.slightly-smaller {
+    font-size: .9em;
 }

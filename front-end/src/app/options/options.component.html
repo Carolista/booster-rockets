@@ -2,10 +2,6 @@
     <p class="page-title">Choose Flashcards</p>
 
     <div class="space-above">
-        <label><input #selectAll name="selectAll" type="checkbox" [(ngModel)]="selectAllBoxes.checked" (change)="selectAllOptions(selectAll.checked)" /> {{selectAllBoxes.item}}</label>
-    </div>
-
-    <div class="space-above">
         <div class="checklist-row"> 
             <div class="checklist-header checklist-checkbox-col">
                 Categories
@@ -62,8 +58,15 @@
         </div>
     </div>
 
-    <div class="space-above deck-count">
-        Current selections will generate a deck of _____ flashcards.
+    <div class="space-above slightly-smaller">
+        <label class="inline-space"><input #selectAllCat name="selectAllCat" type="checkbox" [(ngModel)]="selectAllCategoryBoxes.checked" (change)="selectAllCategories(selectAllCat.checked)" /> {{selectAllCategoryBoxes.item}}</label>
+        <label class="inline-space"><input #selectAllTop name="selectAllTop" type="checkbox" [(ngModel)]="selectAllTopicBoxes.checked" (change)="selectAllTopics(selectAllTop.checked)" /> {{selectAllTopicBoxes.item}}</label>
+        <label class="inline-space"><input #selectAllTyp name="selectAllTyp" type="checkbox" [(ngModel)]="selectAllTypeBoxes.checked" (change)="selectAllTypes(selectAllTyp.checked)" /> {{selectAllTypeBoxes.item}}</label>
+    </div>
+
+    <div class="space-above">
+        <span class="deck-count">Your deck will have {{cardsInDeck}} flashcards.</span><br />
+        <span *ngIf="cardsInDeck === 0" class="error-msg">Make selections above to add cards to the deck.</span>
     </div>
 
     <div class="space-above">
