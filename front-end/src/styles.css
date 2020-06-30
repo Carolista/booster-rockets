@@ -34,14 +34,24 @@ IDEAS:
 
 #header {
     display: flex;
-    height: 12vh;
-    min-height: 80px;
-    max-height: 90px;
+    height: 85px;
     width: 100vw;
     justify-content: center;
     align-items: center;
     bottom: 0;
     color: white;
+    padding: 5px;
+}
+
+#navbar {
+    display: flex;
+    height: 35px;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    color: white;
+    background-color: #5b8b0e;
     padding: 5px;
 }
 
@@ -290,8 +300,16 @@ button:disabled {
     font-size: .9em;
 }
 
-.subtle-link {
+a.subtle-link {
     color: #555555;
+}
+
+a.white-link {
+    font-weight: 400;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 0px 15px;
 }
 
 .slightly-smaller {
