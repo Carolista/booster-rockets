@@ -6,6 +6,9 @@ html, body {
     margin: 0px;
     font-family: 'Prompt', sans-serif;
     font-weight: 200;
+    background-color: #222222; /* prevents white peeking through when hitting scrolling limits */
+    z-index: 1;
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,15 +31,18 @@ IDEAS:
     width: 100vw;
     padding-bottom: -6vh;
 }
+
 #header {
     display: flex;
     height: 12vh;
+    min-height: 80px;
+    max-height: 90px;
     width: 100vw;
     justify-content: center;
     align-items: center;
     bottom: 0;
-    background-color: #222222;
     color: white;
+    padding: 5px;
 }
 
 #main {
@@ -45,7 +51,7 @@ IDEAS:
     width: 100vw;
     justify-content: center;
     background-color: white;
-    padding-bottom: 60px;
+    padding: 60px 0px;
 }
 
 #footer {
@@ -55,14 +61,12 @@ IDEAS:
     width: 100vw;
     justify-content: center;
     align-items: center;
-    background-color: #222222;
     color: white;
     padding: 5px;
 }
 
 .top-align {
     align-items: top;
-    margin-top: 50px;
 }
 
 .center-align {
@@ -78,7 +82,7 @@ IDEAS:
 
 @media screen and (min-width: 800px) {
     .title {
-       font-size: 56px;
+       font-size: 50px;
     }
 }
 
@@ -87,8 +91,28 @@ IDEAS:
 }
 
 .options-block {
-    width: 75vw;
-    max-width: 560px;
+    width: 85vw;
+    max-width: 720px;
+}
+
+.options-left-stats {
+    width: 85%;
+}
+
+.options-right-stats {
+    width: 15%;
+}
+
+.options-left {
+    width: 90%;
+}
+
+.options-right {
+    width: 10%;
+}
+
+.checkbox-column-thirds {
+    width: 33%
 }
 
 .login-register {
@@ -116,20 +140,31 @@ IDEAS:
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
     font-size: 1.8em;
-    margin-bottom:0.5em;
+    margin-bottom: 0.3em;
 }
 
-.checklist-row {
+.flexbox-row {
     display: flex;
     flex-direction: row;
     margin-bottom: 2px;
+}
+
+.flexbox-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.checklist-header-stats {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
 }
 
 .checklist-header {
     font-weight: 600;
     text-transform: uppercase;
     font-size: 1.2em;
-    margin-bottom: 0.5em;
 }
 
 .stats-headers {
@@ -176,26 +211,47 @@ IDEAS:
     color: #BBBBBB;
 }
 
-.count-block {
-    width: 60%;
+.count-block-z {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    min-height: 60px;
+    top: 110px;
+    right: 20px;
+    padding: 5px 20px 20px;
+    background-color: #ca4a0f;
+    border-radius: 0px 30px;
+    justify-content: center;
+    align-items: center;
 }
-.deck-count {
+
+.alert-z {
+    background-color: #a73500;
+}
+
+.deck-count-z {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
-    font-weight: 600;
-    color: #df7716;
-    margin-bottom: 5px;
+    color: white;
 }
 
 .big-number {
-    font-size: 5em;
-    padding-right: 10px;
-    margin-top: -18px;
+    font-weight: 400;
+    font-size: 3.6em;
 }
 
 .big-text {
-    font-size: 1.7em;
-    margin-left: 5px;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.instruction {
+    font-family: "Prompt", sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    text-transform: none;
+    margin-top: 10px;
+    color: white;
 }
 
 .form-fields {
@@ -215,7 +271,7 @@ button {
     background-color: #5b8b0e;
     text-transform: uppercase;
     border: none;
-    border-radius: 5px;
+    border-radius: 0px 15px;
 }
 
 button:disabled {
@@ -242,14 +298,6 @@ button:disabled {
     font-size: .9em;
 }
 
-.instruction {
-    font-family: "Days One", sans-serif;
-    margin-top: -15px;
-}
-
-
-/* EXPERIMENTAL CUSTOM CHECKBOX */
-
 .custom-checkbox input {
     display: none;
 }
@@ -261,12 +309,16 @@ button:disabled {
     cursor: pointer;
     user-select: none;
 }
+
+.custom-checkbox-small {
+    padding-left: 21px;
+}
   
 .custom-checkbox .checkmark {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border-radius: 5px;
+    border-radius: 0px 5px;
     background: #ccc;
     position: absolute;
     left: 0;
@@ -274,14 +326,18 @@ button:disabled {
 }
 
 .custom-checkbox-small .checkmark {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
+    width: 17px;
+    height: 17px;
+    border-radius: 0px 4px;
     top: 8%;
 }
   
 .custom-checkbox input:checked+.checkmark {
     background-color: #0ba5c0;
+}
+
+.custom-checkbox-small input:checked+.checkmark {
+    background-color: #bada55;
 }
   
 .custom-checkbox input:checked+.checkmark:after {
@@ -292,7 +348,7 @@ button:disabled {
     border-left: 2px solid white;
     border-bottom: 2px solid white;
     top: 45%;
-    left: 50%;
+    left: 52%;
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 

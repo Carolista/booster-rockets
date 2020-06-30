@@ -15,6 +15,7 @@ import { Selection } from '../selection';
 export class OptionsComponent implements OnInit {
 
   // ngModels
+  includeStats: Selection = new Selection("Include Statistics", true);
   allCategories: Selection[] = [];
   allTopics: Selection[] = [];
   allTypes: Selection[] = [];
@@ -30,6 +31,7 @@ export class OptionsComponent implements OnInit {
   accuracyPerTopic: number[] = [];
 
   cardsInDeck: number = 0;
+  
  
   // TEMPORARY PROPERTIES OF USER UNTIL BACK END IS CONNECTED FIXME: pull from user
   filters: Filters = new Filters([],[],["Multiple Choice", "True/False"]); 
