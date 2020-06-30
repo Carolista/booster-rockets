@@ -35,12 +35,11 @@ IDEAS:
 #header {
     display: flex;
     height: 12vh;
-    min-height: 60px;
+    min-height: 80px;
     width: 100vw;
     justify-content: center;
     align-items: center;
     bottom: 0;
-    /* background-color: #222222; */
     color: white;
     padding: 5px;
 }
@@ -61,14 +60,12 @@ IDEAS:
     width: 100vw;
     justify-content: center;
     align-items: center;
-    /* background-color: #222222; */
     color: white;
     padding: 5px;
 }
 
 .top-align {
     align-items: top;
-    margin-top: 50px;
 }
 
 .center-align {
@@ -93,8 +90,15 @@ IDEAS:
 }
 
 .options-block {
-    width: 70vw;
-    max-width: 560px;
+    width: 80vw;
+    max-width: 600px;
+}
+
+.options-left {
+    width: 85%;
+}
+.options-right {
+    width: 15%;
 }
 
 .login-register {
@@ -122,7 +126,6 @@ IDEAS:
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
     font-size: 1.8em;
-    margin-bottom:0.5em;
 }
 
 .flexbox-row {
@@ -187,10 +190,10 @@ IDEAS:
     flex-direction: column;
     position: fixed;
     min-height: 60px;
-    top: 90px;
+    top: 110px;
     right: 20px;
     padding: 5px 20px 20px;
-    background-color: #bd430b;
+    background-color: #ca4a0f;
     border-radius: 0px 30px;
     justify-content: center;
     align-items: center;
