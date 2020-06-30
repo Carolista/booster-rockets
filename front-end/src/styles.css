@@ -36,6 +36,7 @@ IDEAS:
     display: flex;
     height: 12vh;
     min-height: 80px;
+    max-height: 90px;
     width: 100vw;
     justify-content: center;
     align-items: center;
@@ -50,7 +51,7 @@ IDEAS:
     width: 100vw;
     justify-content: center;
     background-color: white;
-    padding-bottom: 60px;
+    padding: 60px 0px;
 }
 
 #footer {
@@ -90,15 +91,28 @@ IDEAS:
 }
 
 .options-block {
-    width: 80vw;
-    max-width: 600px;
+    width: 85vw;
+    max-width: 720px;
+}
+
+.options-left-stats {
+    width: 85%;
+}
+
+.options-right-stats {
+    width: 15%;
 }
 
 .options-left {
-    width: 85%;
+    width: 90%;
 }
+
 .options-right {
-    width: 15%;
+    width: 10%;
+}
+
+.checkbox-column-thirds {
+    width: 33%
 }
 
 .login-register {
@@ -126,6 +140,7 @@ IDEAS:
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
     font-size: 1.8em;
+    margin-bottom: 0.3em;
 }
 
 .flexbox-row {
@@ -134,11 +149,22 @@ IDEAS:
     margin-bottom: 2px;
 }
 
-.checklist-header {
+.flexbox-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.checklist-header-stats {
     font-weight: 600;
     text-transform: uppercase;
     font-size: 1.2em;
     margin-bottom: 0.5em;
+}
+
+.checklist-header {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.2em;
 }
 
 .stats-headers {
@@ -272,10 +298,6 @@ button:disabled {
     font-size: .9em;
 }
 
-
-
-/* EXPERIMENTAL CUSTOM CHECKBOX */
-
 .custom-checkbox input {
     display: none;
 }
@@ -286,6 +308,10 @@ button:disabled {
     position: relative;
     cursor: pointer;
     user-select: none;
+}
+
+.custom-checkbox-small {
+    padding-left: 21px;
 }
   
 .custom-checkbox .checkmark {
@@ -300,14 +326,18 @@ button:disabled {
 }
 
 .custom-checkbox-small .checkmark {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     border-radius: 0px 4px;
     top: 8%;
 }
   
 .custom-checkbox input:checked+.checkmark {
     background-color: #0ba5c0;
+}
+
+.custom-checkbox-small input:checked+.checkmark {
+    background-color: #bada55;
 }
   
 .custom-checkbox input:checked+.checkmark:after {
@@ -318,7 +348,7 @@ button:disabled {
     border-left: 2px solid white;
     border-bottom: 2px solid white;
     top: 45%;
-    left: 50%;
+    left: 52%;
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 

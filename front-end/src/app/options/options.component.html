@@ -13,14 +13,20 @@
 <!-- TODO: implement toggle to show stats or show checkboxes in columns instead -->
 
 <div class="top-align">
-    <div class="flexbox-row options-block">
-        <div class="options-left">
-            <p class="page-title">Choose Flashcards</p>
+    <div class="page-title">
+        Choose Flashcards
+    </div>
+    <div class="checkbox-column">
+        <label class="custom-checkbox"><input [(ngModel)]="includeStats.checked" (change)="!includeStats.checked = includeStats.checked" type="checkbox"><span class="checkmark"></span> {{includeStats.item}}</label>
+    </div>
 
+    <!-- IF TOGGLED TO INCLUDE STATS -->
+    <div class="flexbox-row options-block" *ngIf="includeStats.checked === true">
+        <div class="options-left-stats">
             <div class="space-above">
                 <div class="flexbox-row"> 
                     <div>
-                        <span class="checklist-header">Categories</span>
+                        <span class="checklist-header-stats">Categories</span>
                         <label class="slightly-smaller spacer-10 custom-checkbox custom-checkbox-small"><input #selectAllCat name="selectAllCat" type="checkbox" [(ngModel)]="selectAllCategoryBoxes.checked" (change)="selectAllCategories(selectAllCat.checked)" /><span class="checkmark"></span> {{selectAllCategoryBoxes.item}}</label>
                     </div>
                 </div>
@@ -57,7 +63,7 @@
             <div class="space-above">
                 <div class="flexbox-row"> 
                     <div>
-                        <span class="checklist-header">Topics</span>
+                        <span class="checklist-header-stats">Topics</span>
                         <label class="slightly-smaller spacer-10 custom-checkbox custom-checkbox-small"><input #selectAllTop name="selectAllTop" type="checkbox" [(ngModel)]="selectAllTopicBoxes.checked" (change)="selectAllTopics(selectAllTop.checked)" /><span class="checkmark"></span> {{selectAllTopicBoxes.item}}</label>
                     </div>
                 </div>
@@ -93,11 +99,56 @@
 
             <div class="space-above">
                 <div class="space-below">
-                    <span class="checklist-header">Types</span>
+                    <span class="checklist-header-stats">Types</span>
                     <label class="slightly-smaller spacer-10 custom-checkbox custom-checkbox-small"><input #selectAllTyp name="selectAllTyp" type="checkbox" [(ngModel)]="selectAllTypeBoxes.checked" (change)="selectAllTypes(selectAllTyp.checked)" /><span class="checkmark"></span> {{selectAllTypeBoxes.item}}</label>
                 </div>
                 <div *ngFor="let type of allTypes; let t = index">
                     <label class="custom-checkbox"><input #types name="type" [(ngModel)]="allTypes[t].checked" (change)="updateTypes(t)" type="checkbox"><span class="checkmark"></span> {{allTypes[t].item}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="options-right-stats">
+            &nbsp;
+        </div>
+    </div>
+
+    <!-- IF TOGGLED TO EXCLUDE STATS -->
+    <div class="flexbox-row options-block" *ngIf="includeStats.checked === false">
+        <div class="options-left">
+            <div class="space-above flexbox-row">
+                <div class="flexbox-column checkbox-column-thirds">    
+                    <div class="flexbox-column space-below">
+                        <div class="checklist-header">Categories</div>
+                        <label class="slightly-smaller custom-checkbox custom-checkbox-small space-below"><input #selectAllCat name="selectAllCat" type="checkbox" [(ngModel)]="selectAllCategoryBoxes.checked" (change)="selectAllCategories(selectAllCat.checked)" /><span class="checkmark"></span> {{selectAllCategoryBoxes.item}}</label>
+                    </div>
+                    
+                    <div *ngFor="let category of allCategories; let c = index">
+                        <div class="checkbox-column">
+                            <label class="custom-checkbox"><input #categories name="categories" [(ngModel)]="allCategories[c].checked" (change)="updateCategories(c)" type="checkbox"><span class="checkmark"></span> {{allCategories[c].item}}</label>
+                        </div>
+                    </div>
+                </div>            
+                <div class="flexbox-column checkbox-column-thirds">
+                    <div class="flexbox-column space-below">
+                        <div class="checklist-header">Topics</div>
+                    <label class="slightly-smaller custom-checkbox custom-checkbox-small space-below"><input #selectAllTop name="selectAllTop" type="checkbox" [(ngModel)]="selectAllTopicBoxes.checked" (change)="selectAllTopics(selectAllTop.checked)" /><span class="checkmark"></span> {{selectAllTopicBoxes.item}}</label>
+                    </div>
+                    
+                    <div *ngFor="let topic of allTopics; let p = index" class="flexbox-row">
+                        <div class="checkbox-column">
+                            <label class="custom-checkbox"><input #topics name="topics" [(ngModel)]="allTopics[p].checked" (change)="updateTopics(p)" type="checkbox"><span class="checkmark"></span> {{allTopics[p].item}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="flexbox-column checkbox-column-thirds">
+                    <div class="flexbox-column space-below">
+                        <div class="checklist-header">Types</div>
+                    <label class="slightly-smaller custom-checkbox custom-checkbox-small space-below"><input #selectAllTyp name="selectAllTyp" type="checkbox" [(ngModel)]="selectAllTypeBoxes.checked" (change)="selectAllTypes(selectAllTyp.checked)" /><span class="checkmark"></span> {{selectAllTypeBoxes.item}}</label>
+                    </div>
+                    <div *ngFor="let type of allTypes; let t = index">
+                        <label class="custom-checkbox"><input #types name="type" [(ngModel)]="allTypes[t].checked" (change)="updateTypes(t)" type="checkbox"><span class="checkmark"></span> {{allTypes[t].item}}</label>
+                    </div>
                 </div>
             </div>
         </div>
