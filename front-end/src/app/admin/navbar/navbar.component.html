@@ -1,7 +1,8 @@
 <div class="center-align">
     <div class="flexbox-row">
-        <a class="white-link" [routerLink]="'/admin/search'">Search Questions</a>
-        <a class="white-link" [routerLink]="'/admin/create'">Create New Content</a>
-        <a class="white-link" [routerLink]="'/start'">Back to Start</a>
+        <a class="white-link" [class.white-link-selected]="activeLink === 'dashboard'" [routerLink]="'/admin/dashboard'" (click)="activeLink='dashboard'">Admin Dashboard</a>
+        <a class="white-link" [class.white-link-selected]="activeLink === 'search'" [routerLink]="'/admin/search'" (click)="activeLink='search'">Search Questions</a>
+        <a class="white-link" [class.white-link-selected]="activeLink === 'create'" [routerLink]="'/admin/create'" (click)="activeLink='create'">Create New Content</a>
+        <a class="white-link" [class.white-link-selected]="activeLink === 'start'" [routerLink]="'/start'" (click)="activeLink='start'">Back to Start</a>
     </div>
 </div>

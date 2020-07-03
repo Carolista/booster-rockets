@@ -6,7 +6,8 @@ html, body {
     margin: 0px;
     font-family: 'Prompt', sans-serif;
     font-weight: 200;
-    background-color: #222222; /* prevents white peeking through when hitting scrolling limits */
+    color: #333333;
+    background-color: #333333; /* prevents white peeking through when hitting scrolling limits */
     z-index: 1;
     overflow-x: hidden;
 }
@@ -23,6 +24,8 @@ IDEAS:
 */
 
 /* TODO: move styles that are not used globally to lower css files */
+
+/* TODO: add fixed "to top" button on longer pages */
 
 #viewport {
     display: flex;
@@ -133,9 +136,41 @@ IDEAS:
     text-align: center;
 }
 
+.search-block {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    align-items: center;
+    text-align: center;
+}
+
+.parameters-block {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.results-block {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    align-items: top;
+    text-align: center;
+}
+
 .right {
     width: 100%;
     text-align: right;
+}
+
+.center {
+    width: 100%;
+    text-align: center;
+}
+
+.left {
+    width: 100%;
+    text-align: left;
 }
 
 .space-above {
@@ -152,6 +187,12 @@ IDEAS:
     font-size: 1.8em;
     margin-bottom: 0.3em;
 }
+
+/* .nav-button {
+    height: 100%;
+    margin: 0px;
+    background-color: 
+} */
 
 .flexbox-row {
     display: flex;
@@ -305,10 +346,23 @@ a.subtle-link {
 }
 
 a.white-link {
+    font-size: .9em;
     font-weight: 400;
-    color: white;
+    color: #a9d366;
     text-transform: uppercase;
     text-decoration: none;
+    margin: 0px 15px;
+}
+
+a.white-link:hover {
+    color: white;
+}
+
+a.white-link-selected {
+    color: white;
+}
+
+.inline-radio {
     margin: 0px 15px;
 }
 
@@ -386,3 +440,71 @@ a.white-link {
     left: 50%;
     transform: translate(-50%, -50%) rotate(180deg);
 } */
+
+
+/***** INLINE BUTTON GROUP *****/
+
+.button-group {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.button-group > .button-inline {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.button-group > .button-inline:hover, .button-group > .button-inline:focus, .button-group > .button-inline:active {
+    z-index: 1;
+}
+
+.button-group > .button-inline:hover {
+    background-color: #5b8b0e;
+    color: white;
+}
+
+.button-inline {
+    position: relative;
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333333;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    user-select: none; /* user cannot select text of button label */
+    background-color: transparent;
+    line-height: 1.5rem;
+    border: 2px solid #333333;
+    border-radius: 0px 15px;
+    padding: 7px 11px;
+    margin: 0px 5px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.button-selected {
+    color: white;
+    background-color: #333333;
+    text-decoration: none;
+    border-color: #333333;
+}
+
+.button-inline:hover {
+    color: #5b8b0e;
+    text-decoration: none;
+    border-color: #5b8b0e;
+}
+
+.button-inline:focus {
+    outline: 0;
+}
+
+.button-inline:disabled {
+    opacity: 0.65;
+}
+
+.button-inline:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}

@@ -1,1 +1,38 @@
-<p>search works!</p>
+<div class="top-align center">
+    <div class="search-block">
+
+        <div class="page-title">
+            SEARCH
+        </div>
+
+        <div class="button-group">
+            <button class="button-inline" [class.button-selected]="searchType === 'flashcard'" (click)="searchType = 'flashcard'">Flashcards</button>
+            <button class="button-inline" [class.button-selected]="searchType === 'user'" (click)="searchType = 'user'">Users</button>
+        </div>
+
+        <!-- Flashcard Search -->
+        <div *ngIf="searchType === 'flashcard'" class="center">
+            <div class="parameters-block space-above">
+
+                <label>Keyword: <input type="text" /></label> 
+                
+                Filter by:
+                <select>
+                    <option></option>
+                    <option>One</option>
+                    <option>Two</option>
+                </select>
+                <!-- TODO: create drop-down boxes for category, topic, and type with "" as an option -->
+
+            </div>
+
+            <div class="results-block">
+
+            </div>
+        </div>
+
+
+        <!-- Add feature to return results as table or in grid -->
+    </div>
+    
+</div>

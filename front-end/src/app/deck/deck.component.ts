@@ -80,7 +80,6 @@ export class DeckComponent implements OnInit {
     this.questions[index].presented++;
     this.statistics.presented++;
     if (this.currentResponse === this.currentCard.answer) {
-      console.log("Correct answer");
       this.questions[index].correct++;
       this.statistics.correct++;
       this.statistics.currentStreak++;
@@ -89,7 +88,6 @@ export class DeckComponent implements OnInit {
       }
       this.correct = true;
     } else {
-      console.log("Wrong answer");
       this.correct = false;
     }
     console.log(this.questions[index]);
