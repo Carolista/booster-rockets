@@ -52,7 +52,7 @@ export class DeckComponent implements OnInit {
     questionBank.forEach(obj => {
       let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
-      if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
+      if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
         if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
           this.shuffle(card.choices);
         }

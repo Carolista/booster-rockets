@@ -17,17 +17,16 @@
                 <label>Keyword: <input type="text" /></label> 
                 
                 Filter by:
-                <select>
+                <select #categorySelection="ngModel" [(ngModel)]="selectedCategory" (change)="buildFlashcardResults()">
                     <option></option>
-                    <option>One</option>
-                    <option>Two</option>
+                    <option *ngFor="let category of allCategories">{{category}}</option>
                 </select>
                 <!-- TODO: create drop-down boxes for category, topic, and type with "" as an option -->
 
             </div>
 
             <div class="results-block">
-
+                <p *ngFor="let result of flashcardResults">{{result.query}}</p>
             </div>
         </div>
 
