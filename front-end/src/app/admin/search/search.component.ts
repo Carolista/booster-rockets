@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import questionBank from '../../../assets/question-bank.json';
+import allFlashcards from '../../../assets/question-bank.json';
 import { Flashcard } from 'src/app/flashcard';
 import { User } from 'src/app/user';
 
@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
   allCategories: string[] = [];
   allTopics: string[] = [];
   allTypes: string[] = [];
-  numberOfCards: number = questionBank.length;
+  numberOfCards: number = allFlashcards.length;
   keyword: string = "";
   selectedCategory: string = "";
   selectedTopic: string = "";
@@ -61,7 +61,7 @@ export class SearchComponent implements OnInit {
 
   buildSelectionArrays() {
     let index: number;
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         this.allCategories.push(obj.category);
@@ -79,20 +79,6 @@ export class SearchComponent implements OnInit {
     this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
   }
-
-  // search(searchTerm: string): void {
-  //   let matchingSatellites: Satellite[] = [];
-  //   searchTerm = searchTerm.toLowerCase();
-  //   for(let i=0; i < this.sourceList.length; i++) {
-  //       let name = this.sourceList[i].name.toLowerCase();
-  //       let type = this.sourceList[i].type.toLowerCase();
-  //       let orbitType = this.sourceList[i].orbitType.toLowerCase();
-  //       if (name.indexOf(searchTerm) >= 0 || type.indexOf(searchTerm) >= 0 || orbitType.indexOf(searchTerm) >= 0) {
-  //           matchingSatellites.push(this.sourceList[i]);
-  //       }
-  //   }
-  //   this.displayList = matchingSatellites;
-  // }
 
   searchTermFound(term: string, card: Flashcard): boolean {
     term = term.toLowerCase();
@@ -112,7 +98,7 @@ export class SearchComponent implements OnInit {
   getFlashcardResults() {
 
     // start with all possible questions in a new array
-    this.flashcardResults = questionBank.slice(0);
+    this.flashcardResults = allFlashcards.slice(0);
 
     // filter results
     let i: number = 0;

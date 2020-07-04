@@ -244,6 +244,14 @@ IDEAS:
     margin-bottom: 0.3em;
 }
 
+.dashboard-stats {
+    font-family: 'Days One', 'Prompt', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    line-height: 1.5em; 
+    margin-bottom: 0.3em;
+}
+
 .category-topic {
     font-weight: 600;
     font-size: 1.1rem;

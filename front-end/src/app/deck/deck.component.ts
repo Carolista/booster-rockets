@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import questionBank from '../../assets/question-bank.json';
+import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
@@ -49,7 +49,7 @@ export class DeckComponent implements OnInit {
     // build flashcard set for this session from question bank
     this.flashcards = [];
     // TODO: use criteria instead of adding all
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {

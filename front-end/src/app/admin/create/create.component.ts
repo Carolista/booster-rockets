@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import questionBank from '../../../assets/question-bank.json';
+import allFlashcards from '../../../assets/question-bank.json';
 import { Flashcard } from 'src/app/flashcard';
 
 @Component({
@@ -50,7 +50,7 @@ export class CreateComponent implements OnInit {
 
   buildSelectionArrays() {
     let index: number;
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         this.allCategories.push(obj.category);
