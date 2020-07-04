@@ -13,20 +13,64 @@
         <!-- Flashcard Search -->
         <div *ngIf="searchType === 'flashcard'" class="center">
             <div class="parameters-block space-above">
-
-                <label>Keyword: <input type="text" /></label> 
-                
-                Filter by:
-                <select #categorySelection="ngModel" [(ngModel)]="selectedCategory" (change)="buildFlashcardResults()">
-                    <option></option>
-                    <option *ngFor="let category of allCategories">{{category}}</option>
-                </select>
-                <!-- TODO: create drop-down boxes for category, topic, and type with "" as an option -->
-
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        Keyword
+                    </div>
+                    <div class="left search-field-column">
+                        <input type="text" class="text-input" />
+                    </div>        
+                </div>
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        Category
+                    </div>
+                    <div class="left search-field-column">
+                        <select #categorySelection="ngModel" [(ngModel)]="selectedCategory" (change)="getFlashcardResults()" class="dropdown">
+                            <option></option>
+                            <option *ngFor="let category of allCategories">{{category}}</option>
+                        </select>
+                    </div>        
+                </div>
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        Topic
+                    </div>
+                    <div class="left search-field-column">
+                        <select #topicSelection="ngModel" [(ngModel)]="selectedTopic" (change)="getFlashcardResults()" class="dropdown">
+                            <option></option>
+                            <option *ngFor="let topic of allTopics">{{topic}}</option>
+                        </select>
+                    </div>        
+                </div>
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        Type
+                    </div>
+                    <div class="left search-field-column">
+                        <select #typeSelection="ngModel" [(ngModel)]="selectedType" (change)="getFlashcardResults()" class="dropdown">
+                            <option></option>
+                            <option *ngFor="let type of allTypes">{{type}}</option>
+                        </select>
+                    </div>        
+                </div>
             </div>
 
-            <div class="results-block">
-                <p *ngFor="let result of flashcardResults">{{result.query}}</p>
+            <div class="results-block slightly-smaller">
+                <span class="space-above result-count">Your search returned {{flashcardResults.length}} result<span *ngIf="flashcardResults.length === 0 || flashcardResults.length > 1">s</span>.</span>
+                <div *ngFor="let result of flashcardResults" class="slightly-smaller">
+                    <hr>
+                    <div class="flexbox-row">
+                        <div class="category-topic">ID: {{result.id}} &#187; {{result.category}}: {{result.topic}}</div> <!-- TODO: add edit button once questions are in db -->
+                    </div>                 
+                    <span class="query">{{result.query}}</span>
+                    <div *ngFor="let choice of result.choices; let i = index" class="choice-indent">
+                        {{letters[i]}}. {{choice}}
+                    </div>
+                    <div class="answer">
+                        <span class="query">Correct Answer: </span><span>{{result.answer}}</span>
+                    </div>                  
+                </div>
             </div>
         </div>
 

@@ -128,6 +128,24 @@ IDEAS:
     width: 33%
 }
 
+.search-type-column {
+    max-width: 25%;
+    padding: 0px 5px;
+}
+
+.search-field-column {
+    min-width: 70%;
+    padding: 0px 5px;
+}
+
+.text-input {
+    width: 96%;
+}
+
+.dropdown {
+    width: 100%;
+}
+
 .login-register {
     display: flex;
     flex-direction: column;
@@ -148,14 +166,30 @@ IDEAS:
     display: flex;
     flex-direction: column;
     text-align: left;
+    margin: 0 5vw;
+    padding: 0 10vw;
 }
 
 .results-block {
     display: flex;
-    flex-direction: row;
-    width: 90vw;
+    flex-direction: column;
+    width: 100%;
     align-items: top;
-    text-align: center;
+    text-align: left;
+}
+
+.result-count {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #5b8b0e;
+}
+
+.choice-indent {
+    margin-left: 15px;
+}
+
+.answer {
+    margin-top: 5px;
 }
 
 .right {
@@ -173,8 +207,16 @@ IDEAS:
     text-align: left;
 }
 
+.bottom {
+    align-items: bottom;
+}
+
 .space-above {
     margin-top: 30px;
+}
+
+.half-space-above {
+    margin-top: 15px;
 }
 
 .space-below {
@@ -188,11 +230,11 @@ IDEAS:
     margin-bottom: 0.3em;
 }
 
-/* .nav-button {
-    height: 100%;
-    margin: 0px;
-    background-color: 
-} */
+.category-topic {
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100%;
+}
 
 .flexbox-row {
     display: flex;
@@ -232,7 +274,7 @@ IDEAS:
 }
 
 .query {
-    font-weight: 800;
+    font-weight: 400;
 }
 
 .answer-correct {

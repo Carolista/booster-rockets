@@ -17,6 +17,8 @@ export class SearchComponent implements OnInit {
   selectedCategory: string = "";
   selectedTopic: string = "";
   selectedType: string = "";
+
+  letters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   
   flashcardResults: Flashcard[] = [];
   userResults: User[] = [];
@@ -26,6 +28,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.buildSelectionArrays();
+    this.getFlashcardResults();
   }
 
   findCategory(category: string): number {
@@ -76,19 +79,36 @@ export class SearchComponent implements OnInit {
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
   }
 
-  buildFlashcardResults() {
+  getFlashcardResults() {
 
-    // reset results array
-    this.flashcardResults = [];
-
+    // start with all possible questions in a new array
+    this.flashcardResults = questionBank.slice(0);
+    
     // build flashcard results from question bank
-    questionBank.forEach(obj => {
-      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
-      // add card only if it fits user's criteria
-      if (this.selectedCategory === "" || this.selectedCategory === card.category) {
-        this.flashcardResults.push(card);
-      }      
-    });
+    let i: number = 0;
+    while (i < this.flashcardResults.length) {
+      let card = this.flashcardResults[i];
+      if (this.selectedCategory !== "") {
+        if (this.selectedCategory !== card.category) {
+          this.flashcardResults.splice(i,1);
+          continue; // end loop and do not advance i due to splice
+        }        
+      }
+      if (this.selectedTopic !== "") {
+        if (this.selectedTopic !== card.topic) {
+          this.flashcardResults.splice(i,1);
+          continue;
+        }        
+      }
+      if (this.selectedType !== "") {
+        if (this.selectedType !== card.type) {
+          this.flashcardResults.splice(i,1);
+          continue;
+        }        
+      }
+      // otherwise it is kept in the array and i increases
+      i++
+    }
 
     console.log("Flashcard results ready.")
   }
