@@ -19,7 +19,7 @@
                         Keyword
                     </div>
                     <div class="left search-field-column">
-                        <input #key="ngModel" [(ngModel)]="keyword" (input)="getFlashcardResults()" placeholder="Type anything!" type="text" class="text-input" />
+                        <input #key="ngModel" [(ngModel)]="keyword" (input)="getFlashcardResults()" placeholder="Type anything!" type="text" class="search-form-field" />
                     </div>        
                 </div>
 
@@ -77,7 +77,8 @@
             </div>
         </div>
 
-
+        <!-- TODO: Set up alternate section for user search -->
+        
         <!-- TODO: (maybe) Add feature to return user results as table or in grid -->
     </div>
     

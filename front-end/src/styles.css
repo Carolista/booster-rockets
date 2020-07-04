@@ -48,7 +48,8 @@ IDEAS:
 
 #navbar {
     display: flex;
-    height: 35px;
+    height: 35px; /* figure out why this height is changing depending on whether the content is smaller or larger than the vh */
+    max-height: 35px;
     width: 100vw;
     justify-content: center;
     align-items: center;
@@ -128,6 +129,11 @@ IDEAS:
     width: 33%
 }
 
+.create-column {
+    width: 28%;
+    margin: 0px 25px;
+}
+
 .search-type-column {
     max-width: 25%;
     padding: 0px 5px;
@@ -150,6 +156,14 @@ IDEAS:
     display: flex;
     flex-direction: column;
     width: 50vw;
+    align-items: center;
+    text-align: center;
+}
+
+.create-block {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
     align-items: center;
     text-align: center;
 }
@@ -347,19 +361,43 @@ IDEAS:
     color: white;
 }
 
-.form-fields {
-    width: 50vw;
-    height: 25px;
+form {
+    width: 100%;
+}
+
+select {
+    height: 30px;
     margin-bottom: 8px;
     padding: 5px 10px;
     border: none;
-    border-radius: 5px;
-    background-color: #eeeeee;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
+}
+
+.form-fields {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 8px;
+    margin-left: 12px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
+}
+
+.search-form-field {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
 }
 
 button {
     height: 40px;
-    padding: 10px;
+    padding: 10px 13px;
     color: white;
     background-color: #5b8b0e;
     text-transform: uppercase;
@@ -373,9 +411,19 @@ button:disabled {
 
 .error-msg {
     color: #aa1e0c;
-    font-size: .9em;
+    font-size: 0.75em;
+    text-transform: uppercase;
     text-align: left;
     margin-bottom: 10px;
+}
+
+.error-msg-create {
+    color: #aa1e0c;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 30px;
 }
 
 .secondary-text {

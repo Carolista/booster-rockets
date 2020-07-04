@@ -25,7 +25,6 @@ export class SearchComponent implements OnInit {
   flashcardResults: Flashcard[] = [];
   userResults: User[] = [];
 
-
   constructor() { }
 
   ngOnInit() {
