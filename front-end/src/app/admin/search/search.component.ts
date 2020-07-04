@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   allCategories: string[] = [];
   allTopics: string[] = [];
   allTypes: string[] = [];
+  numberOfCards: number = questionBank.length;
   keyword: string = "";
   selectedCategory: string = "";
   selectedTopic: string = "";
