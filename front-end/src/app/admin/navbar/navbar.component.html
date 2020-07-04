@@ -1,5 +1,6 @@
 <div class="center-align">
     <div class="flexbox-row">
+        <!-- FIXME: need to learn proper way to reference active route so this will always be correct -->
         <a class="white-link" [class.white-link-selected]="activeLink === 'dashboard'" [routerLink]="'/admin/dashboard'" (click)="activeLink='dashboard'">Admin Dashboard</a>
         <a class="white-link" [class.white-link-selected]="activeLink === 'search'" [routerLink]="'/admin/search'" (click)="activeLink='search'">Search Questions</a>
         <a class="white-link" [class.white-link-selected]="activeLink === 'create'" [routerLink]="'/admin/create'" (click)="activeLink='create'">Create New Content</a>

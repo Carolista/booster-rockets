@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   allCategories: string[] = [];
   allTopics: string[] = [];
   allTypes: string[] = [];
+  keyword: string = "";
   selectedCategory: string = "";
   selectedTopic: string = "";
   selectedType: string = "";
@@ -79,19 +80,56 @@ export class SearchComponent implements OnInit {
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
   }
 
+  // search(searchTerm: string): void {
+  //   let matchingSatellites: Satellite[] = [];
+  //   searchTerm = searchTerm.toLowerCase();
+  //   for(let i=0; i < this.sourceList.length; i++) {
+  //       let name = this.sourceList[i].name.toLowerCase();
+  //       let type = this.sourceList[i].type.toLowerCase();
+  //       let orbitType = this.sourceList[i].orbitType.toLowerCase();
+  //       if (name.indexOf(searchTerm) >= 0 || type.indexOf(searchTerm) >= 0 || orbitType.indexOf(searchTerm) >= 0) {
+  //           matchingSatellites.push(this.sourceList[i]);
+  //       }
+  //   }
+  //   this.displayList = matchingSatellites;
+  // }
+
+  searchTermFound(term: string, card: Flashcard): boolean {
+    term = term.toLowerCase();
+    let category = card.category.toLowerCase();
+    let topic = card.topic.toLowerCase();
+    let query = card.query.toLowerCase();
+    let choices = card.choices.toString().toLowerCase();
+    if (category.indexOf(term) >=0
+        || topic.indexOf(term) >= 0
+        || query.indexOf(term) >= 0
+        || choices.indexOf(term) >= 0) {
+          return true;
+        }
+    return false;
+  }
+
   getFlashcardResults() {
 
     // start with all possible questions in a new array
     this.flashcardResults = questionBank.slice(0);
-    
-    // build flashcard results from question bank
+
+    // filter results
     let i: number = 0;
     while (i < this.flashcardResults.length) {
       let card = this.flashcardResults[i];
+
+      // narrow based on keyword
+      if (this.keyword.length > 0 && !this.searchTermFound(this.keyword,card)) {
+        this.flashcardResults.splice(i,1);
+        continue; // end loop and do not advance i due to splice
+      }
+
+      // narrow based on dropdown options
       if (this.selectedCategory !== "") {
         if (this.selectedCategory !== card.category) {
           this.flashcardResults.splice(i,1);
-          continue; // end loop and do not advance i due to splice
+          continue; 
         }        
       }
       if (this.selectedTopic !== "") {
@@ -106,6 +144,7 @@ export class SearchComponent implements OnInit {
           continue;
         }        
       }
+
       // otherwise it is kept in the array and i increases
       i++
     }

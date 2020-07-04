@@ -13,14 +13,16 @@
         <!-- Flashcard Search -->
         <div *ngIf="searchType === 'flashcard'" class="center">
             <div class="parameters-block space-above">
+
                 <div class="flexbox-row">
                     <div class="right search-type-column">
                         Keyword
                     </div>
                     <div class="left search-field-column">
-                        <input type="text" class="text-input" />
+                        <input #key="ngModel" [(ngModel)]="keyword" (input)="getFlashcardResults()" placeholder="Type anything!" type="text" class="text-input" />
                     </div>        
                 </div>
+
                 <div class="flexbox-row">
                     <div class="right search-type-column">
                         Category
@@ -75,7 +77,7 @@
         </div>
 
 
-        <!-- Add feature to return results as table or in grid -->
+        <!-- TODO: (maybe) Add feature to return user results as table or in grid -->
     </div>
     
 </div>
