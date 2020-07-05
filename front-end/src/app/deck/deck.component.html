@@ -1,10 +1,8 @@
 <div class="center-align">
     <div class="card">
-        <span class="category-topic">{{currentCard.category}}</span> 
+        <span class="category-topic">{{currentCard.category}}: {{currentCard.topic}}</span>
             <small *ngIf="!answered && currentQuestion.presented === 0" class="stat-snippet-new spacer-10">New question!</small>
         <hr>
-        <!-- TODO: add topic here as well -->
-
         <p class="query">{{currentCard.query}}</p>
         <div *ngFor="let choice of currentCard.choices; let c = index">
             <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentCard.choices[c]" [checked]="false" />{{currentCard.choices[c]}}

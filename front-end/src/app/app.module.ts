@@ -13,6 +13,10 @@ import { OptionsComponent } from './options/options.component';
 import { StartComponent } from './start/start.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { CreateComponent } from './admin/create/create.component';
+import { SearchComponent } from './admin/search/search.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { NavbarComponent } from './admin/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { RegisterComponent } from './register/register.component';
     OptionsComponent,
     StartComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CreateComponent,
+    SearchComponent,
+    DashboardComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

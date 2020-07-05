@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import questionBank from '../../assets/question-bank.json';
+import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
@@ -22,7 +22,7 @@ export class DeckComponent implements OnInit {
   correct: boolean = true;
 
   // temporarily hard-code Filters object to test function in buildFlashcardSet
-  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Strings", "Arrays"], ["Multiple Choice","True/False"]);
+  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Queries", "Arrays", "General"], ["Multiple Choice","True/False"]);
 
   // temporarily hard-code Question array to test statistics calculations
   questions: Question[] = [
@@ -49,14 +49,15 @@ export class DeckComponent implements OnInit {
     // build flashcard set for this session from question bank
     this.flashcards = [];
     // TODO: use criteria instead of adding all
-    questionBank.forEach(obj => {
+    allFlashcards.forEach(obj => {
       let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
-      if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
+      if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
         if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
           this.shuffle(card.choices);
         }
         this.flashcards.push(card);
+        console.log("added question to deck: " + card.query);
       }      
     });
 
@@ -80,7 +81,6 @@ export class DeckComponent implements OnInit {
     this.questions[index].presented++;
     this.statistics.presented++;
     if (this.currentResponse === this.currentCard.answer) {
-      console.log("Correct answer");
       this.questions[index].correct++;
       this.statistics.correct++;
       this.statistics.currentStreak++;
@@ -89,7 +89,6 @@ export class DeckComponent implements OnInit {
       }
       this.correct = true;
     } else {
-      console.log("Wrong answer");
       this.correct = false;
     }
     console.log(this.questions[index]);

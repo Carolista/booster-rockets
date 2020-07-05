@@ -6,7 +6,8 @@ html, body {
     margin: 0px;
     font-family: 'Prompt', sans-serif;
     font-weight: 200;
-    background-color: #222222; /* prevents white peeking through when hitting scrolling limits */
+    color: #333333;
+    background-color: #333333; /* prevents white peeking through when hitting scrolling limits */
     z-index: 1;
     overflow-x: hidden;
 }
@@ -24,6 +25,8 @@ IDEAS:
 
 /* TODO: move styles that are not used globally to lower css files */
 
+/* TODO: add fixed "to top" button on longer pages */
+
 #viewport {
     display: flex;
     flex-direction: column;
@@ -34,14 +37,25 @@ IDEAS:
 
 #header {
     display: flex;
-    height: 12vh;
-    min-height: 80px;
-    max-height: 90px;
+    height: 85px;
     width: 100vw;
     justify-content: center;
     align-items: center;
     bottom: 0;
     color: white;
+    padding: 5px;
+}
+
+#navbar {
+    display: flex;
+    height: 35px; /* FIXME: figure out why this height is changing depending on whether the content is smaller or larger than the vh */
+    max-height: 35px;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    color: white;
+    background-color: #5b8b0e;
     padding: 5px;
 }
 
@@ -115,6 +129,29 @@ IDEAS:
     width: 33%
 }
 
+.create-column {
+    width: 28%;
+    margin: 0px 25px;
+}
+
+.search-type-column {
+    max-width: 30%;
+    padding: 0px 5px;
+}
+
+.search-field-column {
+    min-width: 65%;
+    padding: 0px 5px;
+}
+
+.text-input {
+    width: 96%;
+}
+
+.dropdown {
+    width: 100%;
+}
+
 .login-register {
     display: flex;
     flex-direction: column;
@@ -123,13 +160,77 @@ IDEAS:
     text-align: center;
 }
 
+.create-block {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    align-items: center;
+    text-align: center;
+}
+
+.search-block {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    align-items: center;
+    text-align: center;
+}
+
+.parameters-block {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 0 5vw;
+    padding: 0 10vw;
+}
+
+.results-block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: top;
+    text-align: left;
+}
+
+.result-count {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #5b8b0e;
+}
+
+.choice-indent {
+    margin-left: 15px;
+}
+
+.answer {
+    margin-top: 5px;
+}
+
 .right {
     width: 100%;
     text-align: right;
 }
 
+.center {
+    width: 100%;
+    text-align: center;
+}
+
+.left {
+    width: 100%;
+    text-align: left;
+}
+
+.bottom {
+    align-items: bottom;
+}
+
 .space-above {
     margin-top: 30px;
+}
+
+.half-space-above {
+    margin-top: 15px;
 }
 
 .space-below {
@@ -141,6 +242,20 @@ IDEAS:
     text-transform: uppercase;
     font-size: 1.8em;
     margin-bottom: 0.3em;
+}
+
+.dashboard-stats {
+    font-family: 'Days One', 'Prompt', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    line-height: 1.5em; 
+    margin-bottom: 0.3em;
+}
+
+.category-topic {
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100%;
 }
 
 .flexbox-row {
@@ -181,7 +296,7 @@ IDEAS:
 }
 
 .query {
-    font-weight: 800;
+    font-weight: 400;
 }
 
 .answer-correct {
@@ -254,35 +369,55 @@ IDEAS:
     color: white;
 }
 
-.form-fields {
-    width: 50vw;
-    height: 25px;
+form {
+    width: 100%;
+}
+
+select {
+    height: 30px;
     margin-bottom: 8px;
     padding: 5px 10px;
     border: none;
-    border-radius: 5px;
-    background-color: #eeeeee;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
 }
 
-button {
-    height: 40px;
-    padding: 10px;
-    color: white;
-    background-color: #5b8b0e;
-    text-transform: uppercase;
+.form-fields {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 8px;
+    margin-left: 12px;
+    padding: 5px 10px;
     border: none;
-    border-radius: 0px 15px;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
 }
 
-button:disabled {
-    background-color: #ccc;
+.search-form-field {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
 }
 
 .error-msg {
     color: #aa1e0c;
-    font-size: .9em;
+    font-size: 0.75em;
+    text-transform: uppercase;
     text-align: left;
     margin-bottom: 10px;
+}
+
+.error-msg-create {
+    color: #aa1e0c;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 30px;
 }
 
 .secondary-text {
@@ -290,8 +425,29 @@ button:disabled {
     font-size: .9em;
 }
 
-.subtle-link {
+a.subtle-link {
     color: #555555;
+}
+
+a.white-link {
+    font-size: .9em;
+    font-weight: 400;
+    color: #a9d366;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 0px 15px;
+}
+
+a.white-link:hover {
+    color: white;
+}
+
+a.white-link-selected {
+    color: white;
+}
+
+.inline-radio {
+    margin: 0px 15px;
 }
 
 .slightly-smaller {
@@ -368,3 +524,83 @@ button:disabled {
     left: 50%;
     transform: translate(-50%, -50%) rotate(180deg);
 } */
+
+
+/***** INLINE BUTTON GROUP *****/
+
+.button-group {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.button-group > .button-inline {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.button-group > .button-inline:hover, .button-group > .button-inline:focus, .button-group > .button-inline:active {
+    z-index: 1;
+}
+
+
+button {
+    height: 40px;
+    padding: 10px 13px;
+    color: white;
+    background-color: #5b8b0e;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0px 15px;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+.button-inline {
+    position: relative;
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #5b8b0e;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    user-select: none; /* user cannot select text of button label */
+    background: transparent;
+    line-height: 1.5rem;
+    border: 2px solid #5b8b0e;
+    border-radius: 0px 15px;
+    padding: 7px 11px;
+    margin: 0px 5px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.button-inline:hover {
+    color: white;
+    background: #7fc017;
+    text-decoration: none;
+    border-color: #7fc017;
+    opacity: 1;
+}
+
+.button-selected {
+    color: white;
+    background: #5b8b0e;
+    text-decoration: none;
+    border-color: #5b8b0e;
+}
+
+.button-inline:focus {
+    outline: 0;
+}
+
+.button-inline:disabled {
+    opacity: 0.65;
+}
+
+.button-inline:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
