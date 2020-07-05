@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import questionBank from '../../assets/question-bank.json';
+import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
@@ -22,15 +22,15 @@ export class DeckComponent implements OnInit {
   correct: boolean = true;
 
   // temporarily hard-code Filters object to test function in buildFlashcardSet
-  filters: Filters = new Filters(null, ["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Strings", "Arrays"], ["Multiple Choice","True/False"]);
+  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Queries", "Arrays", "General"], ["Multiple Choice","True/False"]);
 
   // temporarily hard-code Question array to test statistics calculations
   questions: Question[] = [
-    new Question(123, 1, 3, 2),
-    new Question(145, 2, 4, 3),
-    new Question(164, 5, 6, 5),
-    new Question(198, 7, 4, 4),
-    new Question(210, 9, 2, 1)
+    new Question(1, 3, 2),
+    new Question(2, 4, 3),
+    new Question(5, 6, 5),
+    new Question(7, 4, 4),
+    new Question(9, 2, 1)
   ]
 
   // temporarily hard-code Statistics object to test statistics calculations
@@ -49,14 +49,15 @@ export class DeckComponent implements OnInit {
     // build flashcard set for this session from question bank
     this.flashcards = [];
     // TODO: use criteria instead of adding all
-    questionBank.forEach(obj => {
-      let card = new Flashcard(obj.id, obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
+    allFlashcards.forEach(obj => {
+      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
       // add card to deck only if it fits user's criteria
-      if (this.filters.categories.includes(card.category) && this.filters.types.includes(card.type)) {
+      if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
         if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
           this.shuffle(card.choices);
         }
         this.flashcards.push(card);
+        console.log("added question to deck: " + card.query);
       }      
     });
 
@@ -73,14 +74,13 @@ export class DeckComponent implements OnInit {
     this.answered = true;
     let index = this.findQuestionByCardId(this.currentCard.id);
     if (index === -1) {
-      let question = new Question(null, this.currentCard.id, 0, 0);
+      let question = new Question(this.currentCard.id, 0, 0);
       this.questions.push(question);
       index = this.questions.length - 1;
     }
     this.questions[index].presented++;
     this.statistics.presented++;
     if (this.currentResponse === this.currentCard.answer) {
-      console.log("Correct answer");
       this.questions[index].correct++;
       this.statistics.correct++;
       this.statistics.currentStreak++;
@@ -89,7 +89,6 @@ export class DeckComponent implements OnInit {
       }
       this.correct = true;
     } else {
-      console.log("Wrong answer");
       this.correct = false;
     }
     console.log(this.questions[index]);
@@ -98,7 +97,7 @@ export class DeckComponent implements OnInit {
   setCurrentQuestion() {
     let index = this.findQuestionByCardId(this.currentCard.id);
     if (index === -1) {
-      this.currentQuestion = new Question(null, this.currentCard.id, 0, 0); 
+      this.currentQuestion = new Question(this.currentCard.id, 0, 0); 
     } else {
       this.currentQuestion = this.questions[index];
     }

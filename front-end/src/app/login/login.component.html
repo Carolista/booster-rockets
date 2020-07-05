@@ -1,0 +1,41 @@
+<div class="center-align">
+    <div class="login-register">
+        <p class="page-title">Log In</p>
+        <form #f="ngForm" name="form" (ngSubmit)="f.form.valid && onSubmit()" validate>
+    
+            <div>            
+                <input #email="ngModel" name="email" placeholder="E-mail Address" type="email" 
+                    [(ngModel)]="user.email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$" class="form-fields" />
+                <div *ngIf="email.invalid && email.touched" class="error-msg">
+                    Please enter a valid e-mail address.
+                </div>
+            </div>
+    
+            <div>
+                <input #password="ngModel" name="password" placeholder="Password" type="password"
+                    [(ngModel)]="user.password" required minlength="8" class="form-fields" />
+                <div *ngIf="f.invalid && password.touched">
+                    <div *ngIf="password.errors.required" class="error-msg">
+                        Password is required.
+                    </div>
+                    <div *ngIf="password.errors.minlength" class="error-msg">
+                        Password must be at least 8 characters long.
+                    </div>
+                </div>
+            </div>
+    
+            <div class="secondary-text">
+                <p>Don't have an account yet? <a [routerLink]="'/register'" class="subtle-link">Register here.</a></p>
+            </div>
+    
+            <div class="space-above">
+                <button type="submit" [disabled]="!f.form.valid">Log in</button>
+            </div>
+            
+            <div *ngIf="f.submitted && isLoginFailed" class="error-msg">
+                Sorry! That e-mail and password combination is invalid.
+            </div>
+            
+        </form>
+    </div>  
+</div>

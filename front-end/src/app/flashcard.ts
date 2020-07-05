@@ -10,8 +10,7 @@ export class Flashcard {
     choices: string[]; 
     answer: string; 
 
-    constructor(id: number, category: string, topic: string, type: string, query: string, choices: string[], answer: string) {
-        this.id = id;
+    constructor(category: string, topic: string, type: string, query: string, choices: string[], answer: string) {
         this.category = category;
         this.topic = topic;
         this.type = type;

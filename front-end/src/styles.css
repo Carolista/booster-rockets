@@ -1,10 +1,15 @@
 html, body {
+    position: relative;
     height: 100vh;
     width: 100vw;
     padding: 0px;
     margin: 0px;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-weight: 200;
+    color: #333333;
+    background-color: #333333; /* prevents white peeking through when hitting scrolling limits */
+    z-index: 1;
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,46 +23,187 @@ IDEAS:
         (beach, coffeeshop, library, mountains, garden, gaming den, etc)
 */
 
-.header {
+/* TODO: move styles that are not used globally to lower css files */
+
+/* TODO: add fixed "to top" button on longer pages */
+
+#viewport {
     display: flex;
-    height: 10vh;
+    flex-direction: column;
+    height: 100vh;
     width: 100vw;
-    justify-content: center;
-    align-items: center;
-    background-color: #222222;
-    color: ghostwhite;
+    padding-bottom: -6vh;
 }
 
-.main {
+#header {
     display: flex;
-    height: 83vh;
+    height: 85px;
     width: 100vw;
     justify-content: center;
     align-items: center;
-    background-color: ghostwhite;
+    bottom: 0;
+    color: white;
+    padding: 5px;
 }
 
-.footer {
+#navbar {
     display: flex;
-    height: 7vh;
+    height: 35px; /* FIXME: figure out why this height is changing depending on whether the content is smaller or larger than the vh */
+    max-height: 35px;
     width: 100vw;
     justify-content: center;
     align-items: center;
-    background-color: #222222;
-    color: ghostwhite;
+    bottom: 0;
+    color: white;
+    background-color: #5b8b0e;
+    padding: 5px;
+}
+
+#main {
+    display: flex;
+    flex: 1 0 auto;
+    width: 100vw;
+    justify-content: center;
+    background-color: white;
+    padding: 60px 0px;
+}
+
+#footer {
+    display: flex;
+    flex-shrink: 0;
+    height: 6vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 5px;
+}
+
+.top-align {
+    align-items: top;
+}
+
+.center-align {
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 
 .title {
-    font-size: 5vh;
-    font-family: 'Days One', sans-serif;
+    font-size: 7vw;
+    font-family: 'Days One', 'Prompt', sans-serif;
+}
+
+@media screen and (min-width: 800px) {
+    .title {
+       font-size: 50px;
+    }
 }
 
 .card {
-    width: 65vw;
+    width: 55vw;
 }
 
 .options-block {
+    width: 85vw;
+    max-width: 720px;
+}
+
+.options-left-stats {
+    width: 85%;
+}
+
+.options-right-stats {
+    width: 15%;
+}
+
+.options-left {
+    width: 90%;
+}
+
+.options-right {
+    width: 10%;
+}
+
+.checkbox-column-thirds {
+    width: 33%
+}
+
+.create-column {
+    width: 28%;
+    margin: 0px 25px;
+}
+
+.search-type-column {
+    max-width: 30%;
+    padding: 0px 5px;
+}
+
+.search-field-column {
+    min-width: 65%;
+    padding: 0px 5px;
+}
+
+.text-input {
+    width: 96%;
+}
+
+.dropdown {
+    width: 100%;
+}
+
+.login-register {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    align-items: center;
+    text-align: center;
+}
+
+.create-block {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    align-items: center;
+    text-align: center;
+}
+
+.search-block {
+    display: flex;
+    flex-direction: column;
     width: 70vw;
+    align-items: center;
+    text-align: center;
+}
+
+.parameters-block {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 0 5vw;
+    padding: 0 10vw;
+}
+
+.results-block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: top;
+    text-align: left;
+}
+
+.result-count {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #5b8b0e;
+}
+
+.choice-indent {
+    margin-left: 15px;
+}
+
+.answer {
+    margin-top: 5px;
 }
 
 .right {
@@ -65,28 +211,80 @@ IDEAS:
     text-align: right;
 }
 
+.center {
+    width: 100%;
+    text-align: center;
+}
+
+.left {
+    width: 100%;
+    text-align: left;
+}
+
+.bottom {
+    align-items: bottom;
+}
+
 .space-above {
-    margin-top: 25px;
+    margin-top: 30px;
+}
+
+.half-space-above {
+    margin-top: 15px;
+}
+
+.space-below {
+    margin-bottom: 5px;
 }
 
 .page-title {
-    font-family: 'Days One', sans-serif;
+    font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
     font-size: 1.8em;
-    margin-bottom:0.5em;
+    margin-bottom: 0.3em;
 }
 
-.checklist-header {
+.dashboard-stats {
+    font-family: 'Days One', 'Prompt', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    line-height: 1.5em; 
+    margin-bottom: 0.3em;
+}
+
+.category-topic {
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.flexbox-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2px;
+}
+
+.flexbox-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.checklist-header-stats {
     font-weight: 600;
     text-transform: uppercase;
     font-size: 1.2em;
     margin-bottom: 0.5em;
 }
 
-.category-topic {
-    font-size: 1.2em;
-    font-weight: 400;
+.checklist-header {
+    font-weight: 600;
     text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.stats-headers {
+    font-weight: 600;
+    margin: 5px 0px 3px 0px;
 }
 
 .stat-snippet-new {
@@ -98,7 +296,7 @@ IDEAS:
 }
 
 .query {
-    font-weight: 800;
+    font-weight: 400;
 }
 
 .answer-correct {
@@ -115,20 +313,294 @@ IDEAS:
     margin: 0px 10px;
 }
 
-.checklist-row {
-    display: flex;
-    flex-direction: row;
-}
-
-.checklist-checkbox-col {
-    width: 40%;
-}
-
-.checklist-stats-col {
-    width: 30%;
+.stats-column {
+    width: 20%;
     text-align: center;
+}
+
+.checkbox-column {
+    width: 40%;
 }
 
 .muted {
     color: #BBBBBB;
+}
+
+.count-block-z {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    min-height: 60px;
+    top: 110px;
+    right: 20px;
+    padding: 5px 20px 20px;
+    background-color: #ca4a0f;
+    border-radius: 0px 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-z {
+    background-color: #a73500;
+}
+
+.deck-count-z {
+    font-family: 'Days One', 'Prompt', sans-serif;
+    text-transform: uppercase;
+    color: white;
+}
+
+.big-number {
+    font-weight: 400;
+    font-size: 3.6em;
+}
+
+.big-text {
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.instruction {
+    font-family: "Prompt", sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    text-transform: none;
+    margin-top: 10px;
+    color: white;
+}
+
+form {
+    width: 100%;
+}
+
+select {
+    height: 30px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
+}
+
+.form-fields {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 8px;
+    margin-left: 12px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
+}
+
+.search-form-field {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0 10px;
+    background-color: #ebebeb;
+}
+
+.error-msg {
+    color: #aa1e0c;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.error-msg-create {
+    color: #aa1e0c;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 30px;
+}
+
+.secondary-text {
+    color: #777777;
+    font-size: .9em;
+}
+
+a.subtle-link {
+    color: #555555;
+}
+
+a.white-link {
+    font-size: .9em;
+    font-weight: 400;
+    color: #a9d366;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 0px 15px;
+}
+
+a.white-link:hover {
+    color: white;
+}
+
+a.white-link-selected {
+    color: white;
+}
+
+.inline-radio {
+    margin: 0px 15px;
+}
+
+.slightly-smaller {
+    font-size: .9em;
+}
+
+.custom-checkbox input {
+    display: none;
+}
+  
+.custom-checkbox {
+    display: inline-block;
+    padding-left: 25px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-checkbox-small {
+    padding-left: 21px;
+}
+  
+.custom-checkbox .checkmark {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 0px 5px;
+    background: #ccc;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.custom-checkbox-small .checkmark {
+    width: 17px;
+    height: 17px;
+    border-radius: 0px 4px;
+    top: 8%;
+}
+  
+.custom-checkbox input:checked+.checkmark {
+    background-color: #0ba5c0;
+}
+
+.custom-checkbox-small input:checked+.checkmark {
+    background-color: #bada55;
+}
+  
+.custom-checkbox input:checked+.checkmark:after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 9px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    top: 45%;
+    left: 52%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.custom-checkbox-small input:checked+.checkmark:after {
+    height: 3px;
+    width: 8px;
+}
+  
+/* .custom-checkbox input:indeterminate+.checkmark:after {
+    content: "";
+    position: absolute;
+    height: 0px;
+    width: 9px;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(180deg);
+} */
+
+
+/***** INLINE BUTTON GROUP *****/
+
+.button-group {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.button-group > .button-inline {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.button-group > .button-inline:hover, .button-group > .button-inline:focus, .button-group > .button-inline:active {
+    z-index: 1;
+}
+
+
+button {
+    height: 40px;
+    padding: 10px 13px;
+    color: white;
+    background-color: #5b8b0e;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0px 15px;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+.button-inline {
+    position: relative;
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #5b8b0e;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    user-select: none; /* user cannot select text of button label */
+    background: transparent;
+    line-height: 1.5rem;
+    border: 2px solid #5b8b0e;
+    border-radius: 0px 15px;
+    padding: 7px 11px;
+    margin: 0px 5px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.button-inline:hover {
+    color: white;
+    background: #7fc017;
+    text-decoration: none;
+    border-color: #7fc017;
+    opacity: 1;
+}
+
+.button-selected {
+    color: white;
+    background: #5b8b0e;
+    text-decoration: none;
+    border-color: #5b8b0e;
+}
+
+.button-inline:focus {
+    outline: 0;
+}
+
+.button-inline:disabled {
+    opacity: 0.65;
+}
+
+.button-inline:not(:disabled):not(.disabled) {
+    cursor: pointer;
 }
