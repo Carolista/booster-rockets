@@ -10,27 +10,44 @@ import { User } from 'src/app/user';
 })
 export class SearchComponent implements OnInit {
 
-  searchType: string = "flashcard";
+  searchType: string = "user";
+
+  // FLASHCARD SEARCH
   allCategories: string[] = [];
   allTopics: string[] = [];
   allTypes: string[] = [];
-  numberOfCards: number = allFlashcards.length;
+  
   keyword: string = "";
   selectedCategory: string = "";
   selectedTopic: string = "";
   selectedType: string = "";
+  numberOfCards: number = allFlashcards.length;
+  flashcardResults: Flashcard[] = [];
 
   letters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   
-  flashcardResults: Flashcard[] = [];
+  allUsers: User[] = [new User("Caroline", "Jones","caroline@jones.com","",null,null,null,null),
+                      new User("Fitzwilliam","Darcy","mrdarcy@derbyshire.com","",null,null,null,null),
+                      new User("Bilbo","Baggins","bilbo@theshire.com","",null,null,null,null),
+                      new User("Willy","Wonka","willy@wonkachocolates.com","",null,null,null,null),
+                      new User("John Jacob","Jingleheimerschmidt","johnjacob@longlastnames.com","",null,null,null,null),
+                      new User("William","Riker","commander.riker@federation.com","",null,null,null,null)];
+  firstName: string = "";
+  lastName: string = "";
+  email: string = "";
+  numberOfUsers: number = this.allUsers.length;
   userResults: User[] = [];
 
   constructor() { }
 
   ngOnInit() {
-    this.buildSelectionArrays();
+    this.buildFlashcardSearchArrays();
     this.getFlashcardResults();
+    this.getUserResults();
   }
+
+
+  // FLASHCARD SEARCH
 
   findCategory(category: string): number {
     for (let i=0; i < this.allCategories.length; i++) {
@@ -59,7 +76,7 @@ export class SearchComponent implements OnInit {
     return -1;
   }
 
-  buildSelectionArrays() {
+  buildFlashcardSearchArrays() {
     let index: number;
     allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
@@ -80,7 +97,7 @@ export class SearchComponent implements OnInit {
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
   }
 
-  searchTermFound(term: string, card: Flashcard): boolean {
+  flashcardSearchTermFound(term: string, card: Flashcard): boolean {
     term = term.toLowerCase();
     let category = card.category.toLowerCase();
     let topic = card.topic.toLowerCase();
@@ -106,7 +123,7 @@ export class SearchComponent implements OnInit {
       let card = this.flashcardResults[i];
 
       // narrow based on keyword
-      if (this.keyword.length > 0 && !this.searchTermFound(this.keyword,card)) {
+      if (this.keyword.length > 0 && !this.flashcardSearchTermFound(this.keyword,card)) {
         this.flashcardResults.splice(i,1);
         continue; // end loop and do not advance i due to splice
       }
@@ -130,12 +147,44 @@ export class SearchComponent implements OnInit {
           continue;
         }        
       }
-
       // otherwise it is kept in the array and i increases
       i++
     }
 
     console.log("Flashcard results ready.")
+  }
+
+
+  // USER SEARCH
+
+  getUserResults() {
+
+    // start with all possible users in a new array
+    this.userResults = this.allUsers.slice(0);
+
+    // filter results
+    let i: number = 0;
+    while (i < this.userResults.length) {
+      let user = this.userResults[i];
+
+      // narrow based on each field
+      if (this.firstName.length > 0 && user.firstName.toLowerCase().indexOf(this.firstName.toLowerCase()) < 0) {
+        this.userResults.splice(i,1);
+        continue; // end loop and do not advance i due to splice
+      }
+      if (this.lastName.length > 0 && user.lastName.toLowerCase().indexOf(this.lastName.toLowerCase()) < 0) {
+        this.userResults.splice(i,1);
+        continue; 
+      }        
+      if (this.email.length > 0 && user.email.toLowerCase().indexOf(this.email.toLowerCase()) < 0) {
+        this.userResults.splice(i,1);
+        continue; 
+      } 
+      // otherwise it is kept in the array and i increases
+      i++
+    }
+
+    console.log("User results ready.")
   }
 
 }

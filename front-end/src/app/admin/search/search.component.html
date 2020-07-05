@@ -77,9 +77,52 @@
             </div>
         </div>
 
-        <!-- TODO: Set up alternate section for user search -->
+        <!-- User Search -->
+        <div *ngIf="searchType === 'user'" class="center">
+            <div class="parameters-block space-above">
+
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        First Name
+                    </div>
+                    <div class="left search-field-column">
+                        <input #first="ngModel" [(ngModel)]="firstName" (input)="getUserResults()" placeholder="Type anything!" type="text" class="search-form-field" />
+                    </div>        
+                </div>
+
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        Last Name
+                    </div>
+                    <div class="left search-field-column">
+                        <input #last="ngModel" [(ngModel)]="lastName" (input)="getUserResults()" placeholder="Type anything!" type="text" class="search-form-field" />
+                    </div>        
+                </div>
+
+                <div class="flexbox-row">
+                    <div class="right search-type-column">
+                        E-mail
+                    </div>
+                    <div class="left search-field-column">
+                        <input #userEmail="ngModel" [(ngModel)]="email" (input)="getUserResults()" placeholder="Type anything!" type="text" class="search-form-field" />
+                    </div>        
+                </div>
+
+            </div>
+
+            <div class="results-block slightly-smaller">
+                <span class="space-above result-count" *ngIf="userResults.length === numberOfUsers">Displaying all users.</span>
+                <span class="space-above result-count" *ngIf="userResults.length < numberOfUsers">Your search returned {{userResults.length}} result<span *ngIf="userResults.length === 0 || userResults.length > 1">s</span>.</span>
+                <div *ngFor="let user of userResults" class="slightly-smaller">
+                    <hr>
+                    <div class="flexbox-row">
+                        <div class="category-topic">ID: {{user.id}} &#187; {{user.firstName}} {{user.lastName}}</div> <!-- TODO: add edit button once questions are in db -->
+                    </div>                 
+                    <span class="query">E-mail: {{user.email}}</span>                
+                </div>
+            </div>
+        </div>
         
-        <!-- TODO: (maybe) Add feature to return user results as table or in grid -->
     </div>
     
 </div>
