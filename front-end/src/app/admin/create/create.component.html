@@ -55,38 +55,40 @@
                 </div>
             </div>
 
+            <!-- TODO: REFACTOR TO RESPOND TO TYPE SELECTED AND HAVE A DIFFERENT SETUP FOR TRUE/FALSE QUESTIONS -->
+            
             <div class="half-space-above center">
                 <input #query="ngModel" name="query" [(ngModel)]="flashcard.query" required minlength="9" type='text' placeholder="Question" class="form-fields" />
                 <div *ngIf="answer.touched && answer.invalid" class="error-msg-create">
-                    Question must be at least 2 characters.
+                    Question must be at least 9 characters.
                 </div>
             </div>
             <div>
-                <input #answer="ngModel" name="answer" [(ngModel)]="flashcard.answer" required minlength="9" type='text' placeholder="Answer" class="form-fields" />
+                <input #answer="ngModel" name="answer" [(ngModel)]="flashcard.answer" (change)="saveChoiceA()" required minlength="2" type='text' placeholder="Option A - Correct Answer" class="form-fields" />
                 <div *ngIf="answer.touched && answer.invalid" class="error-msg-create">
                     Answer must be at least 2 characters.
                 </div>
             </div>
             <div>
-                <input #optionB="ngModel" name="optionB" [(ngModel)]="flashcard.choices[1]" required minlength="2" type='text' placeholder="Option B" class="form-fields" />
+                <input #optionB="ngModel" name="optionB" [(ngModel)]="flashcard.choices[1]" required minlength="2" type='text' placeholder="Option B - Incorrect" class="form-fields" />
                 <div *ngIf="optionB.touched && optionB.invalid" class="error-msg-create">
                     Option must be at least 2 characters.
                 </div>
             </div>
             <div>
-                <input #optionC="ngModel" name="optionC" [(ngModel)]="flashcard.choices[2]" minlength="2" type='text' placeholder="Option C (optional)" class="form-fields" />
+                <input #optionC="ngModel" name="optionC" [(ngModel)]="flashcard.choices[2]" minlength="2" type='text' placeholder="Option C - Incorrect (optional)" class="form-fields" />
                 <div *ngIf="optionC.dirty && optionC.touched && optionC.invalid" class="error-msg-create">
                     Option must be at least 2 characters.
                 </div>
             </div>            
             <div>
-                <input #optionD="ngModel" name="optionD" [(ngModel)]="flashcard.choices[3]" minlength="2" type='text' placeholder="Option D (optional)" class="form-fields" />
+                <input #optionD="ngModel" name="optionD" [(ngModel)]="flashcard.choices[3]" minlength="2" type='text' placeholder="Option D - Incorrect (optional)" class="form-fields" />
                 <div *ngIf="optionD.dirty && optionD.touched && optionD.invalid" class="error-msg-create">
                     Option must be at least 2 characters.
                 </div>
             </div> 
             <div>
-                <input #optionE="ngModel" name="optionE" [(ngModel)]="flashcard.choices[4]" minlength="2" type='text' placeholder="Option E (optional)" class="form-fields" />
+                <input #optionE="ngModel" name="optionE" [(ngModel)]="flashcard.choices[4]" minlength="2" type='text' placeholder="Option E - Incorrect (optional)" class="form-fields" />
                 <div *ngIf="optionE.dirty && optionE.touched && optionE.invalid" class="error-msg-create">
                     Option must be at least 2 characters.
                 </div>

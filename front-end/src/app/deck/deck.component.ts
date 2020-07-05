@@ -22,7 +22,7 @@ export class DeckComponent implements OnInit {
   correct: boolean = true;
 
   // temporarily hard-code Filters object to test function in buildFlashcardSet
-  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Strings", "Arrays"], ["Multiple Choice","True/False"]);
+  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Queries", "Arrays", "General"], ["Multiple Choice","True/False"]);
 
   // temporarily hard-code Question array to test statistics calculations
   questions: Question[] = [
@@ -57,6 +57,7 @@ export class DeckComponent implements OnInit {
           this.shuffle(card.choices);
         }
         this.flashcards.push(card);
+        console.log("added question to deck: " + card.query);
       }      
     });
 

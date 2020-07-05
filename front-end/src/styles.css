@@ -48,7 +48,7 @@ IDEAS:
 
 #navbar {
     display: flex;
-    height: 35px; /* figure out why this height is changing depending on whether the content is smaller or larger than the vh */
+    height: 35px; /* FIXME: figure out why this height is changing depending on whether the content is smaller or larger than the vh */
     max-height: 35px;
     width: 100vw;
     justify-content: center;
@@ -403,20 +403,6 @@ select {
     background-color: #ebebeb;
 }
 
-button {
-    height: 40px;
-    padding: 10px 13px;
-    color: white;
-    background-color: #5b8b0e;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 0px 15px;
-}
-
-button:disabled {
-    background-color: #ccc;
-}
-
 .error-msg {
     color: #aa1e0c;
     font-size: 0.75em;
@@ -557,9 +543,19 @@ a.white-link-selected {
     z-index: 1;
 }
 
-.button-group > .button-inline:hover {
-    background-color: #5b8b0e;
+
+button {
+    height: 40px;
+    padding: 10px 13px;
     color: white;
+    background-color: #5b8b0e;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0px 15px;
+}
+
+button:disabled {
+    background-color: #ccc;
 }
 
 .button-inline {
@@ -568,29 +564,31 @@ a.white-link-selected {
     font-size: .8rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: #333333;
+    color: #5b8b0e;
     text-align: center;
     vertical-align: middle;
     height: 40px;
     user-select: none; /* user cannot select text of button label */
-    background-color: transparent;
+    background: transparent;
     line-height: 1.5rem;
-    border: 2px solid #333333;
+    border: 2px solid #5b8b0e;
     border-radius: 0px 15px;
     padding: 7px 11px;
     margin: 0px 5px;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.button-inline:hover {
+    color: white;
+    background: #7fc017;
+    text-decoration: none;
+    border-color: #7fc017;
+    opacity: 1;
 }
 
 .button-selected {
     color: white;
-    background-color: #333333;
-    text-decoration: none;
-    border-color: #333333;
-}
-
-.button-inline:hover {
-    color: #5b8b0e;
+    background: #5b8b0e;
     text-decoration: none;
     border-color: #5b8b0e;
 }
