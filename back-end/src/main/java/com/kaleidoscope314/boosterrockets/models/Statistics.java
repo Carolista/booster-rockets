@@ -12,10 +12,6 @@ public class Statistics extends AbstractEntity {
     private int currentStreak = 0;
     private int longestStreak = 0;
 
-    // TODO: maybe do away with these since they are just a result of a calculation on front end using other saved data
-    private int categories = 0;
-    private int topics = 0;
-
     public Statistics() {}
 
     public int getPresented() {
@@ -56,22 +52,6 @@ public class Statistics extends AbstractEntity {
 
     public void setLongestStreak(int longestStreak) {
         this.longestStreak = longestStreak;
-    }
-
-    public int getCategories() {
-        return categories;
-    }
-
-    public void setCategories(int categories) {
-        this.categories = categories;
-    }
-
-    public int getTopics() {
-        return topics;
-    }
-
-    public void setTopics(int topics) {
-        this.topics = topics;
     }
 
 }

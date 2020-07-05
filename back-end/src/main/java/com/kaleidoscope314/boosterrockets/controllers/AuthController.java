@@ -11,14 +11,12 @@ import com.kaleidoscope314.boosterrockets.payload.response.MessageResponse;
 import com.kaleidoscope314.boosterrockets.security.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationManager; // it's not finding this!?!
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-//import javax.validation.Valid;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -71,8 +69,8 @@ public class AuthController {
             roleRepository.save(adminRole);
         }
 
-        // Here we would check what role the newly registered user has and assign it accordingly. For right now, just
-        // gives them the role user
+        // Here we would check what role the newly registered user has and assign it accordingly.
+        // For right now, just gives them the role user
         Role userRole = roleRepository.findByName(ROLE_USER).get();
         roles.add(userRole);
 

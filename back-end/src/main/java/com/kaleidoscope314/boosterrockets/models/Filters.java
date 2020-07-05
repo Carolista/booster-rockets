@@ -8,7 +8,6 @@ import java.util.List;
 @Entity
 public class Filters extends AbstractEntity {
 
-
     private List<String> categories = new ArrayList<>();
     private List<String> topics = new ArrayList<>();
     private List<String> types = new ArrayList<>();
