@@ -1,0 +1,103 @@
+<div class="center-align center">
+    <div class="create-block">
+
+        <div class="page-title">
+            CREATE FLASHCARD
+        </div>
+        <div class="slightly-smaller">
+            TIP: before creating a new card, <a [routerLink]="'/admin/search'" class="subtle-link">search</a> cards with the same<br /> category and primary keyword to prevent duplicates.
+        </div>
+
+        <form #f="ngForm" name="form" (ngSubmit)="f.form.valid && saveFlashcard()" class="space-above" validate>
+
+            <div class="flexbox-row">
+                <div class="flexbox-column create-column">
+                    <div class="right search-type-column">
+                        Category
+                    </div>
+                    <div class="left search-field-column">
+                        <select #categorySelection="ngModel" name="categorySelection" [(ngModel)]="flashcard.category" class="dropdown" required>
+                            <option></option>
+                            <option *ngFor="let category of allCategories">{{category}}</option>
+                        </select>
+                        <div *ngIf="categorySelection.touched && categorySelection.invalid" class="error-msg">
+                            Category is required.
+                        </div>
+                    </div>        
+                </div>
+                <div class="flexbox-column create-column">
+                    <div class="right search-type-column">
+                        Topic
+                    </div>
+                    <div class="left search-field-column">
+                        <select #topicSelection="ngModel" name="topicSelection" [(ngModel)]="flashcard.topic" class="dropdown" required>
+                            <option></option>
+                            <option *ngFor="let topic of allTopics">{{topic}}</option>
+                        </select>
+                        <div *ngIf="topicSelection.touched && topicSelection.invalid" class="error-msg">
+                            Topic is required.
+                        </div>
+                    </div>        
+                </div>
+                <div class="flexbox-column create-column">
+                    <div class="right search-type-column">
+                        Type
+                    </div>
+                    <div class="left search-field-column">
+                        <select #typeSelection="ngModel" name="typeSelection" [(ngModel)]="flashcard.type" class="dropdown" required>
+                            <option></option>
+                            <option *ngFor="let type of allTypes">{{type}}</option>
+                        </select>
+                        <div *ngIf="typeSelection.touched && typeSelection.invalid" class="error-msg">
+                            Type is required.
+                        </div>
+                    </div>        
+                </div>
+            </div>
+
+            <!-- TODO: REFACTOR TO RESPOND TO TYPE SELECTED AND HAVE A DIFFERENT SETUP FOR TRUE/FALSE QUESTIONS -->
+            
+            <div class="half-space-above center">
+                <input #query="ngModel" name="query" [(ngModel)]="flashcard.query" required minlength="9" type='text' placeholder="Question" class="form-fields" />
+                <div *ngIf="answer.touched && answer.invalid" class="error-msg-create">
+                    Question must be at least 9 characters.
+                </div>
+            </div>
+            <div>
+                <input #answer="ngModel" name="answer" [(ngModel)]="flashcard.answer" (change)="saveChoiceA()" required minlength="2" type='text' placeholder="Option A - Correct Answer" class="form-fields" />
+                <div *ngIf="answer.touched && answer.invalid" class="error-msg-create">
+                    Answer must be at least 2 characters.
+                </div>
+            </div>
+            <div>
+                <input #optionB="ngModel" name="optionB" [(ngModel)]="flashcard.choices[1]" required minlength="2" type='text' placeholder="Option B - Incorrect" class="form-fields" />
+                <div *ngIf="optionB.touched && optionB.invalid" class="error-msg-create">
+                    Option must be at least 2 characters.
+                </div>
+            </div>
+            <div>
+                <input #optionC="ngModel" name="optionC" [(ngModel)]="flashcard.choices[2]" minlength="2" type='text' placeholder="Option C - Incorrect (optional)" class="form-fields" />
+                <div *ngIf="optionC.dirty && optionC.touched && optionC.invalid" class="error-msg-create">
+                    Option must be at least 2 characters.
+                </div>
+            </div>            
+            <div>
+                <input #optionD="ngModel" name="optionD" [(ngModel)]="flashcard.choices[3]" minlength="2" type='text' placeholder="Option D - Incorrect (optional)" class="form-fields" />
+                <div *ngIf="optionD.dirty && optionD.touched && optionD.invalid" class="error-msg-create">
+                    Option must be at least 2 characters.
+                </div>
+            </div> 
+            <div>
+                <input #optionE="ngModel" name="optionE" [(ngModel)]="flashcard.choices[4]" minlength="2" type='text' placeholder="Option E - Incorrect (optional)" class="form-fields" />
+                <div *ngIf="optionE.dirty && optionE.touched && optionE.invalid" class="error-msg-create">
+                    Option must be at least 2 characters.
+                </div>
+            </div> 
+
+            <div class="space-above">
+                <button type="submit" [disabled]="!f.form.valid">ADD TO DATABASE</button>
+            </div>
+        </form>
+
+    </div>
+</div>

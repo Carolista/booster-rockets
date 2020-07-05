@@ -70,6 +70,8 @@ export class OptionsComponent implements OnInit {
         this.allTypes.push(new Selection(obj.type, true));
       } 
     });
+
+    // FIXME: these need to be updated to reflect Selection object structure
     this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
     this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
