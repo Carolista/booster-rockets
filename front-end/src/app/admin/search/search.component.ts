@@ -95,6 +95,8 @@ export class SearchComponent implements OnInit {
     this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
     this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
+
+    console.log("Flashcard arrays built for categories, topics, and types.")
   }
 
   flashcardSearchTermFound(term: string, card: Flashcard): boolean {
@@ -151,7 +153,7 @@ export class SearchComponent implements OnInit {
       i++
     }
 
-    console.log("Flashcard results ready.")
+    console.log("Flashcard results updated.")
   }
 
 
@@ -184,7 +186,12 @@ export class SearchComponent implements OnInit {
       i++
     }
 
-    console.log("User results ready.")
+    // TODO: add dropdown selection so admin can choose how to sort results - ID, first name, or last name
+    // maybe in the future could also sort by person with most cards presented or whatever
+    
+    this.userResults.sort((a,b) => (a.lastName > b.lastName) ? 1 : -1);
+
+    console.log("User results updated.")
   }
 
 }
