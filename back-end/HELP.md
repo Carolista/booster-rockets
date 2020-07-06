@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.kaleidoscope.booster-rockets' is invalid and this project uses 'com.kaleidoscope.boosterrockets' instead.
+* The original package name 'com.kaleidoscope314.booster-rockets' is invalid and this project uses 'com.kaleidoscope314.boosterrockets' instead.
 
 # Getting Started
 

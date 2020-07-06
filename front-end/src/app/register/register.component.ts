@@ -56,27 +56,27 @@ export class RegisterComponent implements OnInit {
     // values are already saved in user object due to ngModel binding
     console.log("saved user", this.user);
 
-    // this.authService.register(this.user).subscribe(
-    //   data => {
-    //     console.log(data);
+    this.authService.register(this.user).subscribe(
+      data => {
+        console.log(data);
         
-    //     this.isSuccessful = true;
-    //     this.isSignUpFailed = false;
-    //     this.tokenStorage.saveToken(data.token);
-    //     this.tokenStorage.saveUser(data);
-    //     console.log(data.token);
-    //     this.isLoginFailed = false;
-    //     this.isLoggedIn = true;
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data);
+        console.log(data.token);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
 
-    //     this.tokenStorage.saveUser(data);
-    //     this.reloadPage();
+        this.tokenStorage.saveUser(data);
+        this.reloadPage();
         
-    //   },
-    //   err => {
-    //     this.errorMessage = err.error.message;
-    //     this.isSignUpFailed = true;
-    //   }
-    // );
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    );
 
   }
 
