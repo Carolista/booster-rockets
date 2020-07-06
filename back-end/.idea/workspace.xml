@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aafc767f-1abf-41f3-ab48-4ad33e8e11c9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaleidoscope314/boosterrockets/models/data/FlashcardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/kaleidoscope314/boosterrockets/models/Filters.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/kaleidoscope314/boosterrockets/models/Filters.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaleidoscope314/boosterrockets/models/Filters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaleidoscope314/boosterrockets/models/Filters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaleidoscope314/boosterrockets/models/data/Flashcard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaleidoscope314/boosterrockets/models/Flashcard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,9 +65,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -88,6 +93,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -241,10 +247,11 @@
     </state>
     <state x="675" y="251" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1031@0.23.1792.1031" timestamp="1593187911041" />
     <state x="513" y="250" key="#com.intellij.execution.impl.EditConfigurationsDialog/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593993141689" />
-    <state x="1013" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1593190253194">
+    <state x="1013" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1593999251525">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state x="1013" y="231" key="#com.intellij.ide.util.MemberChooser/0.23.1792.1031@0.23.1792.1031" timestamp="1593190253194" />
+    <state x="1013" y="231" key="#com.intellij.ide.util.MemberChooser/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593999251525" />
     <state x="800" y="329" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1593219767691">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
@@ -254,29 +261,29 @@
     </state>
     <state x="965" y="361" key="EnvironmentVariablesDialog/0.23.1792.1031@0.23.1792.1031" timestamp="1593187847210" />
     <state x="965" y="361" key="EnvironmentVariablesDialog/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593993139294" />
-    <state width="1232" height="264" key="GridCell.Tab.0.bottom" timestamp="1593998879751">
+    <state width="1232" height="264" key="GridCell.Tab.0.bottom" timestamp="1594000379927">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state width="1335" height="268" key="GridCell.Tab.0.bottom/0.23.1792.1031@0.23.1792.1031" timestamp="1593224053122" />
-    <state width="1232" height="264" key="GridCell.Tab.0.bottom/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593998879751" />
+    <state width="1232" height="264" key="GridCell.Tab.0.bottom/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1594000379927" />
     <state width="1335" height="268" key="GridCell.Tab.0.bottom/1792.119.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593556584682" />
-    <state width="1232" height="264" key="GridCell.Tab.0.center" timestamp="1593998879750">
+    <state width="1232" height="264" key="GridCell.Tab.0.center" timestamp="1594000379926">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state width="1335" height="268" key="GridCell.Tab.0.center/0.23.1792.1031@0.23.1792.1031" timestamp="1593224053121" />
-    <state width="1232" height="264" key="GridCell.Tab.0.center/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593998879750" />
+    <state width="1232" height="264" key="GridCell.Tab.0.center/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1594000379926" />
     <state width="1335" height="268" key="GridCell.Tab.0.center/1792.119.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593556584681" />
-    <state width="1232" height="264" key="GridCell.Tab.0.left" timestamp="1593998879750">
+    <state width="1232" height="264" key="GridCell.Tab.0.left" timestamp="1594000379925">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state width="1335" height="268" key="GridCell.Tab.0.left/0.23.1792.1031@0.23.1792.1031" timestamp="1593224053121" />
-    <state width="1232" height="264" key="GridCell.Tab.0.left/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593998879750" />
+    <state width="1232" height="264" key="GridCell.Tab.0.left/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1594000379925" />
     <state width="1335" height="268" key="GridCell.Tab.0.left/1792.119.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593556584680" />
-    <state width="1232" height="264" key="GridCell.Tab.0.right" timestamp="1593998879750">
+    <state width="1232" height="264" key="GridCell.Tab.0.right" timestamp="1594000379927">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state width="1335" height="268" key="GridCell.Tab.0.right/0.23.1792.1031@0.23.1792.1031" timestamp="1593224053122" />
-    <state width="1232" height="264" key="GridCell.Tab.0.right/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593998879750" />
+    <state width="1232" height="264" key="GridCell.Tab.0.right/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1594000379927" />
     <state width="1335" height="268" key="GridCell.Tab.0.right/1792.119.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593556584681" />
     <state x="664" y="196" key="SettingsEditor" timestamp="1593998969821">
       <screen x="0" y="23" width="1792" height="1031" />

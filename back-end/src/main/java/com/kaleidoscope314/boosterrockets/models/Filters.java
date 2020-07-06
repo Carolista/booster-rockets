@@ -10,16 +10,16 @@ import java.util.List;
 @Entity
 public class Filters extends AbstractEntity {
 
-//    @Column
-//    @ElementCollection(targetClass=String.class)
+    @Column
+    @ElementCollection(targetClass=String.class)
     private List<String> categories = new ArrayList<>();
 
-//    @Column
-//    @ElementCollection(targetClass=String.class)
+    @Column
+    @ElementCollection(targetClass=String.class)
     private List<String> topics = new ArrayList<>();
 
-//    @Column
-//    @ElementCollection(targetClass=String.class)
+    @Column
+    @ElementCollection(targetClass=String.class)
     private List<String> types = new ArrayList<>();
 
     public Filters() {}
