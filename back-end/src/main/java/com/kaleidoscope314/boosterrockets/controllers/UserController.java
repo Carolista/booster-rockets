@@ -60,9 +60,6 @@ public class UserController {
                 user.setPassword(userRepository.findById(id).get().getPassword());
             }
 
-//            Optional<Iterable<Project>> projectsListOpt = projectRepository.findByUserId(id);
-//            projectsListOpt.ifPresent(projects -> user.setProjects((List<Project>) projects));
-
             user.setRoles(userRepository.findById(id).get().getRoles());
 
             userRepository.save(user);

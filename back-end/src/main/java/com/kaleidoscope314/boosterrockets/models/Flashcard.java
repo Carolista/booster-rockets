@@ -1,10 +1,6 @@
 package com.kaleidoscope314.boosterrockets.models;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Flashcard extends AbstractEntity {
@@ -13,12 +9,11 @@ public class Flashcard extends AbstractEntity {
     private String topic;
     private String type;
     private String query;
-
-    @Column
-    @ElementCollection(targetClass=String.class)
-    private List<String> choices = new ArrayList<>();
-
     private String answer;
+    private String choiceB;
+    private String choiceC;
+    private String choiceD;
+    private String choiceE;
 
     public Flashcard() {}
 
@@ -54,14 +49,6 @@ public class Flashcard extends AbstractEntity {
         this.query = query;
     }
 
-    public List<String> getChoices() {
-        return choices;
-    }
-
-    public void setChoices(List<String> choices) {
-        this.choices = choices;
-    }
-
     public String getAnswer() {
         return answer;
     }
@@ -70,4 +57,35 @@ public class Flashcard extends AbstractEntity {
         this.answer = answer;
     }
 
+    public String getChoiceB() {
+        return choiceB;
+    }
+
+    public void setChoiceB(String choiceB) {
+        this.choiceB = choiceB;
+    }
+
+    public String getChoiceC() {
+        return choiceC;
+    }
+
+    public void setChoiceC(String choiceC) {
+        this.choiceC = choiceC;
+    }
+
+    public String getChoiceD() {
+        return choiceD;
+    }
+
+    public void setChoiceD(String choiceD) {
+        this.choiceD = choiceD;
+    }
+
+    public String getChoiceE() {
+        return choiceE;
+    }
+
+    public void setChoiceE(String choiceE) {
+        this.choiceE = choiceE;
+    }
 }
