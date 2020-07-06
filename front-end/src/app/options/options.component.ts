@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import allFlashcards from '../../assets/question-bank.json';
+// import allFlashcards from '../../assets/question-bank.json';
+import { Flashcard } from '../flashcard';
 import { Filters } from '../filters';
 import { Question } from '../question';
 import { Statistics } from '../statistics';
 import { Settings } from '../settings';
 import { Selection } from '../selection';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 @Component({
   selector: 'app-options',
@@ -13,6 +15,9 @@ import { Selection } from '../selection';
 })
 
 export class OptionsComponent implements OnInit {
+
+  allFlashcards: Flashcard[];
+  flashcardsURL: string = "http://localhost:8080/api/flashcards"
 
   // ngModels
   includeStats: Selection = new Selection("Include Statistics", true);
@@ -45,16 +50,42 @@ export class OptionsComponent implements OnInit {
   settings: Settings = new Settings(true);
   statistics: Statistics = new Statistics;
 
-  constructor() { }
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    this.loadFlashcards();
     this.buildSelectionArrays();
     this.buildStatsArrays();
   }
 
+  loadFlashcards() {
+    fetch(this.flashcardsURL, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      }
+    }).then(function(response) {
+      response.json().then(function(json) {
+        let refreshFlashcards: Flashcard[] = [];
+        console.log(JSON.stringify(json));
+        json.forEach(obj => {
+          let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
+          flashcard.id = obj.id;
+          console.log(flashcard);
+          refreshFlashcards.push(flashcard);
+        });
+        this.allFlashcards = refreshFlashcards;
+      }.bind(this));
+    }.bind(this));
+
+    // console.log(this.allFlashcards);
+  }  
+
   buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
     let index: number;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         this.allCategories.push(new Selection(obj.category, true));
@@ -115,7 +146,7 @@ export class OptionsComponent implements OnInit {
     let correct = 0;
     let accuracy = 0;
     // from full deck of available cards
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (obj.category === category) {
         count++
       }
@@ -139,7 +170,7 @@ export class OptionsComponent implements OnInit {
     let correct = 0;
     let accuracy = 0;
       // from full deck of available cards
-      allFlashcards.forEach(obj => {
+      this.allFlashcards.forEach(obj => {
         if (obj.topic === topic) {
           count++
         }
@@ -159,7 +190,7 @@ export class OptionsComponent implements OnInit {
 
   getCategoryByCardId(cardId: number): string {
     let category: string;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (obj.id === cardId) {
         category = obj.category;
       } 
@@ -169,7 +200,7 @@ export class OptionsComponent implements OnInit {
 
   getTopicByCardId(cardId: number): string {
     let topic: string;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (obj.id === cardId) {
         topic = obj.topic;
       } 
@@ -267,7 +298,7 @@ export class OptionsComponent implements OnInit {
 
   countSelections() {
     let count: number = 0;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (this.filters.categories.includes(obj.category) 
           && this.filters.topics.includes(obj.topic) 
           && this.filters.types.includes(obj.type)) {

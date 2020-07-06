@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import allFlashcards from '../../assets/question-bank.json';
+// import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
@@ -13,6 +13,7 @@ import { Statistics } from '../statistics';
 
 export class DeckComponent implements OnInit {
 
+  allFlashcards: Flashcard[];
   flashcards: Flashcard[];
   currentCard: Flashcard;
   currentQuestion: Question;
@@ -49,13 +50,13 @@ export class DeckComponent implements OnInit {
     // build flashcard set for this session from question bank
     this.flashcards = [];
     // TODO: use criteria instead of adding all
-    allFlashcards.forEach(obj => {
-      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
+    this.allFlashcards.forEach(obj => {
+      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
-        if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
-          this.shuffle(card.choices);
-        }
+        // if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
+        //   this.shuffle(card.choices);
+        // }
         this.flashcards.push(card);
         console.log("added question to deck: " + card.query);
       }      

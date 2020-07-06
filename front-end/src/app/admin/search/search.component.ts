@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import allFlashcards from '../../../assets/question-bank.json';
+// import allFlashcards from '../../../assets/question-bank.json';
 import { Flashcard } from 'src/app/flashcard';
 import { User } from 'src/app/user';
 
@@ -10,6 +10,7 @@ import { User } from 'src/app/user';
 })
 export class SearchComponent implements OnInit {
 
+  allFlashcards: Flashcard[];
   searchType: string = "user";
 
   // FLASHCARD SEARCH
@@ -21,7 +22,7 @@ export class SearchComponent implements OnInit {
   selectedCategory: string = "";
   selectedTopic: string = "";
   selectedType: string = "";
-  numberOfCards: number = allFlashcards.length;
+  numberOfCards: number = this.allFlashcards.length;
   flashcardResults: Flashcard[] = [];
 
   letters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -78,7 +79,7 @@ export class SearchComponent implements OnInit {
 
   buildFlashcardSearchArrays() {
     let index: number;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         this.allCategories.push(obj.category);
@@ -104,11 +105,12 @@ export class SearchComponent implements OnInit {
     let category = card.category.toLowerCase();
     let topic = card.topic.toLowerCase();
     let query = card.query.toLowerCase();
-    let choices = card.choices.toString().toLowerCase();
+    // let choices = card.choices.toString().toLowerCase(); // FIXME: new structure
     if (category.indexOf(term) >=0
         || topic.indexOf(term) >= 0
-        || query.indexOf(term) >= 0
-        || choices.indexOf(term) >= 0) {
+        || query.indexOf(term) >= 0)
+        // || choices.indexOf(term) >= 0) 
+        {
           return true;
         }
     return false;
@@ -117,7 +119,7 @@ export class SearchComponent implements OnInit {
   getFlashcardResults() {
 
     // start with all possible questions in a new array
-    this.flashcardResults = allFlashcards.slice(0);
+    this.flashcardResults = this.allFlashcards.slice(0);
 
     // filter results
     let i: number = 0;

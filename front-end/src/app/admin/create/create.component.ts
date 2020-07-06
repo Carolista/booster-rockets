@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import allFlashcards from '../../../assets/question-bank.json';
+// import allFlashcards from '../../../assets/question-bank.json';
 import { Flashcard } from 'src/app/flashcard';
 
 @Component({
@@ -9,11 +9,12 @@ import { Flashcard } from 'src/app/flashcard';
 })
 export class CreateComponent implements OnInit {
 
+  allFlashcards: Flashcard[];
   allCategories: string[] = [];
   allTopics: string[] = [];
   allTypes: string[] = [];
   
-  flashcard: Flashcard = new Flashcard("","","","",[],"");
+  // flashcard: Flashcard = new Flashcard("","","","",[],"");
 
   constructor() { }
 
@@ -50,7 +51,7 @@ export class CreateComponent implements OnInit {
 
   buildSelectionArrays() {
     let index: number;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         this.allCategories.push(obj.category);
@@ -72,9 +73,9 @@ export class CreateComponent implements OnInit {
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
   }
 
-  saveChoiceA() {
-    this.flashcard.choices[0] = this.flashcard.answer;
-  }
+  // saveChoiceA() {
+  //   this.flashcard.choices[0] = this.flashcard.answer;
+  // }
 
   saveFlashcard() {
     // TODO: write once back end is in place
