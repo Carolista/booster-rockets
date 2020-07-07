@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-// import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
 import { Statistics } from '../statistics';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 @Component({
   selector: 'app-flashcard',
@@ -13,8 +13,11 @@ import { Statistics } from '../statistics';
 
 export class DeckComponent implements OnInit {
 
+  dataIsLoaded: boolean = false;
+  flashcardsURL: string = "http://localhost:8080/api/flashcards"
   allFlashcards: Flashcard[];
-  flashcards: Flashcard[];
+
+  deck: Flashcard[];
   currentCard: Flashcard;
   currentQuestion: Question;
   currentIndex: number = 0;
@@ -37,19 +40,42 @@ export class DeckComponent implements OnInit {
   // temporarily hard-code Statistics object to test statistics calculations
   statistics: Statistics = new Statistics();
 
-  constructor() { 
+  constructor(private tokenStorageService: TokenStorageService) { 
   }
 
   ngOnInit() {
     this.buildFlashcardSet();
   }
 
+  loadFlashcards() {
+    fetch(this.flashcardsURL, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      }
+    }).then(function(response: any) {
+      response.json().then(function(json) {
+        let questionBank: Flashcard[] = [];
+        json.forEach(obj => {
+          let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
+          flashcard.id = obj.id;
+          questionBank.push(flashcard);
+        });
+        this.allFlashcards = questionBank;
+        this.buildFlashcardSet();
+      }.bind(this));
+    }.bind(this));
+  }  
+
+  // TODO: FIXME: TODO: FIXME: handle the fact that choices are no longer in an array in the Flashcard class - can handle with variables since only one card is displayed at a time
+  
   // create randomized list of questions based on user's criteria
   buildFlashcardSet() {
 
-    // build flashcard set for this session from question bank
-    this.flashcards = [];
-    // TODO: use criteria instead of adding all
+    // build flashcard set for this session from all Flashcards
+    this.deck = [];
     this.allFlashcards.forEach(obj => {
       let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
       // add card to deck only if it fits user's criteria
@@ -57,16 +83,16 @@ export class DeckComponent implements OnInit {
         // if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
         //   this.shuffle(card.choices);
         // }
-        this.flashcards.push(card);
+        this.deck.push(card);
         console.log("added question to deck: " + card.query);
       }      
     });
 
     // TODO: if user is given choice to sort by category:
-    // this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
+    // this.deck.sort((a, b) => (a.category > b.category) ? 1 : -1);
 
-    this.shuffle(this.flashcards);
-    this.currentCard = this.flashcards[this.currentIndex];
+    this.shuffle(this.deck);
+    this.currentCard = this.deck[this.currentIndex];
     this.setCurrentQuestion();
     console.log("Flashcard deck built.")
   }
@@ -109,15 +135,15 @@ export class DeckComponent implements OnInit {
   }
 
   getNextCard() {
-    if (this.currentIndex === this.flashcards.length - 1) {
+    if (this.currentIndex === this.deck.length - 1) {
       // TODO: need to ask if they want to start again and then maybe reshuffle?
       this.currentIndex = 0; // this works to return to beginning and loop through in existing order
     } else {
       this.currentIndex++;
     }
-    this.currentCard = this.flashcards[this.currentIndex];
+    this.currentCard = this.deck[this.currentIndex];
     this.setCurrentQuestion();
-    // TODO: eventually use this to rotate graphics for changing flashcards
+    // TODO: eventually use this to rotate graphics for changing deck
 
     this.answered = false;
   }

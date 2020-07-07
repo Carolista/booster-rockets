@@ -15,8 +15,9 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 export class OptionsComponent implements OnInit {
 
-  allFlashcards: Flashcard[] = [];
+  dataIsLoaded: boolean = false;
   flashcardsURL: string = "http://localhost:8080/api/flashcards"
+  allFlashcards: Flashcard[] = [];
 
   // ngModels
   includeStats: Selection = new Selection("Include Statistics", true);
@@ -53,7 +54,6 @@ export class OptionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadFlashcards();
-    console.log(this.allFlashcards[2].category + " is an example of data from allFlashcards")
   }
 
   loadFlashcards() {
@@ -70,18 +70,12 @@ export class OptionsComponent implements OnInit {
         json.forEach(obj => {
           let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
           flashcard.id = obj.id;
-          console.log(flashcard.category, flashcard.topic, flashcard.type); // debug
           questionBank.push(flashcard);
         });
         this.allFlashcards = questionBank;
-        console.log(JSON.stringify(this.allFlashcards)); // debug
+        this.buildSelectionArrays();
       }.bind(this));
     }.bind(this));
-    
-    this.buildSelectionArrays();
-    
-    console.log("Here's a sample topic: " + this.allFlashcards[4].topic); // debug
-    console.log("and a sample category: "+ this.allFlashcards[12].category); // debug
   }  
 
   buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
@@ -224,6 +218,7 @@ export class OptionsComponent implements OnInit {
       this.viewsPerTopic.push(statsPerTopic[1]);
       this.accuracyPerTopic.push(statsPerTopic[2]);
     })
+    this.dataIsLoaded = true;
   }
 
   updateCategories(c: number) {
