@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/flashcards")@Controller
+@RequestMapping("/api/flashcards")
 public class FlashcardController {
 
     @Autowired
@@ -27,12 +27,18 @@ public class FlashcardController {
 
     @GetMapping
     public ResponseEntity<?> getFlashcards(@RequestHeader HttpHeaders headers) {
-        List flashcards = (List<Flashcard>) flashcardRepository.findAll();
+        Optional<Iterable<Flashcard>> flashcards = Optional.of(flashcardRepository.findAll());
         if(flashcards.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(flashcards, HttpStatus.OK);
         }
+//        List flashcards = (List<Flashcard>) flashcardRepository.findAll();
+//        if(flashcards.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<>(flashcards, HttpStatus.OK);
+//        }
     }
 
 }

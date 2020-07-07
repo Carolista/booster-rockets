@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Filters } from '../filters';
 import { Question } from '../question';
@@ -16,7 +15,7 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 export class OptionsComponent implements OnInit {
 
-  allFlashcards: Flashcard[];
+  allFlashcards: Flashcard[] = [];
   flashcardsURL: string = "http://localhost:8080/api/flashcards"
 
   // ngModels
@@ -54,8 +53,7 @@ export class OptionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadFlashcards();
-    this.buildSelectionArrays();
-    this.buildStatsArrays();
+    console.log(this.allFlashcards[2].category + " is an example of data from allFlashcards")
   }
 
   loadFlashcards() {
@@ -66,21 +64,24 @@ export class OptionsComponent implements OnInit {
         'Access-Control-Allow-Credentials': 'true',
         'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
       }
-    }).then(function(response) {
+    }).then(function(response: any) {
       response.json().then(function(json) {
-        let refreshFlashcards: Flashcard[] = [];
-        console.log(JSON.stringify(json));
+        let questionBank: Flashcard[] = [];
         json.forEach(obj => {
           let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
           flashcard.id = obj.id;
-          console.log(flashcard);
-          refreshFlashcards.push(flashcard);
+          console.log(flashcard.category, flashcard.topic, flashcard.type); // debug
+          questionBank.push(flashcard);
         });
-        this.allFlashcards = refreshFlashcards;
+        this.allFlashcards = questionBank;
+        console.log(JSON.stringify(this.allFlashcards)); // debug
       }.bind(this));
     }.bind(this));
-
-    // console.log(this.allFlashcards);
+    
+    this.buildSelectionArrays();
+    
+    console.log("Here's a sample topic: " + this.allFlashcards[4].topic); // debug
+    console.log("and a sample category: "+ this.allFlashcards[12].category); // debug
   }  
 
   buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
@@ -111,6 +112,8 @@ export class OptionsComponent implements OnInit {
     this.updateTopics;
     this.updateTypes;
     this.countSelections();
+
+    this.buildStatsArrays();
   }
 
   findCategory(category: string): number {

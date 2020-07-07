@@ -23,7 +23,6 @@ export class AuthService {
     }, httpOptions);
   }
 
-  // TODO: make sure she actually used this
   register(user: User): Observable<any> {
     return this.http.post(AUTH_API + 'register', {
       firstName: user.firstName,
