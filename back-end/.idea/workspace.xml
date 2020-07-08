@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aafc767f-1abf-41f3-ab48-4ad33e8e11c9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/app/options/options.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/options/options.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/app/options/options.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/options/options.component.ts" afterDir="false" />
-    </list>
+    <list default="true" id="aafc767f-1abf-41f3-ab48-4ad33e8e11c9" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -233,11 +229,11 @@
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state x="779" y="189" key="#Project_Structure/1792.119.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593555677696" />
-    <state x="513" y="250" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1593993141689">
+    <state x="513" y="250" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594152959395">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state x="675" y="251" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1031@0.23.1792.1031" timestamp="1593187911041" />
-    <state x="513" y="250" key="#com.intellij.execution.impl.EditConfigurationsDialog/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593993141689" />
+    <state x="513" y="250" key="#com.intellij.execution.impl.EditConfigurationsDialog/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1594152959395" />
     <state x="1013" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1594009411108">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
@@ -247,11 +243,11 @@
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state x="800" y="329" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1792.1031@0.23.1792.1031" timestamp="1593219767691" />
-    <state x="965" y="361" key="EnvironmentVariablesDialog" timestamp="1593993139294">
+    <state x="965" y="361" key="EnvironmentVariablesDialog" timestamp="1594152958078">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
     <state x="965" y="361" key="EnvironmentVariablesDialog/0.23.1792.1031@0.23.1792.1031" timestamp="1593187847210" />
-    <state x="965" y="361" key="EnvironmentVariablesDialog/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1593993139294" />
+    <state x="965" y="361" key="EnvironmentVariablesDialog/1792.-113.1280.1001/0.23.1792.1031@0.23.1792.1031" timestamp="1594152958078" />
     <state width="1232" height="264" key="GridCell.Tab.0.bottom" timestamp="1594087789387">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>

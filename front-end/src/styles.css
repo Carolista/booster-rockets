@@ -425,6 +425,10 @@ select {
     font-size: .9em;
 }
 
+.correction {
+    font-weight: 600;
+}
+
 a.subtle-link {
     color: #555555;
 }

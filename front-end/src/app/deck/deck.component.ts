@@ -21,6 +21,7 @@ export class DeckComponent implements OnInit {
   currentCard: Flashcard;
   currentQuestion: Question;
   currentIndex: number = 0;
+  currentChoices: string[] = [];
   currentResponse: string;
   answered: boolean = false;
   correct: boolean = true;
@@ -44,7 +45,7 @@ export class DeckComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buildFlashcardSet();
+    this.loadFlashcards();
   }
 
   loadFlashcards() {
@@ -69,8 +70,6 @@ export class DeckComponent implements OnInit {
     }.bind(this));
   }  
 
-  // TODO: FIXME: TODO: FIXME: handle the fact that choices are no longer in an array in the Flashcard class - can handle with variables since only one card is displayed at a time
-  
   // create randomized list of questions based on user's criteria
   buildFlashcardSet() {
 
@@ -80,9 +79,6 @@ export class DeckComponent implements OnInit {
       let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
-        // if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
-        //   this.shuffle(card.choices);
-        // }
         this.deck.push(card);
         console.log("added question to deck: " + card.query);
       }      
@@ -93,6 +89,7 @@ export class DeckComponent implements OnInit {
 
     this.shuffle(this.deck);
     this.currentCard = this.deck[this.currentIndex];
+    this.setCurrentChoices();
     this.setCurrentQuestion();
     console.log("Flashcard deck built.")
   }
@@ -118,7 +115,7 @@ export class DeckComponent implements OnInit {
     } else {
       this.correct = false;
     }
-    console.log(this.questions[index]);
+    // console.log(this.questions[index]);
   }
 
   setCurrentQuestion() {
@@ -128,6 +125,25 @@ export class DeckComponent implements OnInit {
     } else {
       this.currentQuestion = this.questions[index];
     }
+    this.dataIsLoaded = true;
+  }
+
+  setCurrentChoices() {
+    if (this.currentCard.type === "True/False") {
+      this.currentChoices = ["True", "False"];
+    } else {
+      this.currentChoices = [this.currentCard.answer,this.currentCard.choiceB];
+      if (this.currentCard.choiceC !== "") {
+        this.currentChoices.push(this.currentCard.choiceC);
+      }
+      if (this.currentCard.choiceD !== "") {
+        this.currentChoices.push(this.currentCard.choiceD);
+      }
+      if (this.currentCard.choiceE !== "") {
+        this.currentChoices.push(this.currentCard.choiceE);
+      }
+      this.shuffle(this.currentChoices);
+    } 
   }
 
   getSuccessRate(): number {
@@ -136,13 +152,15 @@ export class DeckComponent implements OnInit {
 
   getNextCard() {
     if (this.currentIndex === this.deck.length - 1) {
-      // TODO: need to ask if they want to start again and then maybe reshuffle?
+      // TODO: need to ask if they want to start again
+      this.shuffle(this.deck);
       this.currentIndex = 0; // this works to return to beginning and loop through in existing order
     } else {
       this.currentIndex++;
     }
     this.currentCard = this.deck[this.currentIndex];
     this.setCurrentQuestion();
+    this.setCurrentChoices();
     // TODO: eventually use this to rotate graphics for changing deck
 
     this.answered = false;

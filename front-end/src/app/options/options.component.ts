@@ -56,6 +56,9 @@ export class OptionsComponent implements OnInit {
     this.loadFlashcards();
   }
 
+
+  // ** PULL IN ALL FLASHCARDS FROM DATABASE QUESTION BANK ** //
+
   loadFlashcards() {
     fetch(this.flashcardsURL, {
       method: 'GET',
@@ -78,6 +81,9 @@ export class OptionsComponent implements OnInit {
     }.bind(this));
   }  
 
+
+// ** GET CATEGORIES, TOPICS, & TYPES FROM QUESTION BANK ** //
+
   buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
     let index: number;
     this.allFlashcards.forEach(obj => {
@@ -97,10 +103,9 @@ export class OptionsComponent implements OnInit {
       } 
     });
 
-    // FIXME: these need to be updated to reflect Selection object structure
-    this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
-    this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
-    this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
+    this.allCategories.sort((a, b) => (a.item > b.item) ? 1 : -1);
+    this.allTopics.sort((a, b) => (a.item > b.item) ? 1 : -1);
+    this.allTypes.sort((a, b) => (a.item > b.item) ? 1 : -1);
 
     this.updateCategories;
     this.updateTopics;
@@ -119,6 +124,7 @@ export class OptionsComponent implements OnInit {
     return -1;
   }
 
+  
   findTopic(topic: string): number {
     for (let i=0; i < this.allTopics.length; i++) {
       if (this.allTopics[i].item === topic) {
@@ -135,6 +141,25 @@ export class OptionsComponent implements OnInit {
       }
     }
     return -1;
+  }
+
+
+  // ** CREATE STATS FOR EACH CATEGORY AND TOPIC ** //
+
+  buildStatsArrays() {
+    this.allCategories.forEach(obj => {
+      let statsPerCategory: number[] = this.getStatsPerCategory(obj.item);
+      this.cardsPerCategory.push(statsPerCategory[0]);
+      this.viewsPerCategory.push(statsPerCategory[1]);
+      this.accuracyPerCategory.push(statsPerCategory[2]);
+    })
+    this.allTopics.forEach(obj => {
+      let statsPerTopic: number[] = this.getStatsPerTopic(obj.item);
+      this.cardsPerTopic.push(statsPerTopic[0]);
+      this.viewsPerTopic.push(statsPerTopic[1]);
+      this.accuracyPerTopic.push(statsPerTopic[2]);
+    })
+    this.dataIsLoaded = true;
   }
 
   getStatsPerCategory(category: string): number[] {
@@ -166,13 +191,13 @@ export class OptionsComponent implements OnInit {
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
-      // from full deck of available cards
-      this.allFlashcards.forEach(obj => {
-        if (obj.topic === topic) {
-          count++
-        }
-      });
-      // from user's history
+    // from full deck of available cards
+    this.allFlashcards.forEach(obj => {
+      if (obj.topic === topic) {
+        count++
+      }
+    });
+    // from user's history
     for(let i=0; i < this.questions.length; i++) {
       if (this.getTopicByCardId(this.questions[i].cardId) === topic) {
         presented += this.questions[i].presented;
@@ -205,21 +230,8 @@ export class OptionsComponent implements OnInit {
     return topic;
   }
 
-  buildStatsArrays() {
-    this.allCategories.forEach(obj => {
-      let statsPerCategory: number[] = this.getStatsPerCategory(obj.item);
-      this.cardsPerCategory.push(statsPerCategory[0]);
-      this.viewsPerCategory.push(statsPerCategory[1]);
-      this.accuracyPerCategory.push(statsPerCategory[2]);
-    })
-    this.allTopics.forEach(obj => {
-      let statsPerTopic: number[] = this.getStatsPerTopic(obj.item);
-      this.cardsPerTopic.push(statsPerTopic[0]);
-      this.viewsPerTopic.push(statsPerTopic[1]);
-      this.accuracyPerTopic.push(statsPerTopic[2]);
-    })
-    this.dataIsLoaded = true;
-  }
+
+  // ** SAVE SELECTIONS & UPDATE DECK COUNT ** //
 
   updateCategories(c: number) {
     let category = this.allCategories[c].item;
@@ -305,5 +317,7 @@ export class OptionsComponent implements OnInit {
     });
     this.cardsInDeck = count;
   }
+
+  // TODO: MAKE SURE ALL SELECTIONS ARE SAVED WITH USER UPON FORM SUBMISSION
 
 }
