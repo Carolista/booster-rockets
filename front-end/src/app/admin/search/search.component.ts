@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-// import allFlashcards from '../../../assets/question-bank.json';
 import { Flashcard } from 'src/app/flashcard';
 import { User } from 'src/app/user';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
+
 
 @Component({
   selector: 'app-search',
@@ -10,6 +11,8 @@ import { User } from 'src/app/user';
 })
 export class SearchComponent implements OnInit {
 
+  dataIsLoaded: boolean = false;
+  flashcardsURL: string = "http://localhost:8080/api/flashcards"
   allFlashcards: Flashcard[];
   searchType: string = "user";
 
@@ -22,7 +25,7 @@ export class SearchComponent implements OnInit {
   selectedCategory: string = "";
   selectedTopic: string = "";
   selectedType: string = "";
-  numberOfCards: number = this.allFlashcards.length;
+  numberOfCards: number;
   flashcardResults: Flashcard[] = [];
 
   letters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -39,14 +42,37 @@ export class SearchComponent implements OnInit {
   numberOfUsers: number = this.allUsers.length;
   userResults: User[] = [];
 
-  constructor() { }
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    this.buildFlashcardSearchArrays();
-    this.getFlashcardResults();
-    this.getUserResults();
+    this.loadFlashcards();
   }
 
+  // LOAD FLASHCARDS FROM DATABASE
+
+  loadFlashcards() {
+    fetch(this.flashcardsURL, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      }
+    }).then(function(response: any) {
+      response.json().then(function(json) {
+        let questionBank: Flashcard[] = [];
+        json.forEach(obj => {
+          let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
+          flashcard.id = obj.id;
+          questionBank.push(flashcard);
+        });
+        this.allFlashcards = questionBank;
+        this.numberOfCards = this.allFlashcards.length;
+        this.buildFlashcardSearchArrays();
+        
+      }.bind(this));
+    }.bind(this));
+  } 
 
   // FLASHCARD SEARCH
 
@@ -96,6 +122,10 @@ export class SearchComponent implements OnInit {
     this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
     this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
     this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
+
+    this.getFlashcardResults(); // to return all the first time
+    this.getUserResults(); // to return all the first time
+    this.dataIsLoaded = true;
 
     console.log("Flashcard arrays built for categories, topics, and types.")
   }
