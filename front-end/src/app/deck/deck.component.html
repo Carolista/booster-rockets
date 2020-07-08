@@ -9,6 +9,8 @@
                 <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentChoices[c]" [checked]="false" />{{currentChoices[c]}}
             </div>
             <!-- TODO: figure out how the hell to indent label wrap on radio buttons... UGH -->
+            <!-- Hey here's an idea - use row of two columns, radio on left, text on right -->
+            <!-- TODO: make custom radio buttons like the custom checkboxes on other pages -->
 
             <!-- Buttons -->
             <div class="right space-above">

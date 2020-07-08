@@ -33,12 +33,8 @@ public class FlashcardController {
         } else {
             return new ResponseEntity<>(flashcards, HttpStatus.OK);
         }
-//        List flashcards = (List<Flashcard>) flashcardRepository.findAll();
-//        if(flashcards.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            return new ResponseEntity<>(flashcards, HttpStatus.OK);
-//        }
     }
+
+    // TODO: Need POST and PUT methods for 'create' (saving), 'search' (editing), and 'deck' pages (archiving)
 
 }
