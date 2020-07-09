@@ -1,5 +1,6 @@
 package com.kaleidoscope314.boosterrockets.controllers;
 
+import com.kaleidoscope314.boosterrockets.models.Flashcard;
 import com.kaleidoscope314.boosterrockets.models.User;
 import com.kaleidoscope314.boosterrockets.models.data.UserRepository;
 import com.kaleidoscope314.boosterrockets.security.services.UserAuthService;
@@ -28,6 +29,20 @@ public class UserController {
     @Autowired
     PasswordEncoder encoder;
 
+    @GetMapping
+    @PreAuthorize("hasRole('USER')") // FIXME: change to admin as soon as that's implemented
+    public ResponseEntity<?> getUsers(@RequestHeader HttpHeaders headers) {
+
+        String headerAuth = headers.getFirst("Authorization"); // FIXME: what does this do?
+
+        Optional<Iterable<User>> users = Optional.of(userRepository.findAll());
+        if(users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+    }
+
     @GetMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getUserById(@PathVariable("userId") int id, @RequestHeader HttpHeaders headers) {
@@ -53,15 +68,12 @@ public class UserController {
         if (userRepository.findById(id).isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else if (userAuthService.doesUserMatch(id, headerAuth)) {
-
             if (user.getPassword() != null) {
                 user.setPassword(encoder.encode(user.getPassword()));
             } else {
                 user.setPassword(userRepository.findById(id).get().getPassword());
             }
-
             user.setRoles(userRepository.findById(id).get().getRoles());
-
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

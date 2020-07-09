@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div>
-                <input #verifyPassword="ngModel" name="verifyPassword" [(ngModel)]="verify" (change)="checkVerify()" type='password' required placeholder="Verify Updated Password" [class.is-invalid]="passwordMismatch" class="form-fields" />
-                <div *ngIf="password.dirty && verifyPassword.dirty && passwordMismatch" class="error-msg">
+                <input #verifyPassword="ngModel" name="verifyPassword" [(ngModel)]="verify" (input)="checkVerify()" type='password' required placeholder="Verify Updated Password" [class.is-invalid]="passwordMismatch" class="form-fields" />
+                <div *ngIf="password.dirty && verifyPassword.dirty && verifyPassword.touched && passwordMismatch" class="error-msg">
                     Passwords do not match.
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <p>Already registered? <a [routerLink]="'/login'" class="subtle-link">Log in here.</a></p>
             </div>
 
-            <div class="space-above">
+            <div class="space-above"> <!-- FIXME: button does not have link cursor or hover color change -->
                 <button type="submit" [disabled]="!f.form.valid || passwordMismatch">Get Started</button>
             </div>
         </form>

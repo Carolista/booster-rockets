@@ -1,1 +1,4 @@
-<small>&copy; 2020 Caroline R. Jones</small>
+<small>
+    &copy; 2020 Caroline R. Jones 
+    <span *ngIf="isLoggedIn"><a class="white-link" (click)="logout()" [routerLink]="'/login'">LOG OUT</a></span>
+</small>
