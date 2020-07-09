@@ -9,6 +9,8 @@
                 TIP: before creating a new card, <a [routerLink]="'/admin/search'" class="subtle-link">search</a> cards with the same<br /> category and primary keyword to prevent duplicates.
             </div>
 
+            <!-- TODO: Add ability to introduce new categories, topics, and types -->
+
             <form #f="ngForm" name="form" (ngSubmit)="f.form.valid && saveFlashcard()" class="space-above" validate>
 
                 <div class="flexbox-row">

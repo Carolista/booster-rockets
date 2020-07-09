@@ -37,7 +37,9 @@ IDEAS:
 
 #header {
     display: flex;
-    height: 85px;
+    min-height: 60px;
+    height: 10vw;
+    max-height: 80px;
     width: 100vw;
     justify-content: center;
     align-items: center;
@@ -48,9 +50,9 @@ IDEAS:
 
 #navbar {
     display: flex;
-    height: 35px; /* FIXME: figure out why this height is changing depending on whether the content is smaller or larger than the vh */
+    /* height: 35px; */
     max-height: 35px;
-    width: 100vw;
+    /* width: 100vw; */
     justify-content: center;
     align-items: center;
     bottom: 0;
@@ -237,6 +239,10 @@ IDEAS:
     margin-bottom: 5px;
 }
 
+.space-before {
+    margin-left: 20px;
+}
+
 .page-title {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
@@ -331,13 +337,13 @@ IDEAS:
     flex-direction: column;
     position: fixed;
     min-height: 60px;
-    top: 110px;
+    top: 125px;
     right: 20px;
     padding: 5px 20px 20px;
     background-color: #ca4a0f;
     border-radius: 0px 30px;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 .alert-z {
@@ -352,12 +358,12 @@ IDEAS:
 
 .big-number {
     font-weight: 400;
-    font-size: 3.6em;
+    font-size: 3em;
 }
 
 .big-text {
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 0.9em;
 }
 
 .instruction {
@@ -433,13 +439,13 @@ a.subtle-link {
     color: #555555;
 }
 
-a.white-link {
-    font-size: .9em;
+.white-link {
+    font-size: 1.8vw;
     font-weight: 400;
     color: #a9d366;
     text-transform: uppercase;
     text-decoration: none;
-    margin: 0px 15px;
+    margin: 0px 10px;
 }
 
 a.white-link:hover {

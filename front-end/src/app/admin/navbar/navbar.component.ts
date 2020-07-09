@@ -10,12 +10,35 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 export class NavbarComponent implements OnInit {
 
-  activeLink: string = "dashboard";
+  activeLink: string = "start";
+
+  roles: string[] = [];
+  isLoggedIn = false;
+  mySubscription: any;
 
   constructor(private router: Router, private tokenStorageService: TokenStorageService) {}
 
   ngOnInit() {
-    
+    this.load();
+  }
+ 
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
+  }
+ 
+ 
+  load() {
+    if (this.tokenStorageService.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorageService.getUser().roles;
+    } 
+  }
+ 
+  logout() {
+    this.tokenStorageService.signOut();
+    this.isLoggedIn = false;
   }
 
 }

@@ -3,8 +3,8 @@
   <div id="header">
     <app-header></app-header>
   </div>
-  <div id="navbar" *ngIf="isLoggedIn">
-    <app-navbar></app-navbar> <!-- TODO: make this conditional on login & admin role -->
+  <div id="navbar"> <!-- TODO: add  *ngIf="isLoggedIn" once done messing with this -->
+    <app-navbar></app-navbar>
   </div>
   <div id="main">
     <router-outlet></router-outlet>
