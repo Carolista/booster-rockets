@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
   dataIsLoaded: boolean = false;
   flashcardsURL: string = "http://localhost:8080/api/flashcards"
   allFlashcards: Flashcard[];
-  searchType: string = "user";
+  searchType: string = "user"; // set default as either "user" or "flashcard"
 
   // FLASHCARD SEARCH
   allCategories: string[] = [];
@@ -36,16 +36,20 @@ export class SearchComponent implements OnInit {
                       new User("Willy","Wonka","willy@wonkachocolates.com","",null,null,null,null),
                       new User("John Jacob","Jingleheimerschmidt","johnjacob@longlastnames.com","",null,null,null,null),
                       new User("William","Riker","commander.riker@federation.com","",null,null,null,null)];
-  firstName: string = "";
-  lastName: string = "";
-  email: string = "";
-  numberOfUsers: number = this.allUsers.length;
+  numberOfUsers: number = this.allUsers.length; // TODO: set this in load function
+
+  userID: number = 0;
+  searchTerm: string = "";
+  // numberOfUsers: number; 
   userResults: User[] = [];
 
   constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
     this.loadFlashcards();
+    for (let k: number = 0; k < this.allUsers.length; k++) { // temporary to test ID lookup
+      this.allUsers[k].id = 101 + k;
+    }
   }
 
   // LOAD FLASHCARDS FROM DATABASE
@@ -125,24 +129,24 @@ export class SearchComponent implements OnInit {
 
     this.getFlashcardResults(); // to return all the first time
     this.getUserResults(); // to return all the first time
+
     this.dataIsLoaded = true;
 
     console.log("Flashcard arrays built for categories, topics, and types.")
   }
 
-  flashcardSearchTermFound(term: string, card: Flashcard): boolean {
-    term = term.toLowerCase();
+  flashcardSearchTermFound(searchTerm: string, card: Flashcard): boolean {
+    searchTerm = searchTerm.toLowerCase();
     let category = card.category.toLowerCase();
     let topic = card.topic.toLowerCase();
     let query = card.query.toLowerCase();
-    // let choices = card.choices.toString().toLowerCase(); // FIXME: new structure
-    if (category.indexOf(term) >=0
-        || topic.indexOf(term) >= 0
-        || query.indexOf(term) >= 0)
-        // || choices.indexOf(term) >= 0) 
-        {
-          return true;
-        }
+    let choices = [card.answer, card.choiceB, card.choiceC, card.choiceD, card.choiceE].toString().toLowerCase();
+    if (category.indexOf(searchTerm) >= 0
+      || topic.indexOf(searchTerm) >= 0
+      || query.indexOf(searchTerm) >= 0
+      || choices.indexOf(searchTerm) >= 0) {
+        return true;
+      }
     return false;
   }
 
@@ -184,12 +188,27 @@ export class SearchComponent implements OnInit {
       // otherwise it is kept in the array and i increases
       i++
     }
-
-    console.log("Flashcard results updated.")
   }
 
 
   // USER SEARCH
+
+  getUserByID() {
+    if (this.userID === 0 || this.userID === null) { // FIXME: This is not working - still doesn't go back to returning all results... need to make it either/or
+      this.userResults = this.allUsers.splice(0);
+      return;
+    }
+    this.userResults = [];
+    let user: User;
+    for (let i=0; i < this.allUsers.length; i++) {
+      user = this.allUsers[i]
+      if (user.id === this.userID) {
+        this.userResults.push(user);
+        return;
+      }
+    }
+    // else return empty
+  }
 
   getUserResults() {
 
@@ -202,15 +221,7 @@ export class SearchComponent implements OnInit {
       let user = this.userResults[i];
 
       // narrow based on each field
-      if (this.firstName.length > 0 && user.firstName.toLowerCase().indexOf(this.firstName.toLowerCase()) < 0) {
-        this.userResults.splice(i,1);
-        continue; // end loop and do not advance i due to splice
-      }
-      if (this.lastName.length > 0 && user.lastName.toLowerCase().indexOf(this.lastName.toLowerCase()) < 0) {
-        this.userResults.splice(i,1);
-        continue; 
-      }        
-      if (this.email.length > 0 && user.email.toLowerCase().indexOf(this.email.toLowerCase()) < 0) {
+      if ((user.firstName + user.lastName + user.email).toLowerCase().indexOf(this.searchTerm.toLowerCase()) < 0) {
         this.userResults.splice(i,1);
         continue; 
       } 
