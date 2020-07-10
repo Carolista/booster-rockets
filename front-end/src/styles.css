@@ -369,7 +369,7 @@ IDEAS:
 .instruction {
     font-family: "Prompt", sans-serif;
     font-weight: 400;
-    font-size: 0.85em;
+    font-size: 0.65em;
     text-transform: none;
     margin-top: 10px;
     color: white;
@@ -377,6 +377,10 @@ IDEAS:
 
 form {
     width: 100%;
+}
+
+.heavy {
+    font-weight: 800;
 }
 
 select {
@@ -446,6 +450,10 @@ a.subtle-link {
     text-transform: uppercase;
     text-decoration: none;
     margin: 0px 10px;
+}
+
+a.white-link {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 a.white-link:hover {
@@ -585,6 +593,7 @@ button:disabled {
     border-radius: 0px 15px;
     padding: 7px 11px;
     margin: 0px 5px;
+    /* TODO: learn more about implementing transitions and apply to other parts of the site */
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 

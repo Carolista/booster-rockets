@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
       this.router.navigate(['/start']); // TODO: keep or change
+      console.log("User " + this.tokenStorage.getUser().id + " has been registered and is logged in.");
     } 
 
   }

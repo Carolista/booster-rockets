@@ -32,7 +32,9 @@ export class AppComponent {
     if (this.tokenStorageService.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorageService.getUser().roles;
-    } 
+    } else {
+      this.isLoggedIn = false; // necessary to keep header, navbar, and footer from showing
+    }
   }
  
   logout() {
