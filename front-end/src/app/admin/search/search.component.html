@@ -90,21 +90,21 @@
                 <div class="parameters-block space-above">
 
                     <!-- FIXME: This is not working, and really I should make this mutually exclusive with other User search fields -->
-                    <!-- <div class="flexbox-row">
+                    <div class="flexbox-row">
                         <div class="right search-type-column">
                             User ID
                         </div>
                         <div class="left search-field-column">
-                            <input #user="ngModel" [(ngModel)]="userID" (input)="getUserByID()" placeholder="Enter a number" type="text" class="search-form-field" />
+                            <input #user="ngModel" [(ngModel)]="userID" (input)="getUserByID()" placeholder=0 min=0 type="number" class="search-form-field" />
                         </div>        
-                    </div> -->
+                    </div>
 
                     <div class="flexbox-row">
                         <div class="right search-type-column">
                             Name/Email <!-- TODO: Split out e-mail -->
                         </div>
                         <div class="left search-field-column">
-                            <input #term="ngModel" [(ngModel)]="searchTerm" (input)="getUserResults()" placeholder="Type anything!" type="text" class="search-form-field" />
+                            <input #name="ngModel" [(ngModel)]="userName" (input)="getUserResults()" placeholder="Type anything!" type="text" class="search-form-field" />
                         </div>        
                     </div>
 

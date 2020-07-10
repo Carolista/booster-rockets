@@ -39,8 +39,8 @@ export class SearchComponent implements OnInit {
   numberOfUsers: number = this.allUsers.length; // TODO: set this in load function
 
   userID: number = 0;
-  searchTerm: string = "";
-  // numberOfUsers: number; 
+  userName: string = "";
+  // numberOfUsers: number; // user after dummy data is no longer needed
   userResults: User[] = [];
 
   constructor(private tokenStorageService: TokenStorageService) { }
@@ -135,16 +135,16 @@ export class SearchComponent implements OnInit {
     console.log("Flashcard arrays built for categories, topics, and types.")
   }
 
-  flashcardSearchTermFound(searchTerm: string, card: Flashcard): boolean {
-    searchTerm = searchTerm.toLowerCase();
+  flashcardKeywordFound(keyword: string, card: Flashcard): boolean {
+    keyword = keyword.toLowerCase();
     let category = card.category.toLowerCase();
     let topic = card.topic.toLowerCase();
     let query = card.query.toLowerCase();
     let choices = [card.answer, card.choiceB, card.choiceC, card.choiceD, card.choiceE].toString().toLowerCase();
-    if (category.indexOf(searchTerm) >= 0
-      || topic.indexOf(searchTerm) >= 0
-      || query.indexOf(searchTerm) >= 0
-      || choices.indexOf(searchTerm) >= 0) {
+    if (category.indexOf(keyword) >= 0
+      || topic.indexOf(keyword) >= 0
+      || query.indexOf(keyword) >= 0
+      || choices.indexOf(keyword) >= 0) {
         return true;
       }
     return false;
@@ -161,7 +161,7 @@ export class SearchComponent implements OnInit {
       let card = this.flashcardResults[i];
 
       // narrow based on keyword
-      if (this.keyword.length > 0 && !this.flashcardSearchTermFound(this.keyword,card)) {
+      if (this.keyword.length > 0 && !this.flashcardKeywordFound(this.keyword,card)) {
         this.flashcardResults.splice(i,1);
         continue; // end loop and do not advance i due to splice
       }
@@ -185,7 +185,7 @@ export class SearchComponent implements OnInit {
           continue;
         }        
       }
-      // otherwise it is kept in the array and i increases
+      // otherwise this card is kept in the array and i increases
       i++
     }
   }
@@ -194,7 +194,9 @@ export class SearchComponent implements OnInit {
   // USER SEARCH
 
   getUserByID() {
-    if (this.userID === 0 || this.userID === null) { // FIXME: This is not working - still doesn't go back to returning all results... need to make it either/or
+    this.userName = ""; // clear name/email lookup field in form
+
+    if (this.userID === 0 || this.userID === null) { 
       this.userResults = this.allUsers.splice(0);
       return;
     }
@@ -207,10 +209,11 @@ export class SearchComponent implements OnInit {
         return;
       }
     }
-    // else return empty
+    return;
   }
 
   getUserResults() {
+    this.userID = null; // clear ID lookup field in form
 
     // start with all possible users in a new array
     this.userResults = this.allUsers.slice(0);
@@ -221,7 +224,7 @@ export class SearchComponent implements OnInit {
       let user = this.userResults[i];
 
       // narrow based on each field
-      if ((user.firstName + user.lastName + user.email).toLowerCase().indexOf(this.searchTerm.toLowerCase()) < 0) {
+      if ((user.firstName + user.lastName + user.email).toLowerCase().indexOf(this.userName.toLowerCase()) < 0) {
         this.userResults.splice(i,1);
         continue; 
       } 
@@ -230,7 +233,7 @@ export class SearchComponent implements OnInit {
     }
 
     // TODO: add dropdown selection so admin can choose how to sort results - ID, first name, or last name
-    // maybe in the future could also sort by person with most cards presented or whatever
+    // TODO: maybe in the future could also sort by person with most cards presented or whatever
     
     this.userResults.sort((a,b) => (a.lastName > b.lastName) ? 1 : -1);
 
