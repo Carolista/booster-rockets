@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   roles: string[] = [];
   id: number;
   passwordMismatch: boolean = false;
-  user: User = new User("", "", "", "", null, [], null, null); // for ngModel binding
+  user: User = new User("", "", "", ""); // for ngModel binding
   verify: string;
   form: any = {};
 
@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
       this.router.navigate(['/start']); // TODO: keep or change
+      console.log("User " + this.tokenStorage.getUser().id + " has been registered and is logged in.");
     } 
 
   }

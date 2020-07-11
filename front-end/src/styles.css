@@ -37,7 +37,9 @@ IDEAS:
 
 #header {
     display: flex;
-    height: 85px;
+    min-height: 60px;
+    height: 10vw;
+    max-height: 80px;
     width: 100vw;
     justify-content: center;
     align-items: center;
@@ -48,9 +50,9 @@ IDEAS:
 
 #navbar {
     display: flex;
-    height: 35px; /* FIXME: figure out why this height is changing depending on whether the content is smaller or larger than the vh */
+    /* height: 35px; */
     max-height: 35px;
-    width: 100vw;
+    /* width: 100vw; */
     justify-content: center;
     align-items: center;
     bottom: 0;
@@ -140,7 +142,7 @@ IDEAS:
 }
 
 .search-field-column {
-    min-width: 65%;
+    min-width: 45%;
     padding: 0px 5px;
 }
 
@@ -237,6 +239,26 @@ IDEAS:
     margin-bottom: 5px;
 }
 
+.space-before {
+    margin-left: 20px;
+}
+
+.light {
+    font-weight: 200;
+}
+
+.regular {
+    font-weight: 400;
+}
+
+.demibold {
+    font-weight: 600;
+}
+
+.bold {
+    font-weight: 800;
+}
+
 .page-title {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
@@ -256,6 +278,28 @@ IDEAS:
     font-weight: 600;
     font-size: 1.1rem;
     width: 100%;
+}
+
+.result-header {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.result-id {
+    font-weight: 200;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    margin-top: 0.3rem;
+}
+
+.result-tiny-box {
+    height: 1em;
+    min-width: 1em;
+    margin: 4px 10px 0px 0px;
+    color: white;
+    background-color: #5b8b0e;
+    border: none;
+    border-radius: 0px 6px;
 }
 
 .flexbox-row {
@@ -295,10 +339,6 @@ IDEAS:
     color: #777777;
 }
 
-.query {
-    font-weight: 400;
-}
-
 .answer-correct {
     color: #5b8b0e;
     font-weight: 600;
@@ -310,7 +350,7 @@ IDEAS:
 }
 
 .spacer-10 {
-    margin: 0px 10px;
+    margin: 0px 10px; /* FIXME: check against usage of .space-after */
 }
 
 .stats-column {
@@ -331,13 +371,13 @@ IDEAS:
     flex-direction: column;
     position: fixed;
     min-height: 60px;
-    top: 110px;
+    top: 125px;
     right: 20px;
     padding: 5px 20px 20px;
     background-color: #ca4a0f;
     border-radius: 0px 30px;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 .alert-z {
@@ -352,18 +392,18 @@ IDEAS:
 
 .big-number {
     font-weight: 400;
-    font-size: 3.6em;
+    font-size: 3em;
 }
 
 .big-text {
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 0.9em;
 }
 
 .instruction {
     font-family: "Prompt", sans-serif;
     font-weight: 400;
-    font-size: 0.85em;
+    font-size: 0.65em;
     text-transform: none;
     margin-top: 10px;
     color: white;
@@ -371,6 +411,10 @@ IDEAS:
 
 form {
     width: 100%;
+}
+
+.heavy {
+    font-weight: 800; /* FIXME: check against usage of .bold */
 }
 
 select {
@@ -403,6 +447,8 @@ select {
     background-color: #ebebeb;
 }
 
+
+
 .error-msg {
     color: #aa1e0c;
     font-size: 0.75em;
@@ -425,17 +471,25 @@ select {
     font-size: .9em;
 }
 
+.correction {
+    font-weight: 600;
+}
+
 a.subtle-link {
     color: #555555;
 }
 
-a.white-link {
-    font-size: .9em;
+.white-link {
+    font-size: 1.8vw;
     font-weight: 400;
     color: #a9d366;
     text-transform: uppercase;
     text-decoration: none;
-    margin: 0px 15px;
+    margin: 0px 10px;
+}
+
+a.white-link {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 a.white-link:hover {
@@ -575,14 +629,15 @@ button:disabled {
     border-radius: 0px 15px;
     padding: 7px 11px;
     margin: 0px 5px;
+    /* TODO: learn more about implementing transitions and apply to other parts of the site */
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .button-inline:hover {
     color: white;
-    background: #7fc017;
+    background: #6fa814;
     text-decoration: none;
-    border-color: #7fc017;
+    border-color: #6fa814;
     opacity: 1;
 }
 

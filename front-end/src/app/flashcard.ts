@@ -7,16 +7,22 @@ export class Flashcard {
     topic: string;
     type: string; // TODO: additional question types - short answer, fill-in-the-blank/dropdown, multiple response
     query: string; 
-    choices: string[]; 
     answer: string; 
+    choiceB: string;
+    choiceC: string;
+    choiceD: string;
+    choiceE: string;
 
-    constructor(category: string, topic: string, type: string, query: string, choices: string[], answer: string) {
+    constructor(category: string, topic: string, type: string, query: string, answer: string, choiceB: string, choiceC: string = "", choiceD: string = "", choiceE: string = "") {
         this.category = category;
         this.topic = topic;
         this.type = type;
         this.query = query;
-        this.choices = choices;
         this.answer = answer;
+        this.choiceB = choiceB;
+        this.choiceC = choiceC;
+        this.choiceD = choiceD;
+        this.choiceE = choiceE;
     }
 
 }

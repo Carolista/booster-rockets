@@ -15,10 +15,10 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${org.launchcode.jwtSecret}")
+    @Value("${com.kaleidoscope314.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${org.launchcode.jwtExpirationMs}")
+    @Value("${com.kaleidoscope314.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {

@@ -1,15 +1,15 @@
 
 <div id="viewport">
-  <div id="header">
+  <div id="header" *ngIf="isLoggedIn">
     <app-header></app-header>
   </div>
-  <div id="navbar">
-    <app-navbar></app-navbar> <!-- TODO: make this conditional on login & admin role -->
+  <div id="navbar" *ngIf="isLoggedIn"> <!-- TODO: add   once done messing with this -->
+    <app-navbar></app-navbar>
   </div>
   <div id="main">
     <router-outlet></router-outlet>
   </div>
-  <div id="footer">
+  <div id="footer" *ngIf="isLoggedIn">
     <app-footer></app-footer>
   </div>
 </div>

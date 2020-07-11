@@ -16,14 +16,10 @@ export class User {
     settings: Settings;
     statistics: Statistics;
 
-    constructor(firstName: string, lastName: string, email: string, password: string, filters: Filters, questions: Question[], settings: Settings, statistics: Statistics) {
+    constructor(firstName: string, lastName: string, email: string, password: string) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.filters = filters;
-        this.questions = questions;
-        this.settings = settings;
-        this.statistics = statistics;
     }
 }

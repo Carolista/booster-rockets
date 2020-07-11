@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import allFlashcards from '../../assets/question-bank.json';
 import { Flashcard } from '../flashcard';
 import { Question } from '../question';
 import { Filters } from '../filters';
 import { Statistics } from '../statistics';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flashcard',
@@ -13,10 +14,15 @@ import { Statistics } from '../statistics';
 
 export class DeckComponent implements OnInit {
 
-  flashcards: Flashcard[];
+  dataIsLoaded: boolean = false;
+  flashcardsURL: string = "http://localhost:8080/api/flashcards"
+  allFlashcards: Flashcard[];
+
+  deck: Flashcard[];
   currentCard: Flashcard;
   currentQuestion: Question;
   currentIndex: number = 0;
+  currentChoices: string[] = [];
   currentResponse: string;
   answered: boolean = false;
   correct: boolean = true;
@@ -36,36 +42,57 @@ export class DeckComponent implements OnInit {
   // temporarily hard-code Statistics object to test statistics calculations
   statistics: Statistics = new Statistics();
 
-  constructor() { 
-  }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    this.buildFlashcardSet();
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    }
+    this.loadFlashcards();
   }
+
+  loadFlashcards() {
+    fetch(this.flashcardsURL, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      }
+    }).then(function(response: any) {
+      response.json().then(function(json) {
+        let questionBank: Flashcard[] = [];
+        json.forEach(obj => {
+          let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
+          flashcard.id = obj.id;
+          questionBank.push(flashcard);
+        });
+        this.allFlashcards = questionBank;
+        this.buildFlashcardSet();
+      }.bind(this));
+    }.bind(this));
+  }  
 
   // create randomized list of questions based on user's criteria
   buildFlashcardSet() {
 
-    // build flashcard set for this session from question bank
-    this.flashcards = [];
-    // TODO: use criteria instead of adding all
-    allFlashcards.forEach(obj => {
-      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.choices, obj.answer);
+    // build flashcard set for this session from all Flashcards
+    this.deck = [];
+    this.allFlashcards.forEach(obj => {
+      let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
-        if (card.type === "Multiple Choice") { // TODO: add other types in future as needed
-          this.shuffle(card.choices);
-        }
-        this.flashcards.push(card);
+        this.deck.push(card);
         console.log("added question to deck: " + card.query);
       }      
     });
 
     // TODO: if user is given choice to sort by category:
-    // this.flashcards.sort((a, b) => (a.category > b.category) ? 1 : -1);
+    // this.deck.sort((a, b) => (a.category > b.category) ? 1 : -1);
 
-    this.shuffle(this.flashcards);
-    this.currentCard = this.flashcards[this.currentIndex];
+    this.shuffle(this.deck);
+    this.currentCard = this.deck[this.currentIndex];
+    this.setCurrentChoices();
     this.setCurrentQuestion();
     console.log("Flashcard deck built.")
   }
@@ -91,7 +118,7 @@ export class DeckComponent implements OnInit {
     } else {
       this.correct = false;
     }
-    console.log(this.questions[index]);
+    // console.log(this.questions[index]);
   }
 
   setCurrentQuestion() {
@@ -101,6 +128,25 @@ export class DeckComponent implements OnInit {
     } else {
       this.currentQuestion = this.questions[index];
     }
+    this.dataIsLoaded = true;
+  }
+
+  setCurrentChoices() {
+    if (this.currentCard.type === "True/False") {
+      this.currentChoices = ["True", "False"];
+    } else {
+      this.currentChoices = [this.currentCard.answer,this.currentCard.choiceB];
+      if (this.currentCard.choiceC !== "") {
+        this.currentChoices.push(this.currentCard.choiceC);
+      }
+      if (this.currentCard.choiceD !== "") {
+        this.currentChoices.push(this.currentCard.choiceD);
+      }
+      if (this.currentCard.choiceE !== "") {
+        this.currentChoices.push(this.currentCard.choiceE);
+      }
+      this.shuffle(this.currentChoices);
+    } 
   }
 
   getSuccessRate(): number {
@@ -108,15 +154,17 @@ export class DeckComponent implements OnInit {
   }
 
   getNextCard() {
-    if (this.currentIndex === this.flashcards.length - 1) {
-      // TODO: need to ask if they want to start again and then maybe reshuffle?
+    if (this.currentIndex === this.deck.length - 1) {
+      // TODO: need to ask if they want to start again
+      this.shuffle(this.deck);
       this.currentIndex = 0; // this works to return to beginning and loop through in existing order
     } else {
       this.currentIndex++;
     }
-    this.currentCard = this.flashcards[this.currentIndex];
+    this.currentCard = this.deck[this.currentIndex];
     this.setCurrentQuestion();
-    // TODO: eventually use this to rotate graphics for changing flashcards
+    this.setCurrentChoices();
+    // TODO: eventually use this to rotate graphics for changing deck
 
     this.answered = false;
   }

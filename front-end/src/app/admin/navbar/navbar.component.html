@@ -1,9 +1,24 @@
 <div class="center-align">
     <div class="flexbox-row">
-        <!-- FIXME: need to learn proper way to reference active route so this will always be correct -->
-        <a class="white-link" [class.white-link-selected]="activeLink === 'dashboard'" [routerLink]="'/admin/dashboard'" (click)="activeLink='dashboard'">Admin Dashboard</a>
-        <a class="white-link" [class.white-link-selected]="activeLink === 'search'" [routerLink]="'/admin/search'" (click)="activeLink='search'">Search Tool</a>
-        <a class="white-link" [class.white-link-selected]="activeLink === 'create'" [routerLink]="'/admin/create'" (click)="activeLink='create'">Create New Content</a>
-        <a class="white-link" [class.white-link-selected]="activeLink === 'start'" [routerLink]="'/start'" (click)="activeLink='start'">Back to Start</a>
+
+        <!-- ALL USERS -->
+        <div>
+            <!-- FIXME: need to learn proper way to reference active route so this will always be correct -->
+            <a class="white-link" [class.white-link-selected]="activeLink === 'start'" [routerLink]="'/start'" (click)="activeLink='start'">Home</a>
+            <a class="white-link" [class.white-link-selected]="activeLink === 'options'" [routerLink]="'/options'" (click)="activeLink='options'">Choose Cards</a>
+            <a class="white-link" [class.white-link-selected]="activeLink === 'deck'" [routerLink]="'/deck'" (click)="activeLink='deck'">Practice</a>
+            <a class="white-link" (click)="logout()" [routerLink]="'/login'">LOG OUT</a>          
+        </div>
+
+        <!-- ADMIN ONLY -->
+        <div class="space-before"> <!-- TODO: make the admin links visible only when admin role is present -->
+            <span class="white-link">ADMIN </span>&#187;
+            <a class="white-link" [class.white-link-selected]="activeLink === 'dashboard'" [routerLink]="'/admin/dashboard'" (click)="activeLink='dashboard'">Dashboard</a>
+            <a class="white-link" [class.white-link-selected]="activeLink === 'search'" [routerLink]="'/admin/search'" (click)="activeLink='search'">Search</a>
+            <a class="white-link" [class.white-link-selected]="activeLink === 'create'" [routerLink]="'/admin/create'" (click)="activeLink='create'">Create</a>
+        </div>
+        
+        
+        
     </div>
 </div>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import allFlashcards from '../../assets/question-bank.json';
+import { Flashcard } from '../flashcard';
 import { Filters } from '../filters';
 import { Question } from '../question';
 import { Statistics } from '../statistics';
 import { Settings } from '../settings';
-import { Selection } from '../selection';
+import { Selection } from '../selection'
+import { Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 @Component({
   selector: 'app-options',
@@ -13,6 +15,10 @@ import { Selection } from '../selection';
 })
 
 export class OptionsComponent implements OnInit {
+
+  dataIsLoaded: boolean = false;
+  flashcardsURL: string = "http://localhost:8080/api/flashcards"
+  allFlashcards: Flashcard[] = [];
 
   // ngModels
   includeStats: Selection = new Selection("Include Statistics", true);
@@ -45,16 +51,46 @@ export class OptionsComponent implements OnInit {
   settings: Settings = new Settings(true);
   statistics: Statistics = new Statistics;
 
-  constructor() { }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    this.buildSelectionArrays();
-    this.buildStatsArrays();
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    }
+    this.loadFlashcards();
   }
+
+
+  // ** PULL IN ALL FLASHCARDS FROM DATABASE QUESTION BANK ** //
+
+  loadFlashcards() {
+    fetch(this.flashcardsURL, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      }
+    }).then(function(response: any) {
+      response.json().then(function(json) {
+        let questionBank: Flashcard[] = [];
+        json.forEach(obj => {
+          let flashcard = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
+          flashcard.id = obj.id;
+          questionBank.push(flashcard);
+        });
+        this.allFlashcards = questionBank;
+        this.buildSelectionArrays();
+      }.bind(this));
+    }.bind(this));
+  }  
+
+
+// ** GET CATEGORIES, TOPICS, & TYPES FROM QUESTION BANK ** //
 
   buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
     let index: number;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         this.allCategories.push(new Selection(obj.category, true));
@@ -71,15 +107,16 @@ export class OptionsComponent implements OnInit {
       } 
     });
 
-    // FIXME: these need to be updated to reflect Selection object structure
-    this.allCategories.sort((a, b) => (a > b) ? 1 : -1);
-    this.allTopics.sort((a, b) => (a > b) ? 1 : -1);
-    this.allTypes.sort((a, b) => (a > b) ? 1 : -1);
+    this.allCategories.sort((a, b) => (a.item > b.item) ? 1 : -1);
+    this.allTopics.sort((a, b) => (a.item > b.item) ? 1 : -1);
+    this.allTypes.sort((a, b) => (a.item > b.item) ? 1 : -1);
 
     this.updateCategories;
     this.updateTopics;
     this.updateTypes;
     this.countSelections();
+
+    this.buildStatsArrays();
   }
 
   findCategory(category: string): number {
@@ -91,6 +128,7 @@ export class OptionsComponent implements OnInit {
     return -1;
   }
 
+  
   findTopic(topic: string): number {
     for (let i=0; i < this.allTopics.length; i++) {
       if (this.allTopics[i].item === topic) {
@@ -109,13 +147,32 @@ export class OptionsComponent implements OnInit {
     return -1;
   }
 
+
+  // ** CREATE STATS FOR EACH CATEGORY AND TOPIC ** //
+
+  buildStatsArrays() {
+    this.allCategories.forEach(obj => {
+      let statsPerCategory: number[] = this.getStatsPerCategory(obj.item);
+      this.cardsPerCategory.push(statsPerCategory[0]);
+      this.viewsPerCategory.push(statsPerCategory[1]);
+      this.accuracyPerCategory.push(statsPerCategory[2]);
+    })
+    this.allTopics.forEach(obj => {
+      let statsPerTopic: number[] = this.getStatsPerTopic(obj.item);
+      this.cardsPerTopic.push(statsPerTopic[0]);
+      this.viewsPerTopic.push(statsPerTopic[1]);
+      this.accuracyPerTopic.push(statsPerTopic[2]);
+    })
+    this.dataIsLoaded = true;
+  }
+
   getStatsPerCategory(category: string): number[] {
     let count = 0;
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
     // from full deck of available cards
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (obj.category === category) {
         count++
       }
@@ -138,13 +195,13 @@ export class OptionsComponent implements OnInit {
     let presented = 0;
     let correct = 0;
     let accuracy = 0;
-      // from full deck of available cards
-      allFlashcards.forEach(obj => {
-        if (obj.topic === topic) {
-          count++
-        }
-      });
-      // from user's history
+    // from full deck of available cards
+    this.allFlashcards.forEach(obj => {
+      if (obj.topic === topic) {
+        count++
+      }
+    });
+    // from user's history
     for(let i=0; i < this.questions.length; i++) {
       if (this.getTopicByCardId(this.questions[i].cardId) === topic) {
         presented += this.questions[i].presented;
@@ -159,7 +216,7 @@ export class OptionsComponent implements OnInit {
 
   getCategoryByCardId(cardId: number): string {
     let category: string;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (obj.id === cardId) {
         category = obj.category;
       } 
@@ -169,7 +226,7 @@ export class OptionsComponent implements OnInit {
 
   getTopicByCardId(cardId: number): string {
     let topic: string;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (obj.id === cardId) {
         topic = obj.topic;
       } 
@@ -177,20 +234,8 @@ export class OptionsComponent implements OnInit {
     return topic;
   }
 
-  buildStatsArrays() {
-    this.allCategories.forEach(obj => {
-      let statsPerCategory: number[] = this.getStatsPerCategory(obj.item);
-      this.cardsPerCategory.push(statsPerCategory[0]);
-      this.viewsPerCategory.push(statsPerCategory[1]);
-      this.accuracyPerCategory.push(statsPerCategory[2]);
-    })
-    this.allTopics.forEach(obj => {
-      let statsPerTopic: number[] = this.getStatsPerTopic(obj.item);
-      this.cardsPerTopic.push(statsPerTopic[0]);
-      this.viewsPerTopic.push(statsPerTopic[1]);
-      this.accuracyPerTopic.push(statsPerTopic[2]);
-    })
-  }
+
+  // ** SAVE SELECTIONS & UPDATE DECK COUNT ** //
 
   updateCategories(c: number) {
     let category = this.allCategories[c].item;
@@ -267,7 +312,7 @@ export class OptionsComponent implements OnInit {
 
   countSelections() {
     let count: number = 0;
-    allFlashcards.forEach(obj => {
+    this.allFlashcards.forEach(obj => {
       if (this.filters.categories.includes(obj.category) 
           && this.filters.topics.includes(obj.topic) 
           && this.filters.types.includes(obj.type)) {
@@ -276,5 +321,7 @@ export class OptionsComponent implements OnInit {
     });
     this.cardsInDeck = count;
   }
+
+  // TODO: MAKE SURE ALL SELECTIONS ARE SAVED WITH USER UPON FORM SUBMISSION
 
 }

@@ -18,17 +18,18 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   mySubscription: any;
-  user: User = new User("","","","",null,null,null,null);
+  user: User = new User("","","","");
   
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) {
   }
 
   ngOnInit() {
-
+    
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
       this.router.navigate(['/start']); // TODO: keep or change
+      console.log("User " + this.tokenStorage.getUser().id + " has logged in.");
     } 
 
   }
@@ -43,9 +44,9 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.user.email, this.user.password).subscribe(
       data => {
+        console.log(data);
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
-        console.log(data.token);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.reloadPage(); // upon ngInit, will reroute user
@@ -55,7 +56,6 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
-
   }
 
   reloadPage() {
