@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Flashcard } from 'src/app/flashcard';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -19,9 +20,12 @@ export class CreateComponent implements OnInit {
   
   flashcard: Flashcard = new Flashcard("","","","","","","","","");
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    } 
     this.loadFlashcards();
   }
 

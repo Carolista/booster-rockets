@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Flashcard } from 'src/app/flashcard';
 import { User } from 'src/app/user';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,11 +25,13 @@ export class DashboardComponent implements OnInit {
   allTopics: string[] = [];
   allTypes: string[] = [];
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    } 
     this.loadUsers();
-    // this.loadFlashcards(); // temporary while fixing user loading - delete after
   }
 
   // LOAD USERS FROM DATABASE

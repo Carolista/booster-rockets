@@ -37,7 +37,6 @@ export class NavbarComponent implements OnInit {
   }
  
   logout() {
-    // console.log(this.tokenStorageService.getUser());
     console.log("User " + this.tokenStorageService.getUser().id + " has logged out.");
     this.tokenStorageService.signOut();
     this.isLoggedIn = false;

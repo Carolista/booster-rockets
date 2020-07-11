@@ -4,7 +4,8 @@ import { Filters } from '../filters';
 import { Question } from '../question';
 import { Statistics } from '../statistics';
 import { Settings } from '../settings';
-import { Selection } from '../selection';
+import { Selection } from '../selection'
+import { Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 @Component({
@@ -50,9 +51,12 @@ export class OptionsComponent implements OnInit {
   settings: Settings = new Settings(true);
   statistics: Statistics = new Statistics;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    }
     this.loadFlashcards();
   }
 

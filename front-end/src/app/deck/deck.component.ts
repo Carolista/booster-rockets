@@ -4,6 +4,7 @@ import { Question } from '../question';
 import { Filters } from '../filters';
 import { Statistics } from '../statistics';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flashcard',
@@ -41,10 +42,12 @@ export class DeckComponent implements OnInit {
   // temporarily hard-code Statistics object to test statistics calculations
   statistics: Statistics = new Statistics();
 
-  constructor(private tokenStorageService: TokenStorageService) { 
-  }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    }
     this.loadFlashcards();
   }
 

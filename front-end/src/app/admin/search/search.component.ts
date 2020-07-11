@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Flashcard } from 'src/app/flashcard';
 import { User } from 'src/app/user';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
-import { Filters } from 'src/app/filters';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,11 +15,9 @@ export class SearchComponent implements OnInit {
   dataIsLoaded: boolean = false;
   searchType: string = "user"; // set default as either "user" or "flashcard"
 
+  // FLASHCARD SEARCH
   flashcardsURL: string = "http://localhost:8080/api/flashcards"
   allFlashcards: Flashcard[];
-  
-  
-  // FLASHCARD SEARCH
   allCategories: string[] = [];
   allTopics: string[] = [];
   allTypes: string[] = []; 
@@ -29,30 +27,23 @@ export class SearchComponent implements OnInit {
   selectedType: string = "";
   numberOfCards: number;
   flashcardResults: Flashcard[] = [];
-  letters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  letters: string = "ABCDE"; // there are never more than 5 choices
 
   // USER SEARCH
   userURL: string = "http://localhost:8080/api/user"
   allUsers: User[];
-  
-  // allFormerUsers: User[] = [new User("Caroline", "Jones","caroline@jones.com","",null,null,null,null),
-  //                     new User("Fitzwilliam","Darcy","mrdarcy@derbyshire.com","",null,null,null,null),
-  //                     new User("Bilbo","Baggins","bilbo@theshire.com","",null,null,null,null),
-  //                     new User("Willy","Wonka","willy@wonkachocolates.com","",null,null,null,null),
-  //                     new User("John Jacob","Jingleheimerschmidt","johnjacob@longlastnames.com","",null,null,null,null),
-  //                     new User("William","Riker","commander.riker@federation.com","",null,null,null,null)];
-  // numberOfUsers: number = this.allUsers.length;
-
   userID: number = 0;
   userName: string = "";
-  // numberOfUsers: number; // user after dummy data is no longer needed
+  numberOfUsers: number;
   userResults: User[] = [];
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/login'])
+    } 
     this.loadUsers();
-    
   }
 
 // LOAD USERS FROM DATABASE

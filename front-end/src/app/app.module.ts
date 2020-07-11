@@ -17,6 +17,7 @@ import { CreateComponent } from './admin/create/create.component';
 import { SearchComponent } from './admin/search/search.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavbarComponent } from './admin/navbar/navbar.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NavbarComponent } from './admin/navbar/navbar.component';
     CreateComponent,
     SearchComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
