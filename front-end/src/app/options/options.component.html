@@ -158,7 +158,7 @@
         </div>
         
         <div class="space-above right">
-            <button type="submit" [disabled]="cardsInDeck === 0">Let's Go!</button> 
+            <button type="submit" (click)="onSubmit()" [disabled]="cardsInDeck === 0">Let's Go!</button> 
         </div>
 
     </div>

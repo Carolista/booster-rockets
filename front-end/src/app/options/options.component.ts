@@ -23,6 +23,7 @@ export class OptionsComponent implements OnInit {
   userURL: string = "http://localhost:8080/api/user/"; // needs last slash for concatenation with userID
   roles: string[];
   userID: number;
+  user: User;
 
   filters: Filters;; 
   questions: Question[];
@@ -53,9 +54,9 @@ export class OptionsComponent implements OnInit {
     if (this.tokenStorageService.getToken()) {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
-      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN'); // TODO: implement?
       this.userID = user.id;
       this.loadUser();
+      console.log("Data for user " + user.id + " loaded from database.")
     } else {
       this.router.navigate(['/login'])
     }   
@@ -75,11 +76,16 @@ export class OptionsComponent implements OnInit {
       response.json().then(function(json) {
         this.user = new User(json.firstName, json.lastName, json.email, json.password);
         this.user.id = json.id;
-        this.filters === null ? new Filters([],[],[]) : json.filters;
-        this.questions === null ? [] : json.questions;
-        this.settings === null ? new Settings(true) : json.settings;
-        this.statistics === null ? new Statistics() : json.statistics;
+        this.filters = (json.filters === null ? new Filters([],[],[]) : json.filters);
+        this.questions = (json.questions === null ? [] : json.questions);
+        this.settings = (json.settings === null ? new Settings(true) : json.settings);
+        this.statistics = (json.statistics === null ? new Statistics() : json.statistics);
+        // this.filters = new Filters([],[],[]);
+        // this.questions = [];
+        // this.settings = new Settings(true);
+        // this.statistics = new Statistics();
         this.loadFlashcards();
+        console.log("All flashcards loaded from database.")
       }.bind(this));
     }.bind(this));
   }
@@ -103,10 +109,12 @@ export class OptionsComponent implements OnInit {
           questionBank.push(flashcard);
         });
         this.allFlashcards = questionBank;
+        // console.log(JSON.stringify(questionBank));
         this.buildSelectionArrays();
-        
+        console.log("Selection arrays built.");
       }.bind(this));
     }.bind(this));
+    
   }  
 
 
@@ -115,34 +123,67 @@ export class OptionsComponent implements OnInit {
   buildSelectionArrays() {
     let index: number;
     let selected: boolean;
+    let selection: Selection;
     this.allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
         selected = (this.filters.categories.indexOf(obj.category) >= 0);
-        this.allCategories.push(new Selection(obj.category, selected));
+        selection = new Selection(obj.category, selected);
+        this.allCategories.push(selection);
       }
       index = this.findTopic(obj.topic);
       if (index === -1) {
         selected = (this.filters.topics.indexOf(obj.topic) >= 0);
-        this.allTopics.push(new Selection(obj.topic, selected));
+        selection = new Selection(obj.topic, selected);
+        this.allTopics.push(selection);
       } 
       index = this.findType(obj.type);
       if (index === -1) {
         selected = (this.filters.types.indexOf(obj.type) >= 0);
-        this.allTypes.push(new Selection(obj.type, selected));
+        selection = new Selection(obj.type, selected);
+        this.allTypes.push(selection);
       } 
     });
-
     this.allCategories.sort((a, b) => (a.item > b.item) ? 1 : -1);
     this.allTopics.sort((a, b) => (a.item > b.item) ? 1 : -1);
     this.allTypes.sort((a, b) => (a.item > b.item) ? 1 : -1);
 
-    this.updateCategories;
-    this.updateTopics;
-    this.updateTypes;
-    this.countSelections();
+    this.setInitialSelections();
+    console.log("Initial selections set.")
+    
+  }
 
+  setInitialSelections() {
+    let index: number;
+    for (let i=0; i < this.allCategories.length; i++) {
+      index = this.filters.categories.indexOf(this.allCategories[i].item);
+      if (index >= 0) {
+        this.allCategories[i].checked = true;
+      } else {
+        this.allCategories[i].checked = false;
+      }
+    }
+    for (let j=0; j < this.allTopics.length; j++) {
+      index = this.filters.topics.indexOf(this.allTopics[j].item);
+      if (index >= 0) {
+        this.allTopics[j].checked = true;
+      } else {
+        this.allTopics[j].checked = false;
+      }
+    } 
+    for (let j=0; j < this.allTypes.length; j++) {
+      index = this.filters.types.indexOf(this.allTypes[j].item);
+      if (index >= 0) {
+        this.allTypes[j].checked = true;
+      } else {
+        this.allTypes[j].checked = false;
+      }
+    } 
+    this.adjustSelectAll();
+    this.countSelections();
+    console.log("Initial card count done.")
     this.buildStatsArrays();
+    console.log("Stats arrays built.");
   }
 
   findCategory(category: string): number {
@@ -261,7 +302,7 @@ export class OptionsComponent implements OnInit {
   }
 
 
-  // ** SAVE SELECTIONS & UPDATE DECK COUNT ** //
+  // ** SAVE SELECTIONS LOCALLY & UPDATE DECK COUNT ** //
 
   updateCategories(c: number) {
     let category = this.allCategories[c].item;
@@ -271,12 +312,10 @@ export class OptionsComponent implements OnInit {
       this.filters.categories.splice(index,1);
     } else if (checked && index === -1) {
       this.filters.categories.push(category);
+      console.log("The category " + category + " has been added to the filters.categories array.");
+      console.log(this.filters.categories.toString());
     }
-    if (this.filters.categories.length === this.allCategories.length) {
-      this.selectAllCategoryBoxes.checked = true;
-    } else {
-      this.selectAllCategoryBoxes.checked = false;
-    }
+    this.adjustSelectAll();
     this.countSelections();
   }
 
@@ -289,11 +328,7 @@ export class OptionsComponent implements OnInit {
     } else if (checked && index === -1) {
       this.filters.topics.push(topic);
     }
-    if (this.filters.topics.length === this.allTopics.length) {
-      this.selectAllTopicBoxes.checked = true;
-    } else {
-      this.selectAllTopicBoxes.checked = false;
-    }
+    this.adjustSelectAll();
     this.countSelections();
   }
 
@@ -306,12 +341,26 @@ export class OptionsComponent implements OnInit {
     } else if (checked && index === -1) {
       this.filters.types.push(type);
     }
+    this.adjustSelectAll();
+    this.countSelections();
+  }
+
+  adjustSelectAll() {
+    if (this.filters.categories.length === this.allCategories.length) {
+      this.selectAllCategoryBoxes.checked = true;
+    } else {
+      this.selectAllCategoryBoxes.checked = false;
+    }
+    if (this.filters.topics.length === this.allTopics.length) {
+      this.selectAllTopicBoxes.checked = true;
+    } else {
+      this.selectAllTopicBoxes.checked = false;
+    }
     if (this.filters.types.length === this.allTypes.length) {
       this.selectAllTypeBoxes.checked = true;
     } else {
       this.selectAllTypeBoxes.checked = false;
     }
-    this.countSelections();
   }
 
   // select or deselect all categories and topics on page
@@ -345,9 +394,32 @@ export class OptionsComponent implements OnInit {
         count++
       }
     });
+    console.log("There are now " + count + " cards in the deck.");
     this.cardsInDeck = count;
   }
 
-  // TODO: MAKE SURE ALL SELECTIONS ARE SAVED WITH USER UPON FORM SUBMISSION
+  onSubmit() {
+
+    this.user.filters = this.filters;
+
+    fetch(this.userURL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Barer ' + this.tokenStorageService.getToken()
+      },
+      body: JSON.stringify(this.user),
+    }).then(function (response) {
+      return response;
+    }.bind(this)).then(function (data) {
+      console.log('Success:', data);
+    }).catch(function (error) {
+      console.error('Error:', error);
+    });
+
+    this.router.navigate(['/deck']);
+  }
 
 }
