@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Flashcard } from 'src/app/flashcard';
 import { User } from 'src/app/user';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { Filters } from 'src/app/filters';
 
 
 @Component({
@@ -12,31 +13,35 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 export class SearchComponent implements OnInit {
 
   dataIsLoaded: boolean = false;
-  flashcardsURL: string = "http://localhost:8080/api/flashcards"
-  allFlashcards: Flashcard[];
   searchType: string = "user"; // set default as either "user" or "flashcard"
 
+  flashcardsURL: string = "http://localhost:8080/api/flashcards"
+  allFlashcards: Flashcard[];
+  
+  
   // FLASHCARD SEARCH
   allCategories: string[] = [];
   allTopics: string[] = [];
-  allTypes: string[] = [];
-  
+  allTypes: string[] = []; 
   keyword: string = "";
   selectedCategory: string = "";
   selectedTopic: string = "";
   selectedType: string = "";
   numberOfCards: number;
   flashcardResults: Flashcard[] = [];
-
   letters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  // USER SEARCH
+  userURL: string = "http://localhost:8080/api/user"
+  allUsers: User[];
   
-  allUsers: User[] = [new User("Caroline", "Jones","caroline@jones.com","",null,null,null,null),
-                      new User("Fitzwilliam","Darcy","mrdarcy@derbyshire.com","",null,null,null,null),
-                      new User("Bilbo","Baggins","bilbo@theshire.com","",null,null,null,null),
-                      new User("Willy","Wonka","willy@wonkachocolates.com","",null,null,null,null),
-                      new User("John Jacob","Jingleheimerschmidt","johnjacob@longlastnames.com","",null,null,null,null),
-                      new User("William","Riker","commander.riker@federation.com","",null,null,null,null)];
-  numberOfUsers: number = this.allUsers.length; // TODO: set this in load function
+  // allFormerUsers: User[] = [new User("Caroline", "Jones","caroline@jones.com","",null,null,null,null),
+  //                     new User("Fitzwilliam","Darcy","mrdarcy@derbyshire.com","",null,null,null,null),
+  //                     new User("Bilbo","Baggins","bilbo@theshire.com","",null,null,null,null),
+  //                     new User("Willy","Wonka","willy@wonkachocolates.com","",null,null,null,null),
+  //                     new User("John Jacob","Jingleheimerschmidt","johnjacob@longlastnames.com","",null,null,null,null),
+  //                     new User("William","Riker","commander.riker@federation.com","",null,null,null,null)];
+  // numberOfUsers: number = this.allUsers.length;
 
   userID: number = 0;
   userName: string = "";
@@ -46,11 +51,38 @@ export class SearchComponent implements OnInit {
   constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    this.loadFlashcards();
-    for (let k: number = 0; k < this.allUsers.length; k++) { // temporary to test ID lookup
-      this.allUsers[k].id = 101 + k;
-    }
+    this.loadUsers();
+    
   }
+
+// LOAD USERS FROM DATABASE
+
+loadUsers() {
+  fetch(this.userURL, {
+    method: 'GET',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+    }
+  }).then(function(response: any) {
+    response.json().then(function(json) {
+      let users: User[] = [];
+      json.forEach(obj => {
+        let user = new User(obj.firstName, obj.lastName, obj.email, obj.password);
+        user.id = obj.id;
+        user.filters = obj.filters;
+        user.questions = obj.questions;
+        user.settings = obj.settings;
+        user.statistics = obj.statistics;
+        users.push(user);
+      });
+      this.allUsers = users;
+      this.numberOfUsers = this.allUsers.length;  
+      this.loadFlashcards();
+    }.bind(this));
+  }.bind(this));
+} 
 
   // LOAD FLASHCARDS FROM DATABASE
 
@@ -73,7 +105,6 @@ export class SearchComponent implements OnInit {
         this.allFlashcards = questionBank;
         this.numberOfCards = this.allFlashcards.length;
         this.buildFlashcardSearchArrays();
-        
       }.bind(this));
     }.bind(this));
   } 
@@ -195,9 +226,8 @@ export class SearchComponent implements OnInit {
 
   getUserByID() {
     this.userName = ""; // clear name/email lookup field in form
-
-    if (this.userID === 0 || this.userID === null) { 
-      this.userResults = this.allUsers.splice(0);
+    if (this.userID === null) { 
+      this.userResults = this.allUsers.slice(0); // return all records
       return;
     }
     this.userResults = [];
@@ -205,10 +235,12 @@ export class SearchComponent implements OnInit {
     for (let i=0; i < this.allUsers.length; i++) {
       user = this.allUsers[i]
       if (user.id === this.userID) {
+        console.log("User number " + this.userID + " found");
         this.userResults.push(user);
         return;
       }
     }
+    console.log("User number " + this.userID + " not found");
     return;
   }
 

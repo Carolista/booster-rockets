@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   mySubscription: any;
-  user: User = new User("","","","",null,null,null,null);
+  user: User = new User("","","","");
   
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) {
   }

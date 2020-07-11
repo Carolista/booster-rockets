@@ -29,12 +29,10 @@ public class UserController {
     @Autowired
     PasswordEncoder encoder;
 
+    //    @PreAuthorize("hasRole('USER')") // FIXME: change to admin as soon as that's implemented
     @GetMapping
-    @PreAuthorize("hasRole('USER')") // FIXME: change to admin as soon as that's implemented
     public ResponseEntity<?> getUsers(@RequestHeader HttpHeaders headers) {
-
-        String headerAuth = headers.getFirst("Authorization"); // FIXME: what does this do?
-
+//        String headerAuth = headers.getFirst("Authorization"); // FIXME: what does this do?
         Optional<Iterable<User>> users = Optional.of(userRepository.findAll());
         if(users.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

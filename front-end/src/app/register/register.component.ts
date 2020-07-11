@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   roles: string[] = [];
   id: number;
   passwordMismatch: boolean = false;
-  user: User = new User("", "", "", "", null, [], null, null); // for ngModel binding
+  user: User = new User("", "", "", ""); // for ngModel binding
   verify: string;
   form: any = {};
 
