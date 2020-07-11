@@ -27,39 +27,39 @@ export class DashboardComponent implements OnInit {
   constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    // this.loadUsers(); // FIXME: getting CORS error
-    this.loadFlashcards(); // temporary while fixing user loading - delete after
+    this.loadUsers();
+    // this.loadFlashcards(); // temporary while fixing user loading - delete after
   }
 
   // LOAD USERS FROM DATABASE
 
-  // loadUsers() {
-  //   fetch(this.userURL, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Access-Control-Allow-Origin': '*',
-  //       'Access-Control-Allow-Credentials': 'true',
-  //       'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
-  //     },
-  //   }).then(function(response: any) {
-  //     response.json().then(function(json) {
-  //       let userList: User[] = [];
-  //       json.forEach(obj => {
-  //         let user = new User(obj.firstName, obj.lastName, obj.email, obj.password, obj.filters, obj.questions, obj.settings, obj.statistics);
-  //         user.id = obj.id;
-  //         user.filters = obj.filters;
-  //         user.questions = obj.questions;
-  //         user.settings = obj.settings;
-  //         user.statistics = obj.statistics;
-  //         userList.push(user);
-  //       });
-  //       this.allUsers = userList;
-  //       this.numberOfUsers = this.allUsers.length;
-  //       this.loadFlashcards();
-  //     }.bind(this));
-  //   }.bind(this));
-  // }
+  loadUsers() {
+    fetch(this.userURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      },
+    }).then(function(response: any) {
+      response.json().then(function(json) {
+        let userList: User[] = [];
+        json.forEach(obj => {
+          let user = new User(obj.firstName, obj.lastName, obj.email, obj.password);
+          user.id = obj.id;
+          user.filters = obj.filters;
+          user.questions = obj.questions;
+          user.settings = obj.settings;
+          user.statistics = obj.statistics;
+          userList.push(user);
+        });
+        this.allUsers = userList;
+        this.numberOfUsers = this.allUsers.length;
+        this.loadFlashcards();
+      }.bind(this));
+    }.bind(this));
+  }
 
   // LOAD FLASHCARDS FROM DATABASE
 
