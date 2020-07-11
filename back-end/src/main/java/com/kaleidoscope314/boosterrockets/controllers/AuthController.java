@@ -11,7 +11,7 @@ import com.kaleidoscope314.boosterrockets.payload.response.MessageResponse;
 import com.kaleidoscope314.boosterrockets.security.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager; // it's not finding this!?!
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;

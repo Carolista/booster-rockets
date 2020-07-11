@@ -4,12 +4,12 @@ import { User } from 'src/app/user';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
+
 export class SearchComponent implements OnInit {
 
   dataIsLoaded: boolean = false;

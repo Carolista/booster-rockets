@@ -88,8 +88,6 @@
             <!-- User Search -->
             <div *ngIf="searchType === 'user'" class="center">
                 <div class="parameters-block space-above">
-
-                    <!-- FIXME: This is not working, and really I should make this mutually exclusive with other User search fields -->
                     <div class="flexbox-row">
                         <div class="right search-type-column">
                             User ID
@@ -98,18 +96,15 @@
                             <input #user="ngModel" [(ngModel)]="userID" (input)="getUserByID()" placeholder=0 min=0 type="number" class="search-form-field" />
                         </div>        
                     </div>
-
                     <div class="flexbox-row">
                         <div class="right search-type-column">
-                            Name/Email <!-- TODO: Split out e-mail -->
+                            Name/Email
                         </div>
                         <div class="left search-field-column">
                             <input #name="ngModel" [(ngModel)]="userName" (input)="getUserResults()" placeholder="Type anything!" type="text" class="search-form-field" />
                         </div>        
                     </div>
-
                 </div>
-
                 <div class="results-block slightly-smaller">
                     <span class="space-above result-count" *ngIf="userResults.length === numberOfUsers">Displaying all {{numberOfUsers}} users.</span>
                     <span class="space-above result-count" *ngIf="userResults.length < numberOfUsers">Your search returned {{userResults.length}} result<span *ngIf="userResults.length === 0 || userResults.length > 1">s</span>.</span>

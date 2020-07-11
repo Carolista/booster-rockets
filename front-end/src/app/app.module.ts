@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { ScorecardComponent } from './scorecard/scorecard.component';
+import { UserSettingsComponent } from './scorecard/user-settings.component';
 import { DeckComponent } from './deck/deck.component';
 import { OptionsComponent } from './options/options.component';
 import { StartComponent } from './start/start.component';
@@ -24,7 +24,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ScorecardComponent,
+    UserSettingsComponent,
     DeckComponent,
     OptionsComponent,
     StartComponent,

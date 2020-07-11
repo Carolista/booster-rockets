@@ -1,6 +1,5 @@
 package com.kaleidoscope314.boosterrockets.controllers;
 
-import com.kaleidoscope314.boosterrockets.models.Flashcard;
 import com.kaleidoscope314.boosterrockets.models.User;
 import com.kaleidoscope314.boosterrockets.models.data.UserRepository;
 import com.kaleidoscope314.boosterrockets.security.services.UserAuthService;

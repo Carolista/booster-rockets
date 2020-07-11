@@ -9,19 +9,21 @@ import { CreateComponent } from './admin/create/create.component';
 import { SearchComponent } from './admin/search/search.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserSettingsComponent } from './scorecard/user-settings.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'user/settings', component: UserSettingsComponent },
   {path: 'start', component: StartComponent},
   {path: 'options', component: OptionsComponent},
   {path: 'deck', component: DeckComponent},
   {path: 'admin/dashboard', component: DashboardComponent},
   {path: 'admin/create', component: CreateComponent},
   {path: 'admin/search', component: SearchComponent},
-  {path: 'page-not-found', component: PageNotFoundComponent},
+  {path: '404', component: PageNotFoundComponent},
   {path: '', redirectTo: 'start', pathMatch: 'full'},
-  {path: '**', redirectTo: 'page-not-found', pathMatch: 'full'}
+  {path: '**', redirectTo: '404', pathMatch: 'full'}
 ];
 
 @NgModule({

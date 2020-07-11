@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="aafc767f-1abf-41f3-ab48-4ad33e8e11c9" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="aafc767f-1abf-41f3-ab48-4ad33e8e11c9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../front-end/src/app/admin/search/search.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/admin/search/search.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/app/admin/search/search.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/admin/search/search.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/app/options/options.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/options/options.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/app/settings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/settings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/app/statistics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/app/statistics.ts" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

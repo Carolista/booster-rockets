@@ -7,6 +7,7 @@ import { Settings } from '../settings';
 import { Selection } from '../selection'
 import { Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-options',
@@ -17,8 +18,16 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 export class OptionsComponent implements OnInit {
 
   dataIsLoaded: boolean = false;
-  flashcardsURL: string = "http://localhost:8080/api/flashcards"
+  flashcardsURL: string = "http://localhost:8080/api/flashcards";
   allFlashcards: Flashcard[] = [];
+  userURL: string = "http://localhost:8080/api/user/"; // needs last slash for concatenation with userID
+  roles: string[];
+  userID: number;
+
+  filters: Filters;; 
+  questions: Question[];
+  settings: Settings;
+  statistics: Statistics;
 
   // ngModels
   includeStats: Selection = new Selection("Include Statistics", true);
@@ -38,28 +47,42 @@ export class OptionsComponent implements OnInit {
 
   cardsInDeck: number = 0;
   
- 
-  // TEMPORARY PROPERTIES OF USER UNTIL BACK END IS CONNECTED FIXME: pull from user
-  filters: Filters = new Filters([],[],["Multiple Choice", "True/False"]); 
-  questions: Question[] = [ 
-    new Question(1, 3, 2),
-    new Question(2, 4, 3),
-    new Question(5, 6, 5),
-    new Question(7, 4, 4),
-    new Question(9, 2, 1)
-  ]
-  settings: Settings = new Settings(true);
-  statistics: Statistics = new Statistics;
-
   constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    if (!this.tokenStorageService.getToken()) {
+    if (this.tokenStorageService.getToken()) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN'); // TODO: implement?
+      this.userID = user.id;
+      this.loadUser();
+    } else {
       this.router.navigate(['/login'])
-    }
-    this.loadFlashcards();
+    }   
   }
 
+  // GET USER 
+
+  loadUser() {
+    fetch(this.userURL + this.userID, {method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      },
+    }).then(function(response) {
+      response.json().then(function(json) {
+        this.user = new User(json.firstName, json.lastName, json.email, json.password);
+        this.user.id = json.id;
+        this.filters === null ? new Filters([],[],[]) : json.filters;
+        this.questions === null ? [] : json.questions;
+        this.settings === null ? new Settings(true) : json.settings;
+        this.statistics === null ? new Statistics() : json.statistics;
+        this.loadFlashcards();
+      }.bind(this));
+    }.bind(this));
+  }
 
   // ** PULL IN ALL FLASHCARDS FROM DATABASE QUESTION BANK ** //
 
@@ -81,6 +104,7 @@ export class OptionsComponent implements OnInit {
         });
         this.allFlashcards = questionBank;
         this.buildSelectionArrays();
+        
       }.bind(this));
     }.bind(this));
   }  
@@ -88,22 +112,24 @@ export class OptionsComponent implements OnInit {
 
 // ** GET CATEGORIES, TOPICS, & TYPES FROM QUESTION BANK ** //
 
-  buildSelectionArrays() { // FIXME: this will need to be updated once pulling from user
+  buildSelectionArrays() {
     let index: number;
+    let selected: boolean;
     this.allFlashcards.forEach(obj => {
       index = this.findCategory(obj.category);
       if (index === -1) {
-        this.allCategories.push(new Selection(obj.category, true));
-        this.filters.categories.push(obj.category); // FIXME: temporary backfill
+        selected = (this.filters.categories.indexOf(obj.category) >= 0);
+        this.allCategories.push(new Selection(obj.category, selected));
       }
       index = this.findTopic(obj.topic);
       if (index === -1) {
-        this.allTopics.push(new Selection(obj.topic, true));
-        this.filters.topics.push(obj.topic); // FIXME: temporary backfill
+        selected = (this.filters.topics.indexOf(obj.topic) >= 0);
+        this.allTopics.push(new Selection(obj.topic, selected));
       } 
       index = this.findType(obj.type);
       if (index === -1) {
-        this.allTypes.push(new Selection(obj.type, true));
+        selected = (this.filters.types.indexOf(obj.type) >= 0);
+        this.allTypes.push(new Selection(obj.type, selected));
       } 
     });
 

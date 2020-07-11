@@ -74,7 +74,7 @@ public class UserAuthService {
     // gets JWT token from authorization header
     // should only be called internal to UserAuthService
     private String getToken(String headerAuth) {
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Barer ")) {
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(6);
         }
         return null;

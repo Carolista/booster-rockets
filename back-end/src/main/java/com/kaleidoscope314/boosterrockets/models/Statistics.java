@@ -7,7 +7,7 @@ public class Statistics extends AbstractEntity {
 
     private int presented = 0;
     private int correct = 0;
-    private double accuracy = 0;
+    private double accuracy = 0; // TODO: don't need this - can just calculate as needed - fix before next schema drop
 
     private int currentStreak = 0;
     private int longestStreak = 0;
