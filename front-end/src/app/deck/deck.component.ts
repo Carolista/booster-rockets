@@ -83,7 +83,6 @@ export class DeckComponent implements OnInit {
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
         this.deck.push(card);
-        console.log("added question to deck: " + card.query);
       }      
     });
 

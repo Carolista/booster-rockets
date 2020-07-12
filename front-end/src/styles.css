@@ -23,7 +23,7 @@ IDEAS:
         (beach, coffeeshop, library, mountains, garden, gaming den, etc)
 */
 
-/* TODO: move styles that are not used globally to lower css files */
+/* TODO: move styles that are not used globally to component css files */
 
 /* TODO: add fixed "to top" button on longer pages */
 
@@ -374,10 +374,8 @@ IDEAS:
     top: 125px;
     right: 20px;
     padding: 5px 20px 20px;
-    background-color: #ca4a0f;
+    background-color: #09869c;
     border-radius: 0px 30px;
-    /* justify-content: center; */
-    /* align-items: center; */
 }
 
 .alert-z {
@@ -543,11 +541,11 @@ a.white-link-selected {
 }
   
 .custom-checkbox input:checked+.checkmark {
-    background-color: #0ba5c0;
+    background-color: #09869c;
 }
 
 .custom-checkbox-small input:checked+.checkmark {
-    background-color: #bada55;
+    background-color: #bada55; /* and yes I used this color because it is BADASS */
 }
   
 .custom-checkbox input:checked+.checkmark:after {

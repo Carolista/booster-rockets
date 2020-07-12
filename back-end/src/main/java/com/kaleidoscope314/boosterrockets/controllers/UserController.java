@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable("userId") int id,
                                         @RequestHeader HttpHeaders headers) {
 

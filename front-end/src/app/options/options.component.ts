@@ -80,10 +80,6 @@ export class OptionsComponent implements OnInit {
         this.questions = (json.questions === null ? [] : json.questions);
         this.settings = (json.settings === null ? new Settings(true) : json.settings);
         this.statistics = (json.statistics === null ? new Statistics() : json.statistics);
-        // this.filters = new Filters([],[],[]);
-        // this.questions = [];
-        // this.settings = new Settings(true);
-        // this.statistics = new Statistics();
         this.loadFlashcards();
         console.log("All flashcards loaded from database.")
       }.bind(this));
@@ -111,7 +107,6 @@ export class OptionsComponent implements OnInit {
         this.allFlashcards = questionBank;
         // console.log(JSON.stringify(questionBank));
         this.buildSelectionArrays();
-        console.log("Selection arrays built.");
       }.bind(this));
     }.bind(this));
     
@@ -147,9 +142,8 @@ export class OptionsComponent implements OnInit {
     this.allCategories.sort((a, b) => (a.item > b.item) ? 1 : -1);
     this.allTopics.sort((a, b) => (a.item > b.item) ? 1 : -1);
     this.allTypes.sort((a, b) => (a.item > b.item) ? 1 : -1);
-
+    console.log("Selection arrays built.");
     this.setInitialSelections();
-    console.log("Initial selections set.")
     
   }
 
@@ -179,7 +173,15 @@ export class OptionsComponent implements OnInit {
         this.allTypes[j].checked = false;
       }
     } 
-    this.adjustSelectAll();
+    if (this.filters.categories.length === 0 && this.filters.topics.length === 0 && this.filters.types.length === 0) {
+      this.selectAllCategories(true);
+      this.selectAllTopics(true);
+      this.selectAllTypes(true);
+      console.log("All categories, topics, and types included for new user.")
+    } else {
+      this.adjustSelectAll();
+      console.log("Selections set from user's last saved filters.")
+    }
     this.countSelections();
     console.log("Initial card count done.")
     this.buildStatsArrays();
@@ -312,8 +314,6 @@ export class OptionsComponent implements OnInit {
       this.filters.categories.splice(index,1);
     } else if (checked && index === -1) {
       this.filters.categories.push(category);
-      console.log("The category " + category + " has been added to the filters.categories array.");
-      console.log(this.filters.categories.toString());
     }
     this.adjustSelectAll();
     this.countSelections();
@@ -394,32 +394,32 @@ export class OptionsComponent implements OnInit {
         count++
       }
     });
-    console.log("There are now " + count + " cards in the deck.");
     this.cardsInDeck = count;
   }
 
   onSubmit() {
 
     this.user.filters = this.filters;
+    
 
-    fetch(this.userURL, {
+    fetch(this.userURL + this.user.id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': 'true',
-        'Authorization': 'Barer ' + this.tokenStorageService.getToken()
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
       },
       body: JSON.stringify(this.user),
     }).then(function (response) {
-      return response;
+      // this.router.navigate(['/deck']); // FIXME: temporary while debugging PUT
     }.bind(this)).then(function (data) {
       console.log('Success:', data);
     }).catch(function (error) {
       console.error('Error:', error);
     });
 
-    this.router.navigate(['/deck']);
+    
   }
 
 }
