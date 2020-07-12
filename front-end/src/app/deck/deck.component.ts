@@ -5,6 +5,8 @@ import { Filters } from '../filters';
 import { Statistics } from '../statistics';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 import { Router } from '@angular/router';
+import { User } from '../user';
+import { Settings } from '../settings';
 
 @Component({
   selector: 'app-flashcard',
@@ -27,28 +29,50 @@ export class DeckComponent implements OnInit {
   answered: boolean = false;
   correct: boolean = true;
 
-  // temporarily hard-code Filters object to test function in buildFlashcardSet
-  filters: Filters = new Filters(["JavaScript", "Angular", "Thymeleaf", "SQL"], ["Queries", "Arrays", "General"], ["Multiple Choice","True/False"]);
+  userURL: string = "http://localhost:8080/api/user/";
+  user: User;
+  userID: number;
+  roles: string[];
 
-  // temporarily hard-code Question array to test statistics calculations
-  questions: Question[] = [
-    new Question(1, 3, 2),
-    new Question(2, 4, 3),
-    new Question(5, 6, 5),
-    new Question(7, 4, 4),
-    new Question(9, 2, 1)
-  ]
-
-  // temporarily hard-code Statistics object to test statistics calculations
-  statistics: Statistics = new Statistics();
+  filters: Filters;
+  questions: Question[];
+  settings: Settings;
+  statistics: Statistics;
 
   constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
-    if (!this.tokenStorageService.getToken()) {
+    if (this.tokenStorageService.getToken()) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+      this.userID = user.id;
+      this.loadUser();
+      console.log("Data for user " + user.id + " loaded from database.")
+    } else {
       this.router.navigate(['/login'])
-    }
-    this.loadFlashcards();
+    } 
+  }
+
+  loadUser() {
+    fetch(this.userURL + this.userID, {method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      },
+    }).then(function(response) {
+      response.json().then(function(json) {
+        this.user = new User(json.firstName, json.lastName, json.email, json.password);
+        this.user.id = json.id;
+        this.filters = (json.filters === null ? new Filters([],[],[]) : json.filters);
+        this.questions = (json.questions === null ? [] : json.questions);
+        this.settings = (json.settings === null ? new Settings(true) : json.settings);
+        this.statistics = (json.statistics === null ? new Statistics() : json.statistics);
+        this.loadFlashcards();
+        console.log("All flashcards loaded from database.")
+      }.bind(this));
+    }.bind(this));
   }
 
   loadFlashcards() {
@@ -80,6 +104,7 @@ export class DeckComponent implements OnInit {
     this.deck = [];
     this.allFlashcards.forEach(obj => {
       let card = new Flashcard(obj.category, obj.topic, obj.type, obj.query, obj.answer, obj.choiceB, obj.choiceC, obj.choiceD, obj.choiceE);
+      card.id = obj.id;
       // add card to deck only if it fits user's criteria
       if (this.filters.categories.includes(card.category) && this.filters.topics.includes(card.topic) && this.filters.types.includes(card.type)) {
         this.deck.push(card);
@@ -89,45 +114,24 @@ export class DeckComponent implements OnInit {
     // TODO: if user is given choice to sort by category:
     // this.deck.sort((a, b) => (a.category > b.category) ? 1 : -1);
 
+    // otherwise shuffle to randomize order
     this.shuffle(this.deck);
+    console.log("Flashcard deck built.")
     this.currentCard = this.deck[this.currentIndex];
+    console.log("The first flashcard is card with id " + this.currentCard.id);
     this.setCurrentChoices();
     this.setCurrentQuestion();
-    console.log("Flashcard deck built.")
-  }
-
-  checkAnswer() {
-    this.answered = true;
-    let index = this.findQuestionByCardId(this.currentCard.id);
-    if (index === -1) {
-      let question = new Question(this.currentCard.id, 0, 0);
-      this.questions.push(question);
-      index = this.questions.length - 1;
-    }
-    this.questions[index].presented++;
-    this.statistics.presented++;
-    if (this.currentResponse === this.currentCard.answer) {
-      this.questions[index].correct++;
-      this.statistics.correct++;
-      this.statistics.currentStreak++;
-      if (this.statistics.currentStreak > this.statistics.longestStreak) {
-        this.statistics.longestStreak = this.statistics.currentStreak;
-      }
-      this.correct = true;
-    } else {
-      this.correct = false;
-    }
-    // console.log(this.questions[index]);
+    this.dataIsLoaded = true;
   }
 
   setCurrentQuestion() {
     let index = this.findQuestionByCardId(this.currentCard.id);
     if (index === -1) {
-      this.currentQuestion = new Question(this.currentCard.id, 0, 0); 
+      this.currentQuestion = new Question(this.currentCard.id, 0, 0, false); 
     } else {
       this.currentQuestion = this.questions[index];
     }
-    this.dataIsLoaded = true;
+    console.log("Current question object set to track statistics for card " + this.currentCard.id);
   }
 
   setCurrentChoices() {
@@ -148,8 +152,35 @@ export class DeckComponent implements OnInit {
     } 
   }
 
-  getSuccessRate(): number {
-    return Math.round((this.currentQuestion.correct / this.currentQuestion.presented) * 100);
+  checkAnswer() {
+    this.answered = true;
+
+    // add question to list of answered questions if not already there
+    let index = this.findQuestionByCardId(this.currentCard.id);
+    if (index === -1) {
+      console.log("question " + this.currentCard.id + " not found in user history")
+      this.questions.push(this.currentQuestion);
+      console.log(this.questions);
+      index = this.questions.length - 1; // now that it's been added
+    }
+
+    // update per-question statistics and user's global statistics
+    this.questions[index].presented++;
+    this.statistics.presented++;
+    if (this.currentResponse === this.currentCard.answer) {
+      this.questions[index].correct++;
+      this.statistics.correct++;
+      this.statistics.currentStreak++;
+      if (this.statistics.currentStreak > this.statistics.longestStreak) {
+        this.statistics.longestStreak = this.statistics.currentStreak;
+      }
+      this.correct = true;
+    } else {
+      this.correct = false;
+    }
+
+    // send updated data to back end and store in database 
+    this.saveData();
   }
 
   getNextCard() {
@@ -163,12 +194,10 @@ export class DeckComponent implements OnInit {
     this.currentCard = this.deck[this.currentIndex];
     this.setCurrentQuestion();
     this.setCurrentChoices();
-    // TODO: eventually use this to rotate graphics for changing deck
+    // TODO: eventually use this to rotate graphics for changing deck?
 
     this.answered = false;
   }
-
-  // TODO: send updates to back end with each answer in case user exits page/browser mid-session
 
   findQuestionByCardId(cardId: number): number {
     let question: Question;
@@ -179,6 +208,10 @@ export class DeckComponent implements OnInit {
       }
     }
     return -1;
+  }
+
+  getSuccessRate(): number {
+    return Math.round((this.currentQuestion.correct / this.currentQuestion.presented) * 100);
   }
 
   shuffle(array: any[]): any[] {
@@ -194,6 +227,39 @@ export class DeckComponent implements OnInit {
       array[randomIndex] = temporaryValue;
     }
     return array;
+  }
+
+  saveData() {
+
+    this.user.filters = this.filters;
+    console.log(this.questions);
+    this.user.questions = this.questions;
+    console.log("Questions saved to user object.");
+
+    // FIXME: Questions are still not saving in database, even though they are being sent. Check back end
+    // structure for itemDetails in construction estimator as they relate to project, as an example
+
+    console.log(this.user.questions);
+    this.user.settings = this.settings;
+    this.user.statistics = this.statistics;
+
+    // save to database since there is no final 'submit' button and user could leave page at any time
+    fetch(this.userURL + this.user.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+      },
+      body: JSON.stringify(this.user),
+    }).then(function (response) {
+    }.bind(this)).then(function (data) {
+      console.log('Success:', data);
+    }).catch(function (error) {
+      console.error('Error:', error);
+    });
+
   }
 
 }

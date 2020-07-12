@@ -13,9 +13,10 @@
             <!-- TODO: make custom radio buttons like the custom checkboxes on other pages -->
 
             <!-- Buttons -->
-            <div class="right space-above">
-                <button *ngIf="!answered" (click)="checkAnswer()">Submit</button>
-                <button *ngIf="answered" (click)="getNextCard()">Next</button> 
+            <div class="right space-above"> <!-- FIXME: apply different colors to buttons and fix hover color and cursor type -->
+                <button [disabled]="answered" (click)="checkAnswer()" class="spacer-5">Submit</button>
+                <button [disabled]="answered" (click)="getNextCard()" class="spacer-5">Skip</button> 
+                <button [disabled]="!answered" (click)="getNextCard()" class="spacer-5">Next</button> 
             </div>
 
             <!-- Displays only after user submits response -->

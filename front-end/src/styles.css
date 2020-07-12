@@ -353,6 +353,10 @@ IDEAS:
     margin: 0px 10px; /* FIXME: check against usage of .space-after */
 }
 
+.spacer-5 {
+    margin: 0px 5px; /* FIXME: check against usage of .space-after */
+}
+
 .stats-column {
     width: 20%;
     text-align: center;

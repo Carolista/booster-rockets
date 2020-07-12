@@ -9,10 +9,11 @@ export class Question {
     
     archived: boolean; // if user chooses to prevent question from being included in future decks
 
-    constructor(cardId: number, presented: number, correct: number) {
+    constructor(cardId: number, presented: number, correct: number, archived: boolean) {
         this.cardId = cardId;
         this.presented = presented;
         this.correct = correct;
+        this.archived = archived;
     }
 
 }

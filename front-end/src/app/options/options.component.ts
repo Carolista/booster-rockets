@@ -105,7 +105,6 @@ export class OptionsComponent implements OnInit {
           questionBank.push(flashcard);
         });
         this.allFlashcards = questionBank;
-        // console.log(JSON.stringify(questionBank));
         this.buildSelectionArrays();
       }.bind(this));
     }.bind(this));
@@ -400,8 +399,10 @@ export class OptionsComponent implements OnInit {
   onSubmit() {
 
     this.user.filters = this.filters;
+    this.user.questions = this.questions;
+    this.user.settings = this.settings;
+    this.user.statistics = this.statistics;
     
-
     fetch(this.userURL + this.user.id, {
       method: 'PUT',
       headers: {
@@ -412,7 +413,7 @@ export class OptionsComponent implements OnInit {
       },
       body: JSON.stringify(this.user),
     }).then(function (response) {
-      // this.router.navigate(['/deck']); // FIXME: temporary while debugging PUT
+      this.router.navigate(['/deck']);
     }.bind(this)).then(function (data) {
       console.log('Success:', data);
     }).catch(function (error) {
