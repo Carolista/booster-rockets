@@ -197,4 +197,37 @@ export class DeckComponent implements OnInit {
     return array;
   }
 
+  // saveData() {
+
+  //   this.user.filters = this.filters;
+  //   console.log(this.questions);
+  //   this.user.questions = this.questions;
+  //   console.log("Questions saved to user object.");
+
+  //   // FIXME: Questions are still not saving in database, even though they are being sent. Check back end
+  //   // structure for itemDetails in construction estimator as they relate to project, as an example7
+
+  //   console.log(this.user.questions);
+  //   this.user.settings = this.settings;
+  //   this.user.statistics = this.statistics;
+
+  //   // save to database since there is no final 'submit' button and user could leave page at any time
+  //   fetch(this.userURL + this.user.id, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Access-Control-Allow-Origin': '*',
+  //       'Access-Control-Allow-Credentials': 'true',
+  //       'Authorization': 'Bearer ' + this.tokenStorageService.getToken()
+  //     },
+  //     body: JSON.stringify(this.user),
+  //   }).then(function (response) {
+  //   }.bind(this)).then(function (data) {
+  //     console.log('Success:', data);
+  //   }).catch(function (error) {
+  //     console.error('Error:', error);
+  //   });
+
+  // }
+
 }

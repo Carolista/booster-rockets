@@ -1,12 +1,15 @@
 <div *ngIf="dataIsLoaded">
     <div class="center-align">
         <div class="card">
-            <span class="category-topic">{{currentCard.category}}: {{currentCard.topic}}</span>
-                <small *ngIf="!answered && currentQuestion.presented === 0" class="stat-snippet-new spacer-10">New question!</small>
+            <span class="category-topic">{{currentCard.category}} &#187; {{currentCard.topic}}</span>
+                <span *ngIf="!answered && currentQuestion.presented === 0" class="stat-snippet-new spacer-10">New question!</span>
             <hr>
             <p class="query">{{currentCard.query}}</p>
             <div *ngFor="let choice of currentChoices; let c = index">
-                <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentChoices[c]" [checked]="false" />{{currentChoices[c]}}
+                <label class="custom-radio">
+                    <input type="radio" #response name="response" (change)="currentResponse = response.value" [value]="currentChoices[c]" [checked]="false" class="space-before" />
+                    <span class="mark"></span> {{currentChoices[c]}}
+                </label>
             </div>
             <!-- TODO: figure out how the hell to indent label wrap on radio buttons... UGH -->
             <!-- Hey here's an idea - use row of two columns, radio on left, text on right -->

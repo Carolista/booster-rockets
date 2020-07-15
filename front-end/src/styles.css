@@ -4,6 +4,7 @@ html, body {
     width: 100vw;
     padding: 0px;
     margin: 0px;
+    font-size: 14px; /* baseline */
     font-family: 'Prompt', sans-serif;
     font-weight: 200;
     color: #333333;
@@ -92,15 +93,15 @@ IDEAS:
 }
 
 .title {
-    font-size: 7vw;
+    font-size: calc(2rem + 3vw);
     font-family: 'Days One', 'Prompt', sans-serif;
 }
 
-@media screen and (min-width: 800px) {
+/* @media screen and (min-width: 800px) {
     .title {
        font-size: 50px;
     }
-}
+} */
 
 .card {
     width: 55vw;
@@ -138,7 +139,8 @@ IDEAS:
 
 .search-type-column {
     max-width: 30%;
-    padding: 0px 5px;
+    padding: 3px 5px;
+    font-size: 1.1rem;
 }
 
 .search-field-column {
@@ -196,8 +198,13 @@ IDEAS:
 
 .result-count {
     font-weight: 400;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #5b8b0e;
+}
+
+.result-email {
+    font-weight: 200;
+    font-size: 1rem;
 }
 
 .choice-indent {
@@ -262,39 +269,39 @@ IDEAS:
 .page-title {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
-    font-size: 1.8em;
-    margin-bottom: 0.3em;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 .dashboard-stats {
     font-family: 'Days One', 'Prompt', sans-serif;
     text-transform: uppercase;
-    font-size: 1.2em;
-    line-height: 1.5em; 
-    margin-bottom: 0.3em;
+    font-size: 1.2rem;
+    line-height: 1.5rem; 
+    margin-bottom: 0.5rem;
 }
 
 .category-topic {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     width: 100%;
 }
 
 .result-header {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .result-id {
     font-weight: 200;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin-left: 10px;
-    margin-top: 0.3rem;
+    margin-top: 0.25rem;
 }
 
 .result-tiny-box {
-    height: 1em;
-    min-width: 1em;
+    height: 1.1rem;
+    min-width: 1.1rem;
     margin: 4px 10px 0px 0px;
     color: white;
     background-color: #5b8b0e;
@@ -316,14 +323,13 @@ IDEAS:
 .checklist-header-stats {
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 1.2em;
-    margin-bottom: 0.5em;
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
 }
 
 .checklist-header {
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 1.2em;
 }
 
 .stats-headers {
@@ -392,18 +398,18 @@ IDEAS:
 
 .big-number {
     font-weight: 400;
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 .big-text {
     font-weight: 600;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .instruction {
     font-family: "Prompt", sans-serif;
     font-weight: 400;
-    font-size: 0.65em;
+    font-size: 0.65rem;
     text-transform: none;
     margin-top: 10px;
     color: white;
@@ -451,7 +457,7 @@ select {
 
 .error-msg {
     color: #aa1e0c;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     text-transform: uppercase;
     text-align: left;
     margin-bottom: 10px;
@@ -459,7 +465,7 @@ select {
 
 .error-msg-create {
     color: #aa1e0c;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     text-transform: uppercase;
     text-align: left;
     margin-bottom: 10px;
@@ -468,7 +474,7 @@ select {
 
 .secondary-text {
     color: #777777;
-    font-size: .9em;
+    font-size: .9rem;
 }
 
 .correction {
@@ -480,7 +486,7 @@ a.subtle-link {
 }
 
 .white-link {
-    font-size: 1.8vw;
+    font-size: calc(0.8rem + 0.3vw);
     font-weight: 400;
     color: #a9d366;
     text-transform: uppercase;
@@ -489,7 +495,10 @@ a.subtle-link {
 }
 
 a.white-link {
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: color 0.4s ease-in-out, 
+                background-color 0.4s ease-in-out, 
+                border-color 0.4s ease-in-out, 
+                box-shadow 0.4s ease-in-out;
 }
 
 a.white-link:hover {
@@ -505,8 +514,11 @@ a.white-link-selected {
 }
 
 .slightly-smaller {
-    font-size: .9em;
+    font-size: .9rem;
 }
+
+
+/*** CUSTOM CHECKBOXES ***/
 
 .custom-checkbox input {
     display: none;
@@ -514,42 +526,60 @@ a.white-link-selected {
   
 .custom-checkbox {
     display: inline-block;
-    padding-left: 25px;
+    padding-left: 30px;
     position: relative;
     cursor: pointer;
     user-select: none;
+    line-height: 26px;
 }
 
 .custom-checkbox-small {
-    padding-left: 21px;
+    padding-left: 28px;
 }
   
 .custom-checkbox .checkmark {
     display: inline-block;
     width: 20px;
     height: 20px;
+    border: 2px solid;
     border-radius: 0px 5px;
-    background: #ccc;
+    border-color: #ccc;
+    background: white;
     position: absolute;
     left: 0;
     top: 0;
+    transition: color 0.4s ease-in-out, 
+                background-color 0.4s ease-in-out, 
+                border-color 0.4s ease-in-out, 
+                box-shadow 0.4s ease-in-out;
+}
+
+.custom-checkbox .checkmark:hover {
+    border-color: #09869c;
+    background: white;
+}
+
+.custom-checkbox-small .checkmark:hover {
+    border-color: #bada55;
+    background: white;
 }
 
 .custom-checkbox-small .checkmark {
     width: 17px;
     height: 17px;
     border-radius: 0px 4px;
-    top: 8%;
 }
-  
+
 .custom-checkbox input:checked+.checkmark {
-    background-color: #0ba5c0;
+    border-color: #09869c;
+    background-color: #09869c;
 }
 
 .custom-checkbox-small input:checked+.checkmark {
+    border-color: #bada55;
     background-color: #bada55;
 }
-  
+
 .custom-checkbox input:checked+.checkmark:after {
     content: "";
     position: absolute;
@@ -566,18 +596,63 @@ a.white-link-selected {
     height: 3px;
     width: 8px;
 }
+
+
+/*** CUSTOM RADIO BUTTONS ***/
+
+.custom-radio input {
+    display: none;
+}
   
-/* .custom-checkbox input:indeterminate+.checkmark:after {
+.custom-radio {
+    display: inline-block;
+    padding-left: 30px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    line-height: 28px;
+}
+  
+.custom-radio .mark {
+    display: inline-block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 0px 5px;
+    border: 2px solid;
+    border-color: #ccc;
+    background-color: white;
+    left: 0;
+    top: 0;
+    transition: color 0.4s ease-in-out, 
+                background-color 0.4s ease-in-out, 
+                border-color 0.4s ease-in-out, 
+                box-shadow 0.4s ease-in-out;
+}
+
+.custom-radio .mark:hover {
+    border-color: #09869c;
+    background-color: white;
+}
+
+.custom-radio input:checked+.mark {
+    border-color: #09869c;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+}
+
+.custom-radio input:checked+.mark:after {
     content: "";
     position: absolute;
-    height: 0px;
-    width: 9px;
-    border-left: 3px solid white;
-    border-bottom: 3px solid white;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(180deg);
-} */
+    width: 16px;
+    height: 16px;
+    left: 2px;
+    top: 2px;
+    border: none;
+    border-radius: 0px 4px;
+    background-color: #09869c;
+}
 
 
 /***** INLINE BUTTON GROUP *****/
@@ -606,10 +681,23 @@ button {
     text-transform: uppercase;
     border: none;
     border-radius: 0px 15px;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.4s ease-in-out, 
+                background-color 0.4s ease-in-out, 
+                border-color 0.4s ease-in-out, 
+                box-shadow 0.4s ease-in-out;
 }
 
-button:disabled {
+button:disabled, button:disabled:hover {
     background-color: #ccc;
+    cursor: default;
+}
+
+button:active { /* visual effect of button being pressed down */
+    position: relative;
+    top: 2px; 
+    left: 2px;
 }
 
 .button-inline {
@@ -630,10 +718,13 @@ button:disabled {
     padding: 7px 11px;
     margin: 0px 5px;
     /* TODO: learn more about implementing transitions and apply to other parts of the site */
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: color 0.4s ease-in-out, 
+                background-color 0.4s ease-in-out, 
+                border-color 0.4s ease-in-out, 
+                box-shadow 0.4s ease-in-out;
 }
 
-.button-inline:hover {
+.button-inline:hover, button:hover {
     color: white;
     background: #6fa814;
     text-decoration: none;
