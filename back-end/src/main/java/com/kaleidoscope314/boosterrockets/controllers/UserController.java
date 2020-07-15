@@ -1,6 +1,8 @@
 package com.kaleidoscope314.boosterrockets.controllers;
 
+import com.kaleidoscope314.boosterrockets.models.Question;
 import com.kaleidoscope314.boosterrockets.models.User;
+import com.kaleidoscope314.boosterrockets.models.data.QuestionRepository;
 import com.kaleidoscope314.boosterrockets.models.data.UserRepository;
 import com.kaleidoscope314.boosterrockets.security.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    QuestionRepository questionRepository;
 
     @Autowired
     UserAuthService userAuthService;
@@ -70,6 +75,9 @@ public class UserController {
             } else {
                 user.setPassword(userRepository.findById(id).get().getPassword());
             }
+            Optional<Iterable<Question>> questionsListOpt = questionRepository.findByUserId(id);
+            questionsListOpt.ifPresent(projects -> user.setQuestions((List<Question>) projects));
+
             user.setRoles(userRepository.findById(id).get().getRoles());
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
